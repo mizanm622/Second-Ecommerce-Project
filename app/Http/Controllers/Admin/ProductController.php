@@ -148,14 +148,7 @@ class ProductController extends Controller
             $thumbName=uniqid().'.'.$thumb->getClientOriginalExtension();
             $thumb_path=$thumb->move('files/product/thumbs/',$thumbName);
 
-            if(empty($request->video)){
-                $videoPath=0;
-            }else{
-                 //video
-            $video=$request->video;
-            $videoName=uniqid().'.'.$video->getClientOriginalExtension();
-            $videoPath=$video->move('files/product/videos/',$videoName);
-            }
+
 
 
                //$request->filled('status') ? 1 : 0;
@@ -174,7 +167,7 @@ class ProductController extends Controller
             'color'=>$request->color,
             'size'=>$request->size,
             'unit'=>$request->unit,
-            'video'=>$videoPath,
+            'video'=>$request->video,
             'warehouse_id'=>$request->warehouse_id,
             'thumbnail'=>$thumb_path,
             'featured'=>$request->featured,
@@ -249,15 +242,6 @@ class ProductController extends Controller
              $thumb_path=$thumb->move('files/product/thumbs/',$thumbName);
              unlink($request->old_thumbnail);
             }
-            if(empty($request->video)){
-                $videoPath=0;
-            }else{
-                 //video
-            $video=$request->video;
-            $videoName=uniqid().'.'.$video->getClientOriginalExtension();
-            $videoPath=$video->move('files/product/videos/',$videoName);
-            unlink($request->old_video);
-            }
 
             Product::where('id',$request->id)->update([
                 'name'=>$request->name,
@@ -271,7 +255,7 @@ class ProductController extends Controller
                 'color'=>$request->color,
                 'size'=>$request->size,
                 'unit'=>$request->unit,
-                'video'=>$videoPath,
+                'video'=>$request->video,
                 'warehouse_id'=>$request->warehouse_id,
                 'thumbnail'=>$thumb_path,
                 'featured'=>$request->featured,
@@ -293,7 +277,7 @@ class ProductController extends Controller
 
 
             $notification=array('msg' => 'Product Successfully Updated! ', 'alert-type' => 'success');
-            return view('admin.product.show')->with($notification);
+            return view('admin.product.edit')->with($notification);
 
 
     }

@@ -160,7 +160,7 @@
 
               <div class="mb-3">
                 <label class="form-label" for="basic-default-message">Vedio</label>
-                <input type="file" name="video" class="form-control" placeholder="Video Link Here...." >
+                <input type="text" name="video" class="form-control" placeholder="Only Video URL...." >
               </div>
 
             </div><!--End row-->

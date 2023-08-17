@@ -88,19 +88,37 @@
             </div>
 
             <div class="col-lg-3 order-lg-2 order-1">
-                <div class="product_category"><span class="fas fa-map text-bold"> Pickup Point of This Product:</span> {{$products->pickup->address}}</div>
-                <div class="product_category"> <b>Pickup Point Name :</b>{{$products->pickup->name}}</div>
+                <div class="product_category"><p><span class="fas fa-map-marker-alt"> Pickup Point of This Product:</span> {{$products->pickup->address}}</p></div>
+
 
                 <div class="product_category">
-                    <p class="text-left mt-1">Delivery Criteria</p>
-                    <p><span class="fas fa-dot "> (12-24) Hours Delivery after Order Placed!</span></p>
-                    <p><span class="fas fa-dot "> Delivery Charge : (Ok)</span></p>
-                    <p><span class="fas fa-dot "> Cash on Delivery : </span> {{$products->cash_on_delivery == null ? 'Not Available' : 'Available'}}</p>
+                    <h6 class="text-left mt-1">Delivery Criteria</h6>
+                    <p><span class="far fa-arrow-alt-circle-right"> (12-24) Hours Delivery after Order Placed!</span></p>
+                    <p><span class="far fa-arrow-alt-circle-right"> Delivery Charge : (Ok)</span></p>
+                    <p><span class="far fa-arrow-alt-circle-right"> Cash on Delivery : </span> {{$products->cash_on_delivery == null ? 'Not Available' : 'Available'}}</p>
                 </div>
                 <div class="product_category">
-                    <p class="text-left mt-1">Terms & Condition</p>
-                    <p><span class="fas fa-dot "> 7 Days Replacement Gurantee : (Not Available) </span></p>
-                    <p><span class="fas fa-dot "> Warrenty : (Not Available)</span></p>
+                    <h6 class="text-left mt-1">Terms & Condition</h6>
+                    <p><span class="far fa-arrow-alt-circle-right"> 7 Days Replacement Gurantee : Not Available</span></p>
+                    <p><span class="far fa-arrow-alt-circle-right"> Warrenty : Not Available</span></p>
+
+                </div>
+
+                <div class="product-video">
+                    <p>Video Review: </p>
+                  @if ($products->video == 0)
+                    <span class="text-warning tw-400">Opps! Nothing else.....</span>
+                  @else
+                    <iframe src="{{$products->video}}" frameborder="0"></iframe>
+
+                  @endif
+
+
+
+
+
+
+
 
                 </div>
 

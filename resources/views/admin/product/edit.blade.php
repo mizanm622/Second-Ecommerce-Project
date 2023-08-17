@@ -160,8 +160,8 @@
 
               <div class="mb-3">
                 <label class="form-label" for="basic-default-message">Vedio</label>
-                <input type="file" name="video" class="form-control" >
-                <input type="hidden" name="old_video" value="{{$products->video}}">
+                <input type="text" name="video" class="form-control" value="{{$products->video}}" >
+
               </div>
 
             </div><!--End row-->
