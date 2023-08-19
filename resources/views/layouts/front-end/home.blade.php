@@ -1,34 +1,45 @@
 @extends('layouts.app')
 
+<style>
+#owl-demo {
+    display: block;
+    width: 100%;
+    height: 400px;
+}
+</style>
 @section('home-content')
 
 
-<!-- Banner -->
 
+<!-- Banner -->
+<div id="owl-demo" class="owl-carousel owl-theme" >
 @foreach ($bannerProduct as $row)
+<div class="item">
   <div class="banner">
     <div class="banner_background" style="background-image:url(front-end/assets/images/banner_background.jpg)"></div>
     <div class="container fill_height">
         <div class="row fill_height">
-            <div class="banner_product_image"><img src="{{asset($row->thumbnail)}}" alt="" width="150px"></div>
-            <div class="col-lg-5 offset-lg-4 fill_height">
-                <div class="banner_content">
-                    <h1 class="banner_text">{{$row->name}}</h1>
-                    @if ($row->discount_price == '0')
-                    <div class="banner_price">{{$settings->currency}} {{$row->selling_price}}</div>
-                    @else
-                    <div class="banner_price"><span> {{$settings->currency}} {{$row->selling_price}}</span>{{$settings->currency}} {{$row->discount_price}} </div>
-                    @endif
-                    <div class="banner_product_name">{{$row->brand->brand_name}}</div>
-                    <div class="button banner_button"><a href="#">Shop Now</a></div>
-                    <div class="button banner_button"><a href="{{route('product.details',$row->id)}}">Show Details</a></div>
+
+              <div class="banner_product_image"><img src="{{asset($row->thumbnail)}}" alt="" width="150" height="250"></div>
+                <div class="col-lg-5 offset-lg-4 fill_height">
+                    <div class="banner_content">
+                        <h1 class="banner_text">{{$row->name}}</h1>
+                        @if ($row->discount_price == '0')
+                        <div class="banner_price">{{$settings->currency}} {{$row->selling_price}}</div>
+                        @else
+                        <div class="banner_price"><span> {{$settings->currency}} {{$row->selling_price}}</span>{{$settings->currency}} {{$row->discount_price}} </div>
+                        @endif
+                        <div class="banner_product_name">{{$row->brand->brand_name}}</div>
+                        <div class="button banner_button"><a href="#">Shop Now</a></div>
+                        <div class="button banner_button"><a href="{{route('product.details',$row->id)}}">Show Details</a></div>
+                    </div>
                 </div>
             </div>
         </div>
      </div>
   </div>
-
 @endforeach
+</div>
 
 <div class="characteristics">
     <div class="container">

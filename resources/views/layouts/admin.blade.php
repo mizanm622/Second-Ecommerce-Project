@@ -177,10 +177,7 @@
 
 
 
-    //summernote
-    $(document).ready(function() {
-  $('#summernote').summernote();
-                    });
+
 </script>
 
 @if(Session::has('msg'))

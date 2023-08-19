@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -23,9 +24,13 @@ class HomeController extends Controller
     //  single product view from here
 
     public function singleView($id){
-        $products=Product::where('id', $id)->first();
+        $products=Product::where('id',$id)->first();
 
-        return view('layouts.front-end.product.product_details', compact('products'));
+        $relatedProduct=Product::where('subcategory_id',$products->subcategory_id)->orderBy('id','DESC')->limit(10)->get();
+        $brandItem=Product::where('subcategory_id',$products->subcategory_id)->orderBy('id','DESC')->limit(10)->get();
+        // $brandItem=Brand::limit(10)->get();
+
+        return view('layouts.front-end.product.product_details', compact('products','relatedProduct','brandItem'));
 
     }
 }

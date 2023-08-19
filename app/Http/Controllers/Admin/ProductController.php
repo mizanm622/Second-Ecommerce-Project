@@ -277,7 +277,7 @@ class ProductController extends Controller
 
 
             $notification=array('msg' => 'Product Successfully Updated! ', 'alert-type' => 'success');
-            return view('admin.product.edit')->with($notification);
+            return redirect()->route('product.show')->with($notification);
 
 
     }
