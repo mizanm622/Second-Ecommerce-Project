@@ -191,6 +191,14 @@
                   </div>
               </div>
 
+            <div class="mb-3">
+                <label class="form-label" for="basic-icon-default-fullname">Trending </label>
+                <div class="form-check form-switch">
+                    <input type="hidden" name="trending" value="0">
+                    <input class="form-check-input btn" type="checkbox" value="1" name="trending" role="switch" id="flexSwitchCheckChecked" checked>
+                </div>
+            </div>
+
                <div class="mb-3">
                 <label class="form-label" for="basic-icon-default-fullname">Slider Show</label>
                 <div class="form-check form-switch">

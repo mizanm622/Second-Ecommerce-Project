@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+
 class AdminController extends Controller
 {
 
@@ -18,6 +19,30 @@ class AdminController extends Controller
     // admin after login
     public function admin(){
         return view('admin.home');
+    }
+
+    //admin register here
+    public function adminRegister(){
+        return view('admin.profile.admin_register');
+    }
+
+    //create new admin
+    public  function create(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+
+         User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+        ]);
+
+        return redirect()->route('admin.home');
     }
      // admin after logout
     public function logout(){

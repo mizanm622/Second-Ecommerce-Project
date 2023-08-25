@@ -101,6 +101,7 @@ id="layout-navbar"
           </form>
         </li>
         <li><a class="dropdown-item" href="{{route('admin.resetpassword')}}">  <i class="bx bx-power-off me-2"></i><span class="align-middle">Password Reset</span> </a></li>
+        <li><a class="dropdown-item" href="{{route('admin.register')}}">  <i class="bx bx-power-off me-2"></i><span class="align-middle">Register</span> </a></li>
       </ul>
     </li>
     <!--/ User -->

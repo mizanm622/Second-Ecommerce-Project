@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/admin-login', [App\Http\Controllers\Auth\LoginController::class, 'adminLogin'])->name('admin.login');
 
+
 //Route::get('admin/home', [App\Http\Controllers\HomeController::class, 'admin'])->name('admin.home')->middleware('is_admin');
 
 Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_admin'],function(){
@@ -13,6 +14,8 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
     Route::post('admin/logout', 'AdminController@logout')->name('admin.logout');
     Route::get('admin/reset-password', 'AdminController@changePasswrd')->name('admin.resetpassword');
     Route::post('admin/update-password', 'AdminController@updatePasswrd')->name('admin.password.update');
+    Route::get('admin/register', 'AdminController@adminRegister')->name('admin.register');
+    Route::post('admin/create', 'AdminController@create')->name('admin.create');
 
     //category routes
     Route::group(['prefix'=>'category'], function(){

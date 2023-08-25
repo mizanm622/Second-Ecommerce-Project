@@ -37,11 +37,45 @@
                     <div class="product_category">{{$products->childcategory->childcategory_name}}</div>
                     <div class="product_name">{{$products->name}}</div>
                     <div class="rating_r rating_r_4 product_rating">
-                        <span class="text-danger fas fa-star checked"></span>
-                        <span class="text-danger fas fa-star checked"></span>
-                        <span class="text-danger fas fa-star checked"></span>
-                        <span class="text-danger fas fa-star checked"></span>
-                        <span class="fas fa-star"></span>
+                        @if(empty($review))
+
+                            @elseif (ceil($review->avg('review_rating')) == 5)
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="">({{ceil($review->avg('review_rating'))}})</span>
+
+                            @elseif (ceil($review->avg('review_rating')) == 4)
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-muted fas fa-star"></span>
+                                <span class="">({{ceil($review->avg('review_rating'))}})</span>
+                            @elseif (ceil($review->avg('review_rating')) == 3)
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-muted fas fa-star"></span>
+                                <span class="text-muted fas fa-star"></span>
+                                <span class="">({{ceil($review->avg('review_rating'))}})</span>
+                            @elseif (ceil($review->avg('review_rating')) == 2)
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-muted fas fa-star"></span>
+                                <span class="text-muted fas fa-star"></span>
+                                <span class="text-muted fas fa-star"></span>
+                                <span class="">({{ceil($review->avg('review_rating'))}})</span>
+                            @elseif (ceil($review->avg('review_rating')) == 1)
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-muted fas fa-star"></span>
+                                <span class="text-muted fas fa-star"></span>
+                                <span class="text-muted fas fa-star"></span>
+                                <span class="text-muted fas fa-star"></span>
+                                <span class="">({{ceil($review->avg('review_rating'))}})</span>
+                            @endif
                     </div>
                     <div class="product_text"><p>{{$products->description}} Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reprehenderit natus earum neque ullam officia voluptas.</p></div>
                     <div class="product_text"><span class="text-info">Stack: </span>({{$products->stack_quantity}} ) | <span class="text-info">Unit: </span>{{$products->unit}} Pcs</div>
@@ -63,7 +97,7 @@
                                     @isset($products->size)
                                     <div class="mb-3 col-6">
                                         <label class="form-label" for="basic-default-company">Size</label>
-                                        <select type="text" class="form-control" name="size" >
+                                        <select type="text" class="form-control" name="size">
                                             @foreach ($sizes as $size)
                                             <option value="{{$size}}">{{$size}}</option>
                                             @endforeach
@@ -92,8 +126,15 @@
                             <div class="banner_price"><span> {{$settings->currency}} {{$products->selling_price}}</span>{{$settings->currency}} {{$products->discount_price}} </div>
                             @endif
                             <div class="button_container">
-                                <button type="button" class="button cart_button">Add to Cart</button>
-                                <div class="product_fav"><i class="fas fa-heart"></i></div>
+                                @guest
+                                <a class="btn btn-primary btn-md" data-toggle="popover" title="Please login to continue" data-content=""href=""><span class="fas fa-shopping-cart"></span> Add to Cart</a>
+                                <a class="btn btn-primary btn-md" href="" data-toggle="popover" title="Please login to continue" data-content=""><span class="fas fa-heart"></span> Add to Wishlist</a>
+
+                                @else
+                                <a class="btn btn-primary btn-md" href="#"><span class="fas fa-shopping-cart"></span> Add to Cart</a>
+                                <a class="btn btn-primary btn-md" id="product-wishlist" data-id="{{$products->id}}" href="javascript:void(0)"><span class="fas fa-heart"></span> Add to Wishlist</a>
+                                <div class="product_fav"><span class="fas fa-heart"></span></div>
+                                @endguest
                             </div>
 
                         </form>
@@ -141,6 +182,261 @@
 
         </div>
     </div>
+</div>
+
+<!-- Recently Viewed -->
+<div class="product-review">
+    <div class="row">
+        <div class="col-4">
+            <div class="product-details mx-2">
+                <p>Product Configuration</p>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th colspan="2">Name: <td>Mizanur Rahman</td></th>
+                            <th colspan="2">Email: <td>Mizanur Rahman</td></th>
+                        </tr>
+                    </thead>
+
+                </table>
+
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="review-description mx-2">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="average-rating">
+                            <p>Average Review</p>
+                            @if(empty($review))
+
+                             @elseif (intval($review->avg('review_rating')) == 5)
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="">({{intval($review->avg('review_rating'))}})</span>
+
+                            @elseif (intval($review->avg('review_rating')) == 4)
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-muted fas fa-star"></span>
+                                <span class="">({{intval($review->avg('review_rating'))}})</span>
+                            @elseif (intval($review->avg('review_rating')) == 3)
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-muted fas fa-star"></span>
+                                <span class="text-muted fas fa-star"></span>
+                                <span class="">({{intval($review->avg('review_rating'))}})</span>
+                            @elseif (intval($review->avg('review_rating')) == 2)
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-muted fas fa-star"></span>
+                                <span class="text-muted fas fa-star"></span>
+                                <span class="text-muted fas fa-star"></span>
+                                <span class="">({{intval($review->avg('review_rating'))}})</span>
+                            @elseif (intval($review->avg('review_rating')) == 1)
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-muted fas fa-star"></span>
+                                <span class="text-muted fas fa-star"></span>
+                                <span class="text-muted fas fa-star"></span>
+                                <span class="text-muted fas fa-star"></span>
+                                <span class="">({{intval($review->avg('review_rating'))}})</span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="rating-count">
+                            <p>Total Review</p>
+
+                        @if(empty($review))
+                        <p>No Review Found !</p>
+
+                        @else
+                             <div class="five-star">
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="">Total ({{$review->where('review_rating',5)->count();}})</span>
+                             </div>
+
+
+                            <div class="four-star">
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-muted fas fa-star"></span>
+                                <span class="">Total ({{$review->where('review_rating',4)->count();}})</span>
+                            </div>
+
+                            <div class="three-star">
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-muted fas fa-star"></span>
+                                <span class="text-muted fas fa-star"></span>
+                                <span class="">Total ({{$review->where('review_rating',3)->count();}})</span>
+                            </div>
+
+
+                            <div class="two-star">
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-muted fas fa-star"></span>
+                                <span class="text-muted fas fa-star"></span>
+                                <span class="text-muted fas fa-star"></span>
+                                <span class="">Total ({{$review->where('review_rating',2)->count();}})</span>
+                            </div>
+
+                            <div class="one-star">
+                                <span class="text-warning fas fa-star checked"></span>
+                                <span class="text-muted fas fa-star"></span>
+                                <span class="text-muted fas fa-star"></span>
+                                <span class="text-muted fas fa-star"></span>
+                                <span class="text-muted fas fa-star"></span>
+                                <span class="">Total ({{$review->where('review_rating',1)->count();}})</span>
+                            </div>
+                        @endif
+
+                        </div>
+                    </div>
+                </div>
+                <div class="show-review mt-4">
+
+                     <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal">
+                          Show Product Review
+                    </button>
+                    <div class="modal" id="myModal">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Customer Reviews</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body" id="review">
+
+                                <div class="card">
+                                    @if(empty($review))
+                                     <p>No Review Found !</p>
+
+                                    @else
+                                        @foreach ($review as $row)
+
+
+                                        <div class="card-header">
+                                            <h5><span>{{$loop->iteration}} .</span> {{$row->user->name}} | {{$row->review_date}}</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <p>{{$row->review_name}}</p>
+                                            @if ($row->review_rating == 5)
+                                            <div class="rating">
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-warning fas fa-star checked"></span>
+
+                                            </div>
+                                            @elseif ($row->review_rating == 4)
+                                            <div class="rating">
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-muted fas fa-star"></span>
+
+                                            </div>
+                                            @elseif ($row->review_rating == 3)
+                                            <div class="rating">
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-muted fas fa-star"></span>
+                                                <span class="text-muted fas fa-star"></span>
+
+                                            </div>
+                                            @elseif ($row->review_rating == 2)
+                                            <div class="rating">
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-muted fas fa-star"></span>
+                                                <span class="text-muted fas fa-star"></span>
+                                                <span class="text-muted fas fa-star"></span>
+
+                                            </div>
+                                            @elseif ($row->review_rating == 1)
+                                            <div class="rating">
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-muted fas fa-star"></span>
+                                                <span class="text-muted fas fa-star"></span>
+                                                <span class="text-muted fas fa-star"></span>
+                                                <span class="text-muted fas fa-star"></span>
+                                            </div>
+                                            @endif
+                                        </div>
+                                        @endforeach
+                                    @endif
+
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="review-form mx-2">
+                <p>User Review Form</p>
+                <form action="{{route('product.review')}}" method="post"  id="add-form">
+                    @csrf
+                    <div class="form-grout p-3">
+                            <label class="form-label" for="basic-default-message">Description :</label>
+                            <textarea type="text" name="review_name" class="form-control" placeholder="Write your comment  Here...." required></textarea>
+
+                    </div>
+                    <div class="form-grout p-3">
+                            <label class="form-label" for="basic-default-message">Review Rating :</label>
+                            <select type="text" name="review_rating" class="form-control" id="review_rating"  required >
+                                    <option value="1">1 Star</option>
+                                    <option value="2">2 Star</option>
+                                    <option value="3">3 Star</option>
+                                    <option value="4">4 Star</option>
+                                    <option value="5">5 Star</option>
+                            </select>
+                    </div>
+                    @guest
+                    <div class="form-grout p-3">
+                        <small>Plese login/registration to submit your review</small>
+                        <input type="submit" class="form-control btn btn-primary" disabled value="Review Submit">
+                    </div>
+
+                    @else
+                    <div class="form-grout p-3">
+                        <input type="hidden" name="product_id" value="{{$products->id}}">
+                        <input type="submit" class="form-control btn btn-primary" value="Review Submit">
+                    </div>
+                    @endguest
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <!-- Recently Viewed -->
@@ -250,8 +546,47 @@
     </div>
 </div>
 
-
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="{{asset('front-end/assets/js/product_custom.js')}}"></script>
+<script>
+    $(document).ready(function(){
+      $('[data-toggle="popover"]').popover();
+    });
+
+    // insert review data
+    $('#add-form').submit(function(e) {
+    e.preventDefault();
+    var url = $(this).attr('action');
+    var request = $(this).serialize();
+    $.ajax({
+        url: url,
+        type: 'post',
+        anyne: false,
+        data: request,
+        success:function(data) {
+            toastr.success(data);
+             $('#add-form')[0].reset();
+             $('.review-description').load(location.href+' .review-description');
+        }
+    });
+    });
+
+    // insert wishlist data
+    $(document).on('click','#product-wishlist',function(e) {
+    e.preventDefault();
+    let id = $(this).data('id');
+    $.ajax({
+        url: "{{ route('add.wishlist') }}",
+        type: 'get',
+        data: { id : id},
+        success:function(data) {
+            toastr.success(data);
+             $('.wishlist_count').load(location.href+' .wishlist_count');
+        }
+    });
+    });
+
+    </script>
 @endsection
 
 

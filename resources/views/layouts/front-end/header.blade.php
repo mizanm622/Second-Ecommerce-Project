@@ -1,4 +1,4 @@
-@php 
+@php
  $category=App\Models\Category::all();
 @endphp
 <header class="header">
@@ -14,27 +14,72 @@
                     <div class="top_bar_content ml-auto">
                         <div class="top_bar_menu">
                             <ul class="standard_dropdown top_bar_dropdown">
-                                <li>
-                                    <a href="#">English<i class="fas fa-chevron-down"></i></a>
-                                    <ul>
-                                        <li><a href="#">Bangla</a></li>
+                                    <li>
+                                        <a href="#">Language<span class="fas fa-chevron-down"></span> </a>
+                                        <ul>
+                                            <li><a href="#">English</a></li>
+                                            <li><a href="#">Bangla</a></li>
 
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#">$ US dollar<i class="fas fa-chevron-down"></i></a>
-                                    <ul>
-                                        <li><a href="#">৳ BDT Taka </a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">Currency<span class="fas fa-chevron-down"></span> </a>
+                                        <ul>
+                                            <li><a href="#">$ US dollar</a></li>
+                                            <li><a href="#">৳ BDT Taka </a></li>
 
-                                    </ul>
-                                </li>
-                            </ul>
+                                        </ul>
+                                    </li>
+                                    @guest
+                                    <li>
+                                        <a href="#"><span class="fas fa-chevron-down"></span>  Login<span class="fas fa-chevron-down"></span> </a>
+                                        <ul style="width:250px; padding:10px">
+                                        <div class="user-login">
+                                                <form action="{{route('login')}}" method="post">
+                                                    @csrf
+                                                    <div class="form-group">
+                                                        <label for="email">Email</label>
+                                                        <input type="email" class="form-control form-control-md" name="email" placeholder="Enter your email" required >
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="password">Password</label>
+                                                        <input type="password" class="form-control" name="password" placeholder="Enter your password" required >
+                                                    </div>
+
+                                                    <input type="submit"  class="form-control btn btn-info" value="Login">
+                                                </form>
+                                            </div>
+                                        </ul>
+                                   </li>
+                                   @else
+                                   <li>
+                                     <a href="#"><span class="fas fa-chevron-down"></span> {{auth()->user()->name}} </a>
+                                        <ul style="width:250px; padding:10px">
+                                            <li><a  href="{{route('user.profile')}}">Profile</a></li>
+                                            <li><a  href="">Settings</a></li>
+                                            <li><a  href="">Order List</a></li>
+                                            <li><a  href="{{ route('user.logout') }}">Log Out</a></li>
+                                        </ul>
+                                    </li>
+                                    @endguest
+
+                                   <li>
+                                      @guest
+                                            <a href=""><span class="fas fa-chevron-down"></span> Register</a>
+                                            <ul style="width:250px; padding:10px">
+                                                <li><a href="{{route('user.register')}}">Create Account</a></li>
+
+                                            </ul>
+                                      @endguest
+
+                                    </li>
+                                </ul>
                         </div>
-                        <div class="top_bar_user">
+                        {{-- <div class="top_bar_user">
                             <div class="user_icon"><img src="images/user.svg" alt=""></div>
                             <div><a href="#">Register</a></div>
                             <div><a href="#">Sign in</a></div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -64,7 +109,7 @@
                                     <div class="custom_dropdown">
                                         <div class="custom_dropdown_list">
                                             <span class="custom_dropdown_placeholder clc">All Categories</span>
-                                            <i class="fas fa-chevron-down"></i>
+                                            <span class="fas fa-chevron-down"></span>
                                             <ul class="custom_list clc">
                                                 <li><a class="clc" href="#">All Categories</a></li>
                                                 <li><a class="clc" href="#">Computers</a></li>
@@ -86,10 +131,10 @@
                 <div class="col-lg-4 col-9 order-lg-3 order-2 text-lg-left text-right">
                     <div class="wishlist_cart d-flex flex-row align-items-center justify-content-end">
                         <div class="wishlist d-flex flex-row align-items-center justify-content-end">
-                            <div class="wishlist_icon"><img src="images/heart.png" alt=""></div>
+                            <div class="wishlist_icon"><img src="{{asset('front-end/assets/images/heart.png')}}" alt=""></div>
                             <div class="wishlist_content">
                                 <div class="wishlist_text"><a href="#">Wishlist</a></div>
-                                <div class="wishlist_count">115</div>
+                                <div class="wishlist_count"><span class="text-primary">(@if(empty($wishlist))  @else {{$wishlist}}  @endif)</span></div>
                             </div>
                         </div>
 
@@ -162,53 +207,53 @@
 
                         <div class="main_nav_menu ml-auto">
                             <ul class="standard_dropdown main_nav_dropdown">
-                                <li><a href="#">Home<i class="fas fa-chevron-down"></i></a></li>
+                                <li><a href="#">Home<span class="fas fa-chevron-down"></span> </a></li>
                                 <li class="hassubs">
-                                    <a href="#">Super Deals<i class="fas fa-chevron-down"></i></a>
+                                    <a href="#">Super Deals<span class="fas fa-chevron-down"></span> </a>
                                     <ul>
                                         <li>
-                                            <a href="#">Menu Item<i class="fas fa-chevron-down"></i></a>
+                                            <a href="#">Menu Item<span class="fas fa-chevron-down"></span> </a>
                                             <ul>
-                                                <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-                                                <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-                                                <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
+                                                <li><a href="#">Menu Item<span class="fas fa-chevron-down"></span> </a></li>
+                                                <li><a href="#">Menu Item<span class="fas fa-chevron-down"></span> </a></li>
+                                                <li><a href="#">Menu Item<span class="fas fa-chevron-down"></span> </a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-                                        <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-                                        <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
+                                        <li><a href="#">Menu Item<span class="fas fa-chevron-down"></span> </a></li>
+                                        <li><a href="#">Menu Item<span class="fas fa-chevron-down"></span> </a></li>
+                                        <li><a href="#">Menu Item<span class="fas fa-chevron-down"></span> </a></li>
                                     </ul>
                                 </li>
                                 <li class="hassubs">
-                                    <a href="#">Featured Brands<i class="fas fa-chevron-down"></i></a>
+                                    <a href="#">Featured Brands<span class="fas fa-chevron-down"></span> </a>
                                     <ul>
                                         <li>
-                                            <a href="#">Menu Item<i class="fas fa-chevron-down"></i></a>
+                                            <a href="#">Menu Item<span class="fas fa-chevron-down"></span> </a>
                                             <ul>
-                                                <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-                                                <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-                                                <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
+                                                <li><a href="#">Menu Item<span class="fas fa-chevron-down"></span> </a></li>
+                                                <li><a href="#">Menu Item<span class="fas fa-chevron-down"></span> </a></li>
+                                                <li><a href="#">Menu Item<span class="fas fa-chevron-down"></span> </a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-                                        <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-                                        <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
+                                        <li><a href="#">Menu Item<span class="fas fa-chevron-down"></span> </a></li>
+                                        <li><a href="#">Menu Item<span class="fas fa-chevron-down"></span> </a></li>
+                                        <li><a href="#">Menu Item<span class="fas fa-chevron-down"></span> </a></li>
                                     </ul>
                                 </li>
                                 <li class="hassubs">
-                                    <a href="#">Pages<i class="fas fa-chevron-down"></i></a>
+                                    <a href="#">Pages<span class="fas fa-chevron-down"></span> </a>
                                     <ul>
-                                        <li><a href="shop.html">Shop<i class="fas fa-chevron-down"></i></a></li>
-                                        <li><a href="product.html">Product<i class="fas fa-chevron-down"></i></a></li>
-                                        <li><a href="blog.html">Blog<i class="fas fa-chevron-down"></i></a></li>
-                                        <li><a href="blog_single.html">Blog Post<i class="fas fa-chevron-down"></i></a></li>
-                                        <li><a href="regular.html">Regular Post<i class="fas fa-chevron-down"></i></a></li>
-                                        <li><a href="cart.html">Cart<i class="fas fa-chevron-down"></i></a></li>
-                                        <li><a href="contact.html">Contact<i class="fas fa-chevron-down"></i></a></li>
+                                        <li><a href="shop.html">Shop<span class="fas fa-chevron-down"></span> </a></li>
+                                        <li><a href="product.html">Product<span class="fas fa-chevron-down"></span> </a></li>
+                                        <li><a href="blog.html">Blog<span class="fas fa-chevron-down"></span> </a></li>
+                                        <li><a href="blog_single.html">Blog Post<span class="fas fa-chevron-down"></span> </a></li>
+                                        <li><a href="regular.html">Regular Post<span class="fas fa-chevron-down"></span> </a></li>
+                                        <li><a href="cart.html">Cart<span class="fas fa-chevron-down"></span> </a></li>
+                                        <li><a href="contact.html">Contact<span class="fas fa-chevron-down"></span> </a></li>
                                     </ul>
                                 </li>
-                                <li><a href="blog.html">Blog<i class="fas fa-chevron-down"></i></a></li>
-                                <li><a href="contact.html">Contact<i class="fas fa-chevron-down"></i></a></li>
+                                <li><a href="blog.html">Blog<span class="fas fa-chevron-down"></span> </a></li>
+                                <li><a href="contact.html">Contact<span class="fas fa-chevron-down"></span> </a></li>
                             </ul>
                         </div>
 
@@ -263,7 +308,7 @@
                                 </ul>
                             </li>
                             <li class="page_menu_item">
-                                <a href="#">Home<i class="fa fa-angle-down"></i></a>
+                                <a href="">Home<i class="fa fa-angle-down"></i></a>
                             </li>
                             <li class="page_menu_item has-children">
                                 <a href="#">Super Deals<i class="fa fa-angle-down"></i></a>

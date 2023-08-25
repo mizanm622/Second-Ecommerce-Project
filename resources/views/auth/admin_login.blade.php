@@ -129,12 +129,12 @@
             <p class="text-center">
               <span>
                     @if (Route::has('password.request'))
-                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                    <a class="btn btn-link" href="">
                         {{ __('Forgot Your Password?') }}
                     </a>
                     @endif
               </span>
-              <a href="auth-register-basic.html">
+              <a href="">
                 <span>Create an account</span>
               </a>
             </p>

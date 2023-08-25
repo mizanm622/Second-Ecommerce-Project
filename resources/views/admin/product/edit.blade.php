@@ -200,7 +200,15 @@
                 <label class="form-label" for="basic-icon-default-fullname">Featured </label>
                 <div class="form-check form-switch">
                     <input type="hidden" name="featured" value="0">
-                    <input class="form-check-input btn" type="checkbox" value="1" name="featured" role="switch" @if($products->featured== 1) checked @endif>
+                    <input class="form-check-input btn" type="checkbox" value="1" name="featured" role="switch" @if($products->featured == 1) checked @endif>
+                  </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="basic-icon-default-fullname">Trending </label>
+                <div class="form-check form-switch">
+                    <input type="hidden" name="trending" value="0">
+                    <input class="form-check-input btn" type="checkbox" value="1" name="trending" role="switch" @if($products->trending == 1) checked @endif>
                   </div>
               </div>
 
@@ -208,7 +216,7 @@
                 <label class="form-label" for="basic-icon-default-fullname">Slider Show</label>
                 <div class="form-check form-switch">
                     <input type="hidden" name="product_slider" value="0">
-                    <input class="form-check-input btn" type="checkbox" value="1" name="product_slider" role="switch"  @if($products->product_slider== 1) checked @endif>
+                    <input class="form-check-input btn" type="checkbox" value="1" name="product_slider" role="switch"  @if($products->product_slider == 1) checked @endif>
                   </div>
               </div>
 
@@ -216,14 +224,14 @@
                 <label class="form-label" for="basic-icon-default-fullname">Todays Deal </label>
                 <div class="form-check form-switch">
                     <input type="hidden" name="todays_deal" value="0">
-                    <input class="form-check-input btn" type="checkbox" value="1" name="todays_deal" role="switch" @if($products->todays_deal== 1) checked @endif>
+                    <input class="form-check-input btn" type="checkbox" value="1" name="todays_deal" role="switch" @if($products->todays_deal == 1) checked @endif>
                   </div>
               </div>
               <div class="mb-3">
                 <label class="form-label" for="basic-icon-default-fullname">Status</label>
                 <div class="form-check form-switch">
                     <input type="hidden" name="status" value="0">
-                    <input class="form-check-input btn" type="checkbox" name="status" value="1" role="switch" @if($products->status== 1) checked @endif>
+                    <input class="form-check-input btn" type="checkbox" name="status" value="1" role="switch" @if($products->status == 1) checked @endif>
                   </div>
               </div>
               <input type="hidden" name="id" value="{{$products->id}}">

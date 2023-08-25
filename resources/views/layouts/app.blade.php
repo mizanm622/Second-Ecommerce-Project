@@ -22,6 +22,9 @@
     <link rel="stylesheet" type="text/css" href="{{asset('front-end/assets/styles/responsive.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('front-end/assets/styles/product_styles.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('front-end/assets/styles/product_responsive.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/vendor/css/toastr.min.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets/vendor/css/sweetalert.min.css')}}" />
+
 
     </head>
 
@@ -155,6 +158,11 @@
 <script src="{{asset('front-end/assets/plugins/easing/easing.js')}}"></script>
 <script src="{{asset('front-end/assets/js/custom.js')}}"></script>
 <script src="{{asset('front-end/assets/js/product_custom.js')}}"></script>
+{<!--alert plugins-->
+<script src="{{asset('assets/vendor/js/toastr.min.js')}}"></script>
+
+<script src="{{asset('assets/vendor/js/sweetalert.min.js')}}"></script>
+<!--end alert plugins-->}
 
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -166,6 +174,30 @@
 
   gtag('config', 'UA-23581568-13');
 </script>
+
+
+
+@if(Session::has('msg'))
+<script >
+var type ="{{Session::get('alert-type','info')}}";
+switch(type){
+        case 'info':
+        toastr.info("{{Session::get('msg')}}");
+        break;
+        case 'success':
+        toastr.success("{{Session::get('msg')}}");
+        break;
+        case 'warning':
+        toastr.warning("{{Session::get('msg')}}");
+        break;
+        case 'error':
+        toastr.error("{{Session::get('msg')}}");
+        break;
+}
+
+</script>
+@endif
+
 
 </body>
 

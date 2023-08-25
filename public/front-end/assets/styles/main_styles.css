@@ -1780,29 +1780,28 @@ select option
 	content: '\f00c';
 	color: #FFFFFF;
 }
-.product_cart_button
-{
-	position: relative;
-	left: 0px;
-	visibility: hidden;
-	opacity: 0;
-	width: 100%;
-	height: 48px;
-	background: #0e8ce4;
-	border: none;
-	outline: none;
-	font-size: 18px;
-	font-weight: 400;
-	color: #FFFFFF;
-	cursor: pointer;
-	margin-top: 19px;
-	border-bottom-left-radius: 5px;
-	border-bottom-right-radius: 5px;
-	-webkit-transition: all 200ms ease;
-	-moz-transition: all 200ms ease;
-	-ms-transition: all 200ms ease;
-	-o-transition: all 200ms ease;
-	transition: all 200ms ease;
+.product_cart_button {
+    position: relative;
+    left: 0px;
+    visibility: hidden;
+    opacity: 0;
+    width: 100%;
+    height: 36px;
+    background: #0e8ce4;
+    border: none;
+    outline: none;
+    font-size: 18px;
+    font-weight: 400;
+    color: #FFFFFF;
+    cursor: pointer;
+    margin-top: 2px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    -webkit-transition: all 200ms ease;
+    -moz-transition: all 200ms ease;
+    -ms-transition: all 200ms ease;
+    -o-transition: all 200ms ease;
+    transition: all 200ms ease;
 }
 .product_cart_button:hover
 {
@@ -1961,6 +1960,7 @@ select option
 	text-align: center;
 	line-height: 36px;
 	font-size: 12px;
+
 }
 .product_new
 {
@@ -1968,6 +1968,9 @@ select option
 	background: #0e8ce4;
 	visibility: hidden;
 	opacity: 0;
+
+
+
 }
 .product_discount
 {
@@ -1975,9 +1978,10 @@ select option
 	background: #df3b3b;
 	visibility: hidden;
 	opacity: 0;
+
 }
-.product_item.is_new .product_new,
-.product_item.discount .product_discount
+.product_item, .is_new, .product_new,
+.product_item, .discount, .product_discount
 {
 	display: inline-block;
 	visibility: visible;
