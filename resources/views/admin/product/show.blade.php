@@ -240,8 +240,6 @@ $.ajax({
 
 <script type="text/javascript">
 
-
-
         $(function products() {
             $.noConflict();
             table = $('.ytable').DataTable({

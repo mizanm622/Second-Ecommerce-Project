@@ -16,6 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('category_id');
             $table->string('subcategory_name');
             $table->string('subcategory_slug')->nullable();
+            $table->string('subcategory_logo')->nullable();
+            $table->tinyInteger('status')->nullable();
             $table->timestamps();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });

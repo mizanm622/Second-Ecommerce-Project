@@ -43,60 +43,48 @@
 @endforeach
 </div>
 
-<div class="characteristics">
+
+
+<!--Product Campaing-->
+<div class="reviews">
     <div class="container">
         <div class="row">
-
-            <!-- Char. Item -->
-            <div class="col-lg-3 col-md-6 char_col">
-
-                <div class="char_item d-flex flex-row align-items-center justify-content-start">
-                    <div class="char_icon"><img src="{{asset('front-end/assets/images/char_1.png')}}" alt=""></div>
-                    <div class="char_content">
-                        <div class="char_title">Free Delivery</div>
-                        <div class="char_subtitle">from $50</div>
+            <div class="col">
+                <div class="reviews_slider_container">
+                    <!-- Reviews Slider -->
+                    <div class="owl-carousel owl-theme reviews_slider">
+                        <!-- Reviews Slider Item -->
+                         @foreach ($campaing as $item)
+                         @php
+                             $remainingTime=Illuminate\Support\Carbon::now()->diffInDays(Illuminate\Support\Carbon::parse($item->end_date));
+                         @endphp
+                        @if ( $remainingTime != 0)
+                        <div class="owl-item">
+                            <div class="review d-flex flex-row align-items-start justify-content-start">
+                                <div class="review_image"><img src="{{asset($item->images)}}" alt="" width="200" height="120"></div>
+                                <div class="review_content">
+                                    <div class="review_name">{{substr($item->campaing_description, 0, 20)}}....</div>
+                                    <div class="review_rating_container">
+                                        @if ($remainingTime == 1)
+                                        <div class="review_time">Only {{$remainingTime}} day left</div>
+                                        @elseif ($remainingTime > 1)
+                                        <div class="review_time">Only {{$remainingTime}} days left</div>
+                                        @endif
+                                    </div>
+                                    <div class="review_text"><p>{!!$item->discount == 1 ? '<h4 class="text-info">Enjoy This Offer </h4>': '<h4 class="text-danger">'.$settings->currency.''.$item->discount.' % Discount</h4> ' !!}</p></div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+                        @endforeach
                     </div>
-                </div>
-            </div>
-
-            <!-- Char. Item -->
-            <div class="col-lg-3 col-md-6 char_col">
-
-                <div class="char_item d-flex flex-row align-items-center justify-content-start">
-                    <div class="char_icon"><img src="{{asset('front-end/assets/images/char_2.png')}}" alt=""></div>
-                    <div class="char_content">
-                        <div class="char_title">Free Delivery</div>
-                        <div class="char_subtitle">from $50</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Char. Item -->
-            <div class="col-lg-3 col-md-6 char_col">
-
-                <div class="char_item d-flex flex-row align-items-center justify-content-start">
-                    <div class="char_icon"><img src="{{asset('front-end/assets/images/char_3.png')}}" alt=""></div>
-                    <div class="char_content">
-                        <div class="char_title">Free Delivery</div>
-                        <div class="char_subtitle">from $50</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Char. Item -->
-            <div class="col-lg-3 col-md-6 char_col">
-
-                <div class="char_item d-flex flex-row align-items-center justify-content-start">
-                    <div class="char_icon"><img src="{{asset('front-end/assets/images/char_4.png')}}" alt=""></div>
-                    <div class="char_content">
-                        <div class="char_title">Free Delivery</div>
-                        <div class="char_subtitle">from $50</div>
-                    </div>
+                    <div class="reviews_dots"></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<!--End Product Campaing-->
 
 <!-- Deals of the week -->
 
@@ -370,47 +358,15 @@
             <div class="col-lg-9">
                 <div class="popular_categories_slider_container">
                     <div class="owl-carousel owl-theme popular_categories_slider">
-
                         <!-- Popular Categories Item -->
+                        @foreach ($populerCategory as $item)
                         <div class="owl-item">
                             <div class="popular_category d-flex flex-column align-items-center justify-content-center">
-                                <div class="popular_category_image"><img src="{{asset('front-end/assets/images/popular_1.png')}}" alt=""></div>
-                                <div class="popular_category_text">Smartphones & Tablets</div>
+                                <div class="popular_category_image"><img src="{{asset($item->subcategory_logo)}}" alt=""></div>
+                                <div class="popular_category_text">{{$item->subcategory_name}}</div>
                             </div>
                         </div>
-
-                        <!-- Popular Categories Item -->
-                        <div class="owl-item">
-                            <div class="popular_category d-flex flex-column align-items-center justify-content-center">
-                                <div class="popular_category_image"><img src="{{asset('front-end/assets/images/popular_2.png')}}" alt=""></div>
-                                <div class="popular_category_text">Computers & Laptops</div>
-                            </div>
-                        </div>
-
-                        <!-- Popular Categories Item -->
-                        <div class="owl-item">
-                            <div class="popular_category d-flex flex-column align-items-center justify-content-center">
-                                <div class="popular_category_image"><img src="{{asset('front-end/assets/images/popular_3.png')}}" alt=""></div>
-                                <div class="popular_category_text">Gadgets</div>
-                            </div>
-                        </div>
-
-                        <!-- Popular Categories Item -->
-                        <div class="owl-item">
-                            <div class="popular_category d-flex flex-column align-items-center justify-content-center">
-                                <div class="popular_category_image"><img src="{{asset('front-end/assets/images/popular_4.png')}}" alt=""></div>
-                                <div class="popular_category_text">Video Games & Consoles</div>
-                            </div>
-                        </div>
-
-                        <!-- Popular Categories Item -->
-                        <div class="owl-item">
-                            <div class="popular_category d-flex flex-column align-items-center justify-content-center">
-                                <div class="popular_category_image"><img src="{{asset('front-end/assets/images/popular_5.png')}}" alt=""></div>
-                                <div class="popular_category_text">Accessories</div>
-                            </div>
-                        </div>
-
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -1785,22 +1741,12 @@
         <div class="row">
             <div class="col">
                 <div class="brands_slider_container">
-
                     <!-- Brands Slider -->
-
                     <div class="owl-carousel owl-theme brands_slider">
-
-                        <div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="{{asset('front-end/assets/images/brands_1.jpg')}}" alt=""></div></div>
-                        <div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="{{asset('front-end/assets/images/brands_2.jpg')}}" alt=""></div></div>
-                        <div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="{{asset('front-end/assets/images/brands_3.jpg')}}" alt=""></div></div>
-                        <div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="{{asset('front-end/assets/images/brands_4.jpg')}}" alt=""></div></div>
-                        <div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="{{asset('front-end/assets/images/brands_5.jpg')}}" alt=""></div></div>
-                        <div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="{{asset('front-end/assets/images/brands_6.jpg')}}" alt=""></div></div>
-                        <div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="{{asset('front-end/assets/images/brands_7.jpg')}}" alt=""></div></div>
-                        <div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="{{asset('front-end/assets/images/brands_8.jpg')}}" alt=""></div></div>
-
+                        @foreach ($brand as $item )
+                        <div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="{{asset($item->brand_logo)}}" alt="" width="80" height="60"></div></div>
+                        @endforeach
                     </div>
-
                     <!-- Brands Slider Navigation -->
                     <div class="brands_nav brands_prev"><i class="fas fa-chevron-left"></i></div>
                     <div class="brands_nav brands_next"><i class="fas fa-chevron-right"></i></div>

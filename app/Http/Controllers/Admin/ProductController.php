@@ -85,7 +85,7 @@ class ProductController extends Controller
                 }
             })
             ->editColumn('status',function($row){
-                if($row->status== 1 ){
+                if($row->status == 1 ){
                     return '<a href="javascript:void(0)" class="status" data-id="'.$row->id.'"  data-status="'.$row->status.'" ><i class="bx bxs-bell text-success"></i></a>';
                 }else{
                     return '<a href="javascript:void(0)" class="status" data-id="'.$row->id.'"  data-status="'.$row->status.'" ><i class="bx bxs-bell-off bx-flip-horizontal text-danger"></i> </a>';

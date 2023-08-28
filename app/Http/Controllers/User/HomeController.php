@@ -4,7 +4,9 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\Campaing;
 use App\Models\Category;
+use App\Models\Subcategory;
 use App\Models\Product;
 use App\Models\Review;
 use App\Models\Wishlist;
@@ -13,26 +15,29 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     //
-
+     //front-end view from here
     public function index(){
 
-        $category=Category::all();
-        $latestReview=Review::where('review_rating',5)->latest()->get();
-        $bannerProduct=Product::where('product_slider',1)->latest()->get();
+        $category =  Category::all();
+        $populerCategory =  Subcategory::all();
+        $brand =  Brand::all();
+        $campaing = Campaing::where('status',1)->latest()->get();
+        $latestReview = Review::where('review_rating',5)->latest()->get();
+        $bannerProduct = Product::where('product_slider',1)->latest()->get();
         $wishlist = Wishlist::where('user_id',auth()->id())->count();
-        $featuredProduct=Product::where('featured',1)->latest()->limit(16)->get();
-        $populerProduct=Product::where('featured',1)->where('view_count','>',1)->latest()->limit(16)->get();
-        $trendingProduct=Product::where('featured',1)->where('trending',1)->latest()->limit(20)->get();
-        $todaysDeal=Product::where('todays_deal',1)->latest()->get();
+        $featuredProduct = Product::where('featured',1)->latest()->limit(16)->get();
+        $populerProduct = Product::where('featured',1)->where('view_count','>',1)->latest()->limit(16)->get();
+        $trendingProduct = Product::where('featured',1)->where('trending',1)->latest()->limit(20)->get();
+        $todaysDeal = Product::where('todays_deal',1)->latest()->get();
 
 
-        return view('layouts.front-end.home', compact('category','bannerProduct','wishlist','featuredProduct','todaysDeal','populerProduct','trendingProduct','latestReview'));
+        return view('layouts.front-end.home', compact('category','bannerProduct','wishlist','featuredProduct','todaysDeal','populerProduct','trendingProduct','latestReview','campaing','brand','populerCategory'));
     }
 
     // view product from modal
     public function modalView(Request $request){
-        Product::where('id',$request->id)->increment('view_count');// when a user click on the prduct to view then increment view_count
-        $featuredProduct=Product::where('id',$request->id)->first();
+        Product :: where('id',$request->id)->increment('view_count');// when a user click on the prduct to view then increment view_count
+        $featuredProduct = Product::where('id',$request->id)->first();
 
         return view('layouts.front-end.product.single_view',compact('featuredProduct'))->render();
     }
@@ -57,21 +62,16 @@ class HomeController extends Controller
     public function addWishlist(Request $request){
 
 
-        $check = Wishlist::where('product_id',$request->id)->where('user_id',auth()->id())->first();
+        $check = Wishlist :: where('product_id',$request->id)->where('user_id',auth()->id())->first();
         if($check){
             return response()->json('Product Successfully Added to Wishlist!');
-
-            // $notification=array('msg' => 'You have already added this product! ', 'alert-type' => 'warning');
-            // return redirect()->back()->with($notification);
         }else{
 
-        Wishlist::insert([
+        Wishlist :: insert([
             'product_id'=>$request->id,
             'user_id'=>auth()->id(),
         ]);
 
-            // $notification=array('msg' => 'Product Successfully Added to Wishlist!', 'alert-type' => 'success');
-            // return redirect()->back()->with($notification);
             return response()->json('Product Successfully Added to Wishlist!');
 
         }

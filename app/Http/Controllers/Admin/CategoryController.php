@@ -23,39 +23,44 @@ class CategoryController extends Controller
 
     //store category from here
     public function store(Request $request){
-        $validate = $request->validate([
-            'category_name'=>'required|unique:categories|max:255'
+
+
+         $request->validate([
+            'category_name'=>'required|unique:categories|max:255',
+
         ]);
+
 
         Category::insert([
             'category_name'=>$request->category_name,
+            'status'=>$request->status,
             'category_slug'=>Str::slug($request->category_name, '-'),
         ]);
-        $notification=array('msg' => 'Category Successfully Inserted! ', 'alert-type' => 'success');
-        return redirect()->back()->with($notification);
+
+        return response()->json('Category Successfully Inserted!');
 
     }
 
     //edit category from here
     public function edit($id){
-        $datas=Category::where('id',$id)->first();
 
-        return response()->json($datas);
+        $data=Category::find($id);
+        return view('admin.category.category.edit',compact('data'))->render();
     }
 
     //update category from here
     public function update(Request $request){
         $validate = $request->validate([
-            'category_name'=>'required|unique:categories|max:255'
+            'category_name'=>'required|max:255',
         ]);
 
         Category::where('id', $request->id)->update([
             'category_name'=>$request->category_name,
+            'status'=>$request->status,
             'category_slug'=>Str::slug($request->category_name, '-'),
         ]);
 
-        $notification=array('msg' => 'Category Successfully Updeted! ', 'alert-type' => 'info');
-        return redirect()->back()->with($notification);
+        return response()->json('Category Successfully Updated!');
     }
 
     // delete category from here

@@ -841,9 +841,11 @@ $(document).ready(function()
 				items:3,
 				loop:true,
 				margin:30,
-				autoplay:false,
+				autoplay:true,
+                autoplayTimeout:5000,
+                slideSpeed : 500,
 				nav:false,
-				dots:true,
+				dots:false,
 				dotsContainer: '.reviews_dots',
 				responsive:
 				{
@@ -879,6 +881,8 @@ $(document).ready(function() {
     });
 
   });
+
+
 
 	/*
 

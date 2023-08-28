@@ -70,6 +70,16 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
         Route::post('/update', 'BrandController@update')->name('update.brand');
     });
 
+     //campaing routes
+     Route::group(['prefix'=>'campaing'], function(){
+        Route::get('/', 'CampaingController@index')->name('campaing.index');
+        Route::post('/store', 'CampaingController@store')->name('store.campaing');
+        Route::get('/delete/{id}', 'CampaingController@delete')->name('delete.campaing');
+        Route::get('/edit/{id}', 'CampaingController@edit');
+        Route::post('/update', 'CampaingController@update')->name('update.campaing');
+        Route::get('status/{id}', 'CampaingController@status');
+    });
+
      //warehouse routes
      Route::group(['prefix'=>'warehouse'], function(){
         Route::get('/', 'WarehouseController@index')->name('warehouse.index');
