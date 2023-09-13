@@ -71,6 +71,8 @@ Route::group(['namespace' => 'App\Http\Controllers\User',],function(){
 Route::group(['namespace' => 'App\Http\Controllers\User',],function(){
     Route::get('/checkout', 'CheckoutController@index')->name('checkout');
     Route::get('/check-coupon', 'CheckoutController@checkCoupon')->name('check.coupon');
+    Route::post('/submit-order', 'CheckoutController@submitOrder')->name('submit.order');
+    Route::get('/order-status', 'CheckoutController@orderStatus')->name('order.status');
 
 });
 

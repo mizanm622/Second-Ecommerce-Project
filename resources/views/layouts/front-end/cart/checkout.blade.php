@@ -3,22 +3,23 @@
 @section('home-content')
 
 @php
-$delivery = 0;
+    $order_id=rand();
 @endphp
 <div class="container">
+    <form action="{{route('submit.order')}}" method="post" id="order-submit">
+        @csrf
     <div class="row">
-        <div class="col-6">
+
+        <div class="col-4">
             <div class="shipping-info">
                 <div class="card-header mb-2">
                     <h4 class="text-center">Your Shipping Address</h4>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('update.shipping.address') }}" id="update-shipping">
-                        @csrf
                         <div class="row mb-3 text-right">
                             <label for="phone" class="col-md-4 col-form-label text-md-end">{{ __('Phone:') }}</label>
 
-                            <div class="col-md-6">
+                            <div class="col-">
                                 <input id="phone" type="text" value="{{$shippingInfo->phone}}" class="form-control @error('phone') is-invalid @enderror" name="phone" required placeholder="Phone">
                                 @error('phone')
                                     <span class="invalid-feedback" role="alert">
@@ -28,53 +29,61 @@ $delivery = 0;
                             </div>
                         </div>
                         <div class="row mb-3 text-right">
+                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email:') }}</label>
+
+                            <div class="col-">
+                                <input id="email" type="text" value="{{$shippingInfo->email}}" class="form-control"  name="email" required placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="row mb-3 text-right">
                             <label for="town" class="col-md-4 col-form-label text-md-end">{{ __('Town:') }}</label>
 
-                            <div class="col-md-6">
+                            <div class="col-">
                                 <input id="town" type="text" value="{{$shippingInfo->town}}" class="form-control"  name="town" required placeholder="Town">
                             </div>
                         </div>
                         <div class="row mb-3 text-right">
                             <label for="city" class="col-md-4 col-form-label text-md-end">{{ __('City:') }}</label>
 
-                            <div class="col-md-6">
+                            <div class="col-">
                                 <input id="city" type="text" value="{{$shippingInfo->city}}" class="form-control"  name="city" required placeholder="City">
                             </div>
                         </div>
                         <div class="row mb-3 text-right">
                             <label for="zip" class="col-md-4 col-form-label text-md-end">{{ __('Zip Code:') }}</label>
 
-                            <div class="col-md-6">
+                            <div class="col-">
                                 <input id="zip" type="number" value="{{$shippingInfo->zip}}" class="form-control"  name="zip" required placeholder="Zip Code">
                             </div>
                         </div>
                         <div class="row mb-3 text-right">
                             <label for="address" class="col-md-4 col-form-label text-md-end">{{ __('Address:') }}</label>
 
-                            <div class="col-md-6">
-                                <textarea id="address" type="text" value="" cols="10" rows="3" class="form-control"  name="address" required placeholder="Address">{{$shippingInfo->address}}</textarea>
+                            <div class="col-">
+                                <textarea id="address" type="text" value="" cols="20" rows="3" class="form-control"  name="address" required placeholder="Address">{{$shippingInfo->address}}</textarea>
 
                             </div>
                         </div>
                         <div class="row mb-3 text-right">
                             <label for="country" class="col-md-4 col-form-label text-md-end">{{ __('Country:') }}</label>
 
-                            <div class="col-md-6">
+                            <div class="col-">
                                 <input id="country" type="text" value="{{$shippingInfo->country}}" class="form-control"  name="country" required placeholder="Country">
                             </div>
                         </div>
+                        <input type="hidden" name="delivery_charge" value="{{$delivery}}">
+                        <input type="hidden" name="order_id" value="{{$order_id}}">
                         <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
+                            <div class="col-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary btn-block">
-                                    {{ __('Submit') }}
+                                    {{ __('Submit Order') }}
                                 </button>
                             </div>
                         </div>
-                    </form>
                 </div>
             </div>
         </div>
-        <div class="col-6">
+        <div class="col-4">
             <div class="item-area">
                 <div class="card">
                     <div class="card-header">
@@ -93,115 +102,62 @@ $delivery = 0;
 
                                 </tr>
                                 @endforeach
+                                <tr class="text-right">
+                                    <th class="text-right" colspan="2">Subtotal:<td colspan="3"><span class=""> {{$settings->currency}} {{Cart::subtotal()}} /-</span></td></th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+         </div>
+        <div class="col-4">
+            <div class="payment-area">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="text-center">Orders Calculation</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table" id="calculation-area">
+                            <tbody>
                                 @if (session()->has('coupon'))
                                 <tr class="text-right">
 
-                                    <th class="text-right" colspan="3">Subtotal:<td colspan="2"><span class=""> {{$settings->currency}} {{Cart::total()}} /-</span></td></th>
+                                    <th class="text-right" colspan="3">Subtotal:<td colspan="2"><span class=""> {{$settings->currency}} {{Cart::subtotal()}} /-</span></td></th>
                                 </tr>
 
                                 <tr>
                                     <th class="text-right" colspan="3">Coupon Code: <td class="text-right" colspan="2">{{session()->get('coupon')['coupon_code']}}</td></th>
                                 </tr>
                                 <tr>
-                                    <th class="text-right" colspan="3">Coupon Discount: <td class="text-right" colspan="2">(-){{$settings->currency}} {{session()->get('coupon')['coupon_discount']}} /-</td></th>
+                                    <th class="text-right" colspan="3">Coupon Discount: <td class="text-right" colspan="2">(-) {{$settings->currency}} {{session()->get('coupon')['coupon_discount']}} /-</td></th>
                                 </tr>
                                 <tr>
                                     <th class="text-right" colspan="3">After Discount: <td class="text-right" colspan="2">{{$settings->currency}} {{session()->get('coupon')['after_discount']}} /-</td></th>
                                 </tr>
                                 <tr>
-                                    <th class="text-right" colspan="3">Delivery Charge:
-                                        <td class="text-right" colspan="2">
-                                            @if(Cart::total() <= 1000)
-                                            @php
-                                                $delivery =50;
-                                            @endphp
-                                            <span class="">(+){{$settings->currency}} {{$delivery}} /-</span>
-                                        @elseif(Cart::total() > 1000 and Cart::total() <= 2000)
-                                            @php
-                                            $delivery =40;
-                                            @endphp
-                                            <span class="">(+){{$settings->currency}} {{$delivery}} /-</span>
-
-                                        @elseif(Cart::total() > 2000 and Cart::total() <= 3000)
-                                            @php
-                                            $delivery =30;
-                                            @endphp
-                                            <span class="">(+){{$settings->currency}} {{$delivery}} /-</span>
-
-                                        @elseif(Cart::total() > 3000 and Cart::total() <= 4000)
-                                            @php
-                                            $delivery =20;
-                                            @endphp
-                                            <span class="">(+){{$settings->currency}} {{$delivery}} /-</span>
-                                        @elseif(Cart::total() > 4000 and Cart::total() <= 5000)
-                                            @php
-                                            $delivery =10;
-                                            @endphp
-                                            <span class="">(+){{$settings->currency}} {{$delivery}} /-</span>
-                                        @elseif(Cart::total() > 5000)
-                                            @php
-                                            $delivery =0;
-                                            @endphp
-                                            <span class="">(+){{$settings->currency}} {{$delivery}} /-</span>
-                                        @endif
-                                        </td>
-                                    </th>
+                                    <th class="text-right" colspan="3">Delivery Charge:<td class="text-right" colspan="2"><span class="">(+) {{$settings->currency}} {{$delivery}} /-</span></td></th>
+                                </tr>
+                                <tr class="text-right">
+                                    <th class="text-right" colspan="3">Tax (10%):<td colspan="2"><span class="">(+) {{$settings->currency}} {{Cart::tax();}} /-</span></td></th>
                                 </tr>
                                 <tr>
-                                    <th class="text-right" colspan="3">Total Payable: <td class="text-right" colspan="2">{{$settings->currency}} {{session()->get('coupon')['after_discount'] + $delivery}} /-</td></th>
+                                    <th class="text-right" colspan="3">Total Payable: <td class="text-right" colspan="2">{{$settings->currency}} {{session()->get('coupon')['after_discount'] + Cart::tax() + $delivery}} /-</td></th>
                                 </tr>
 
                                 @else
                                 <tr class="text-right">
-                                    <th class="text-right" colspan="3">Subtotal:<td colspan="2"><span class=""> {{$settings->currency}} {{Cart::total()}} /-</span></td></th>
+                                    <th class="text-right" colspan="3">Subtotal:<td colspan="2"><span class=""> {{$settings->currency}} {{Cart::subtotal()}} /-</span></td></th>
                                 </tr>
                                 <tr class="text-right">
-                                    <tr class="text-right">
-                                        <th class="text-right" colspan="3">Delivery Charge:
-                                            <td colspan="2">
+                                    <th class="text-right" colspan="3">Delivery Charge:<td colspan="2"><span class="">(+) {{$settings->currency}} {{$delivery}} /-</span></td></th>
+                                </tr>
+                                <tr class="text-right">
+                                    <th class="text-right" colspan="3">Tax (10%):<td colspan="2"><span class="">(+) {{$settings->currency}} {{Cart::tax();}} /-</span></td></th>
+                                </tr>
 
-                                                @if(Cart::total() <= 1000)
-                                                    @php
-                                                        $delivery =50;
-                                                    @endphp
-                                                    <span class="">(+){{$settings->currency}} {{$delivery}} /-</span>
-                                                @elseif(Cart::total() > 1000 and Cart::total() <= 2000)
-                                                    @php
-                                                    $delivery =40;
-                                                    @endphp
-                                                    <span class="">(+){{$settings->currency}} {{$delivery}} /-</span>
-
-                                                @elseif(Cart::total() > 2000 and Cart::total() <= 3000)
-                                                    @php
-                                                    $delivery =30;
-                                                    @endphp
-                                                    <span class="">(+){{$settings->currency}} {{$delivery}} /-</span>
-
-                                                @elseif(Cart::total() > 3000 and Cart::total() <= 4000)
-                                                    @php
-                                                    $delivery =20;
-                                                    @endphp
-                                                    <span class="">(+){{$settings->currency}} {{$delivery}} /-</span>
-                                                @elseif(Cart::total() > 4000 and Cart::total() <= 5000)
-                                                    @php
-                                                    $delivery =10;
-                                                    @endphp
-                                                    <span class="">(+){{$settings->currency}} {{$delivery}} /-</span>
-                                                @elseif(Cart::total() > 5000)
-                                                    @php
-                                                    $delivery =0;
-                                                    @endphp
-                                                    <span class="">(+){{$settings->currency}} {{$delivery}} /-</span>
-                                                @endif
-
-                                            </td>
-                                        </th>
-                                    </tr>
-
-                                    <tr class="text-right">
-                                        <th class="text-right" colspan="3">Total:<td colspan="2"><span class=""> {{$settings->currency}} {{Cart::total()+$delivery}} /-</span></td></th>
-                                    </tr>
-
+                                <tr class="text-right">
+                                    <th class="text-right" colspan="3">Total:<td colspan="2"><span class=""> {{$settings->currency}} {{Cart::total()+$delivery}} /-</span></td></th>
                                 </tr>
 
                                 @endif
@@ -210,13 +166,12 @@ $delivery = 0;
                         </table>
                     </div>
                 </div>
-            </div>
-            <div class="payment-area">
+                <!--end table-->
                 <div id="accordion">
                     <div class="card">
                         <div class="card-header" id="headingThree">
                           <h5 class="mb-0">
-                            <button class="btn btn-link" data-toggle="collapse" data-target="#coupon-area" aria-expanded="true" aria-controls="collapseOne">
+                            <button class="btn btn-link collapsed fas fa-rocket" data-toggle="collapse" data-target="#coupon-area" aria-expanded="true" aria-controls="collapseOne">
                                 Have a Copoun Code?
                             </button>
                           </h5>
@@ -240,17 +195,17 @@ $delivery = 0;
                     <div class="card">
                       <div class="card-header" id="headingOne">
                         <h5 class="mb-0">
-                          <button class="btn btn-link" data-toggle="collapse" data-target="#cash-on" aria-expanded="true" aria-controls="collapseOne">
+                          <button class="btn btn-link collapsed fas fa-rocket" data-toggle="collapse" data-target="#cash-on" aria-expanded="true" aria-controls="collapseOne">
                            Cash on Delivery
                           </button>
                         </h5>
                       </div>
 
-                      <div id="cash-on" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                      <div id="cash-on" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                         <div class="card-body">
                             <label for="cash_on">Cash on Delivery:</label>
-                            <input type="hidden" name="cash_on" value="0">
-                           <input type="checkbox" class="btn btn-lg btn-primary" name="cash_on" value="1">
+                            <input type="hidden" name="payment" value="cash-on">
+                           <input type="checkbox" class="btn btn-lg btn-primary" name="payment" value="cash-on" required>
 
                         </div>
                       </div>
@@ -258,7 +213,7 @@ $delivery = 0;
                     <div class="card">
                       <div class="card-header" id="headingTwo">
                         <h5 class="mb-0">
-                          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#online" aria-expanded="false" aria-controls="collapseTwo">
+                          <button class="btn btn-link collapsed fas fa-rocket" data-toggle="collapse" data-target="#online" aria-expanded="false" aria-controls="collapseTwo">
                            Online Payment?
                           </button>
                         </h5>
@@ -266,10 +221,10 @@ $delivery = 0;
                       <div id="online" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                         <div class="card-body">
                             <ol>
-                                <li>Bkash</li>
-                                <li>Rocket</li>
-                                <li>Nagad</li>
-                                <li>Card</li>
+                                <li>Bkash <input type="checkbox" name="payment" value="bkash"></li>
+                                <li>Rocket <input type="checkbox" name="payment" value="rocket"></li>
+                                <li>Nagad <input type="checkbox" name="payment" value="nagad"></li>
+                                <li>Card <input type="checkbox" name="payment" value="card"></li>
                             </ol>
                         </div>
                       </div>
@@ -278,12 +233,13 @@ $delivery = 0;
             </div>
         </div>
     </div>
+</form>
 </div>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
 
 
-        $('#update-shipping').submit(function(e) {
+        $('#order-submit').submit(function(e) {
         e.preventDefault();
         var url = $(this).attr('action');
         var request = $(this).serialize();
@@ -295,7 +251,8 @@ $delivery = 0;
             data: request,
             success:function(data) {
                 toastr.success(data);
-                $('#update-shipping').load(location.href+' #update-shipping');
+                $('#order-submit')[0].reset();
+                $('.table').load(location.href+' .table');
 
             }
         });
@@ -314,7 +271,7 @@ $delivery = 0;
                     coupon : coupon,
                 },
                 success:function(data){
-                    $('.table').load(location.href+' .table');
+                    $('#calculation-area').load(location.href+' #calculation-area');
                     if(data == 1){
 
                         $('.status').text('Valid');

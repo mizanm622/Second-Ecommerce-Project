@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\OrderAddress;
+use App\Models\OrderDetail;
 use App\Models\Shipping;
 use App\Models\User;
 use App\Models\Wishlist;
@@ -47,10 +49,11 @@ class UserController extends Controller
             Shipping::insert([
                 'user_id' => $user->id,
                   'phone' => $request->phone,
+                  'email' => $request->email,
                 'address' => $request->address,
             ]);
 
-            session()->flush();
+            session()->forget('mail');
 
             $notification=array('msg' => 'Registration Successfully Complated! ', 'alert-type' => 'success');
             return redirect()->to('/')->with($notification);
@@ -109,8 +112,10 @@ class UserController extends Controller
         $user = User::all();
         $wishlist = Wishlist::where('user_id',auth()->id())->latest()->get();
         $shippingInfo = Shipping::where('user_id',auth()->id())->first();
+        $address =  OrderAddress::where('user_id',auth()->id())->where('order_date', date('Y-m-d'))->get();
+        $orderItems = OrderDetail::where('user_id',auth()->id())->where('order_date', date('Y-m-d'))->get();
 
-        return view('layouts.front-end.user.user_profile',compact('user','wishlist','shippingInfo'));
+        return view('layouts.front-end.user.user_profile',compact('user','wishlist','shippingInfo','address','orderItems'));
     }
 
 
