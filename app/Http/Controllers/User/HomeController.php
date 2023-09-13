@@ -51,31 +51,41 @@ class HomeController extends Controller
         $relatedProduct = Product::where('subcategory_id',$products->subcategory_id)->orderBy('id','DESC')->limit(10)->get();
         $brandItem = Product::where('subcategory_id',$products->subcategory_id)->orderBy('id','DESC')->limit(10)->get();
         $review = Review::where('product_id',$id)->orderBy('id','ASC')->limit(10)->get();
-        $wishlist = Wishlist::where('user_id',auth()->id())->count();
+
         // $brandItem=Brand::limit(10)->get();
 
-        return view('layouts.front-end.product.product_details', compact('products','relatedProduct','brandItem','review','wishlist'));
+        return view('layouts.front-end.product.product_details', compact('products','relatedProduct','brandItem','review'));
+
+    }
+    // category wise product show
+    public function categoryProduct($id){
+        $recentView = Product::where('status',1)->latest()->get();
+        $subcategories = Subcategory::all();
+               $brands = Brand::latest()->get();
+             $products = Product::where('category_id',$id)
+             ->orWhere('subcategory_id',$id)
+             ->orWhere('childcategory_id',$id)
+             ->orWhere('brand_id',$id)
+             ->paginate(4);
+
+             return view('layouts.front-end.product.category_product',compact('subcategories','brands','products','recentView'));
+
+    }
+    // product filter by price
+    public function productPriceFilter(Request $request){
+
+        $products = Product::where('subcategory_id',$request->id)->where('selling_price', '>=', $request->min)->where('selling_price', '<=', $request->max)
+        ->paginate(10);
+        $subcategories = Subcategory::all();
+        $brands = Brand::latest()->get();
+
+        
+        return view('layouts.front-end.product.category_product',compact('subcategories','brands','products'))->render();
 
     }
 
-    // add product wishlist from here
-    public function addWishlist(Request $request){
 
 
-        $check = Wishlist :: where('product_id',$request->id)->where('user_id',auth()->id())->first();
-        if($check){
-            return response()->json('Product Successfully Added to Wishlist!');
-        }else{
-
-        Wishlist :: insert([
-            'product_id'=>$request->id,
-            'user_id'=>auth()->id(),
-        ]);
-
-            return response()->json('Product Successfully Added to Wishlist!');
-
-        }
-   }
 
     // user profile show
     public function userProfile()

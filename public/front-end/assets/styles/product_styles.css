@@ -1609,7 +1609,16 @@ button#show {
 	line-height: 36px;
 	color: #cccccc;
 }
+.product_fav span
+{
+	line-height: 36px;
+	color: #cccccc;
+}
 .product_fav.active i
+{
+	color: #df3b3b;
+}
+.product_fav.active span
 {
 	color: #df3b3b;
 }

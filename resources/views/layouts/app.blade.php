@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="{{asset('assets/vendor/css/toastr.min.css')}}" />
     <link rel="stylesheet" href="{{asset('assets/vendor/css/sweetalert.min.css')}}" />
 
+    <link rel="stylesheet" type="text/css" href="{{asset('front-end/assets/styles/cart_styles.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('front-end/assets/styles/cart_responsive.css')}}">
 
     </head>
 
@@ -158,12 +160,18 @@
 <script src="{{asset('front-end/assets/plugins/easing/easing.js')}}"></script>
 <script src="{{asset('front-end/assets/js/custom.js')}}"></script>
 <script src="{{asset('front-end/assets/js/product_custom.js')}}"></script>
+
+
+
+
 {<!--alert plugins-->
 <script src="{{asset('assets/vendor/js/toastr.min.js')}}"></script>
 
 <script src="{{asset('assets/vendor/js/sweetalert.min.js')}}"></script>
 <!--end alert plugins-->}
 
+ <!--Cart assets-->
+ <script src="{{asset('front-end/assets/js/cart_custom.js')}}"></script>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>

@@ -161,6 +161,7 @@ return [
          */
         Yajra\DataTables\DataTablesServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        // loudemans\Shoppingcart\ShoppingcartServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -185,6 +186,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         'Image' => Intervention\Image\Facades\Image::class,
+        // 'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 

@@ -119,7 +119,6 @@ class SettingsController extends Controller
             'twitter'=>$request->twitter,
             'logo'=>  $logo_path,
             'favicon'=>$favi_path,
-
         ]);
 
         $notification=array('msg' => 'Website Settings Successfully Updated! ', 'alert-type' => 'success');

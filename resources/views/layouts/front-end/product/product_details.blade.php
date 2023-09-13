@@ -13,6 +13,7 @@
 @endphp
 <div class="single_product">
     <div class="container">
+
         <div class="row">
 
             <!-- Images -->
@@ -81,7 +82,12 @@
                     <div class="product_text"><span class="text-info">Stack: </span>({{$products->stack_quantity}} ) | <span class="text-info">Unit: </span>{{$products->unit}} Pcs</div>
 
                     <div class="order_info d-flex flex-row">
-                        <form action="#">
+                        <!--Start form-->
+                        <form action="{{route('add.to.cart')}}" method="post" id="add-to-cart">
+                            @csrf
+                            <input type="hidden" value="{{$products->name}}" name="name">
+                            <input type="hidden" value="{{$products->thumbnail}}" name="image">
+
                             <div class="clearfix" style="z-index: 1000;">
                                <div class="row">
                                 @isset($products->color)
@@ -109,7 +115,7 @@
                                 <!-- Product Quantity -->
                                 <div class="product_quantity clearfix">
                                     <span>Quantity: </span>
-                                    <input id="quantity_input" type="text" pattern="[1-9]*" value="1">
+                                    <input id="quantity_input" name="quantity" type="text" min="1" pattern="[1-9]*" value="1">
                                     <div class="quantity_buttons">
                                         <div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fas fa-chevron-up"></i></div>
                                         <div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fas fa-chevron-down"></i></div>
@@ -120,24 +126,29 @@
                             </div>
 
                             {{-- <div class="product_price">{{$products->selling_price}}$2000</div> --}}
-                            @if ($products->discount_price == '0')
+                            @if ($products->discount_price == 0)
+                            <input type="hidden" value="{{$products->selling_price}}" name="price">
                             <div class="banner_price">{{$settings->currency}} {{$products->selling_price}}</div>
                             @else
+                            <input type="hidden" value="{{$products->discount_price}}" name="price">
                             <div class="banner_price"><span> {{$settings->currency}} {{$products->selling_price}}</span>{{$settings->currency}} {{$products->discount_price}} </div>
+
                             @endif
                             <div class="button_container">
                                 @guest
                                 <a class="btn btn-primary btn-md" data-toggle="popover" title="Please login to continue" data-content=""href=""><span class="fas fa-shopping-cart"></span> Add to Cart</a>
-                                <a class="btn btn-primary btn-md" href="" data-toggle="popover" title="Please login to continue" data-content=""><span class="fas fa-heart"></span> Add to Wishlist</a>
+                                <a class="btn btn-info btn-md" href="" data-toggle="popover" title="Please login to continue" data-content=""><span class="fas fa-heart"></span> Add to Wishlist</a>
 
                                 @else
-                                <a class="btn btn-primary btn-md" href="#"><span class="fas fa-shopping-cart"></span> Add to Cart</a>
-                                <a class="btn btn-primary btn-md" id="product-wishlist" data-id="{{$products->id}}" href="javascript:void(0)"><span class="fas fa-heart"></span> Add to Wishlist</a>
+                                <input type="hidden" value="{{$products->id}}" name="id">
+                                <button type="submit" class="btn btn-primary btn-md" href="#"><span class="fas fa-shopping-cart"></span>Add to Cart</button>
+                                <a class="btn btn-info btn-md" id="product-wishlist" data-id="{{$products->id}}" href="javascript:void(0)"><span class="fas fa-heart"></span> Add to Wishlist</a>
                                 <div class="product_fav"><span class="fas fa-heart"></span></div>
                                 @endguest
                             </div>
 
                         </form>
+                        <!--End form-->
                     </div>
                 </div>
             </div>
@@ -461,23 +472,25 @@
                         @foreach ($relatedProduct as $item )
                         <!-- Recently Viewed Item -->
                         <div class="owl-item">
-                            <div class="viewed_item discount d-flex flex-column align-items-center justify-content-center text-center">
-                                <div class="viewed_image"><img src="{{asset($item->images)}}" alt=""></div>
-                                <div class="viewed_content text-center">
-                                    @if ($item->discount_price == '0')
-                                    <div class="viewed_price">{{$settings->currency}} {{$item->selling_price}}</div>
-                                    @else
-                                    <div class="viewed_price"><span> {{$settings->currency}} {{$item->selling_price}}</span>{{$settings->currency}} {{$item->discount_price}} </div>
-                                    @endif
+                            <div class="viewed_item is_new discount d-flex flex-column align-items-center justify-content-center text-center">
+                                <a href="{{route('product.details',$item->id)}}">
+                                    <div class="viewed_image"><img src="{{asset($item->images)}}" alt="" width="40" height="120"></div>
+                                    <div class="viewed_content text-center">
+                                        @if ($item->discount_price == '0')
+                                        <div class="viewed_price">{{$settings->currency}} {{$item->selling_price}}</div>
+                                        @else
+                                        <div class="viewed_price"><span> {{$settings->currency}} {{$item->selling_price}}</span>{{$settings->currency}} {{$item->discount_price}} </div>
+                                        @endif
 
-                                    <div class="viewed_name"><a href="{{route('product.details',$item->id)}}">{{$item->name}}</a></div>
-                                </div>
+                                        <div class="viewed_name">{{substr($item->name, 0, 15)}}</div>
+                                    </div>
+                                </a>
                                 <ul class="item_marks">
-                                    @isset($item->discount_price)
-                                    <li class="item_mark item_discount">{{$settings->currency}} {{$item->selling_price-$item->discount_price}}</li>
-                                    @endisset
-
+                                    @if($item->discount_price != 0)
+                                    <li class="item_mark item_discount">{{number_format(($item->selling_price-$item->discount_price)*100/$item->discount_price, 1)}}</li>
+                                    @else
                                     <li class="item_mark item_new">new</li>
+                                    @endif
                                 </ul>
                             </div>
                         </div>
@@ -586,6 +599,23 @@
     });
     });
 
+    $('#add-to-cart').submit(function(e) {
+    e.preventDefault();
+    var url = $(this).attr('action');
+    var request = $(this).serialize();
+    $.ajax({
+        url: url,
+        type: 'post',
+        anyne: false,
+        data: request,
+        success:function(data) {
+            toastr.success(data);
+             $('#add-to-cart')[0].reset();
+             $('.cart_price').load(location.href+' .cart_price');
+
+        }
+    });
+    });
     </script>
 @endsection
 

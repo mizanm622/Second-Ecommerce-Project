@@ -170,69 +170,57 @@
                         </div>
 
                         <!-- Product Panel -->
+
+
                         <div class="product_panel panel active">
                             <div class="featured_slider slider">
 
                                 <!-- Slider Item -->
                                 @foreach ($featuredProduct as $product)
+
+
                                     <div class="featured_slider_item">
                                         <div class="border_active"></div>
                                         <div class="product_item discount d-flex flex-column align-items-center justify-content-center text-center">
-                                            <div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{{asset( $product->thumbnail)}}" alt="" width="60" height="80"></div>
-
-                                            <button type="button" id="show" data-id="{{$product->id}}" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
-                                                Large View
-                                            </button>
-
-                                            <div class="product_content">
-
-                                                @if ($product->discount_price == '0')
-                                                <div class="product_price discount">{{$settings->currency}} {{$product->selling_price}}</div>
-                                                @else
-                                                <div class="product_price discount">{{$settings->currency}} {{$product->discount_price}} <span> {{$settings->currency}} {{$product->selling_price}}</span></div>
-                                                @endif
-                                                {{-- <div class="product_price discount">$225<span>$300</span></div> --}}
-                                                <div class="product_name"><div><a href="{{route('product.details',$product->id)}}">{{substr($product->name, 0, 30) }}...</a></div></div>
-                                                <div class="product_extras">
-                                                    <div class="product_color">
-                                                        <input type="radio" checked name="product_color" style="background:#b19c83">
-                                                        <input type="radio" name="product_color" style="background:#000000">
-                                                        <input type="radio" name="product_color" style="background:#999999">
-                                                    </div>
-                                                    @guest
-                                                    <a  class="product_cart_button btn" href="" data-toggle="popover" title="Please login to continue">Add to Cart</a>
+                                            <a href="{{route('product.details',$product->id)}}">
+                                                <div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{{asset( $product->thumbnail)}}" alt="" width="60" height="80"></div>
+                                                <div class="product_content">
+                                                    @if ($product->discount_price == '0')
+                                                    <div class="product_price discount">{{$settings->currency}} {{$product->selling_price}}</div>
                                                     @else
-                                                    <a href="" class="product_cart_button btn">Add to Cart</a>
-                                                    @endguest
-
+                                                    <div class="product_price discount">{{$settings->currency}} {{$product->discount_price}} <span> {{$settings->currency}} {{$product->selling_price}}</span></div>
+                                                    @endif
+                                                    {{-- <div class="product_price discount">$225<span>$300</span></div> --}}
+                                                    <div class="product_name"><div><a href="">{{substr($product->name, 0, 30) }}</a></div></div>
+                                                    <div class="product_extras">
+                                                        <div class="product_color">
+                                                            <input type="radio" checked name="product_color" style="background:#b19c83">
+                                                            <input type="radio" name="product_color" style="background:#000000">
+                                                            <input type="radio" name="product_color" style="background:#999999">
+                                                        </div>
+                                                        <a class="product_cart_button btn" id="show" data-id="{{$product->id}}" href="" data-toggle="modal" data-target="#myModal">Add to Cart</a>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </a>
                                             @guest
                                             <div class="product_fav"><a class="btn" href="" data-toggle="popover" title="Please login to continue" ><i  class="fas fa-heart"></i></a></div>
                                             @else
-                                            <div class="product_fav"><a href="{{route('add.wishlist',$product->id)}}"><i class="fas fa-heart"></i></a> </div>
+                                            <div class="product_fav"><span  data-id="{{$product->id}}" id="product-wishlist" class="fas fa-heart text-info"></span></div>
                                             @endguest
                                             <ul class="product_marks">
                                                 @if($product->discount_price != 0)
-                                                <li class="product_mark product_discount">{{$settings->currency}}{{$product->selling_price-$product->discount_price}}</li>
-
+                                                <li class="product_mark product_discount">{{number_format(($product->selling_price-$product->discount_price)*100/$product->discount_price, 1)}}%</li>
                                                 @else
                                                 <li class="product_mark product_new">new</li>
-
                                                 @endif
-
-
                                             </ul>
                                         </div>
                                     </div>
-                                @endforeach
-
-
-
-
+                                   @endforeach
                             </div>
                             <div class="featured_slider_dots_cover"></div>
                         </div>
+
 
                         <!-- End Product Panel -->
 
@@ -244,45 +232,36 @@
                                     <div class="featured_slider_item">
                                         <div class="border_active"></div>
                                         <div class="product_item discount d-flex flex-column align-items-center justify-content-center text-center">
-                                            <div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{{asset( $product->thumbnail)}}" alt="" width="60" height="80"></div>
-
-                                            <button type="button" id="show" data-id="{{$product->id}}" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
-                                                Large View
-                                            </button>
-
-                                            <div class="product_content">
-
-                                                @if ($product->discount_price == '0')
-                                                <div class="product_price discount"><span>{{$settings->currency}} {{$product->selling_price}}/span></div>
-                                                @else
-                                                <div class="product_price discount">{{$settings->currency}} {{$product->discount_price}} <span> {{$settings->currency}} {{$product->selling_price}}</span></div>
-                                                @endif
-                                                {{-- <div class="product_price discount">$225<span>$300</span></div> --}}
-                                                <div class="product_name"><div><a href="{{route('product.details',$product->id)}}">{{substr($product->name, 0, 30) }}...</a></div></div>
-                                                <div class="product_extras">
-                                                    <div class="product_color">
-                                                        <input type="radio" checked name="product_color" style="background:#b19c83">
-                                                        <input type="radio" name="product_color" style="background:#000000">
-                                                        <input type="radio" name="product_color" style="background:#999999">
-                                                    </div>
-                                                    @guest
-                                                    <a  class="product_cart_button btn" href="" data-toggle="popover" title="Please login to continue">Add to Cart</a>
+                                            <a href="{{route('product.details',$product->id)}}">
+                                                <div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{{asset( $product->thumbnail)}}" alt="" width="60" height="80"></div>
+                                                <div class="product_content">
+                                                    @if ($product->discount_price == '0')
+                                                    <div class="product_price discount">{{$settings->currency}} {{$product->selling_price}}</div>
                                                     @else
-                                                    <a href="" class="product_cart_button btn">Add to Cart</a>
-                                                    @endguest
-
+                                                    <div class="product_price discount">{{$settings->currency}} {{$product->discount_price}} <span> {{$settings->currency}} {{$product->selling_price}}</span></div>
+                                                    @endif
+                                                    {{-- <div class="product_price discount">$225<span>$300</span></div> --}}
+                                                    <div class="product_name"><div><a href="">{{substr($product->name, 0, 30) }}</a></div></div>
+                                                    <div class="product_extras">
+                                                        <div class="product_color">
+                                                            <input type="radio" checked name="product_color" style="background:#b19c83">
+                                                            <input type="radio" name="product_color" style="background:#000000">
+                                                            <input type="radio" name="product_color" style="background:#999999">
+                                                        </div> 
+                                                        <a class="product_cart_button btn" id="show" data-id="{{$product->id}}" href="javascript:void(0)" data-toggle="modal" data-target="#myModal">Add to Cart</a>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </a>
                                             @guest
                                             <div class="product_fav"><a class="btn" href="" data-toggle="popover" title="Please login to continue" ><i  class="fas fa-heart"></i></a></div>
                                             @else
-                                            <div class="product_fav"><a href="{{route('add.wishlist',$product->id)}}"><i class="fas fa-heart"></i></a> </div>
+                                            <div class="product_fav"><span  data-id="{{$product->id}}" id="product-wishlist" class="fas fa-heart text-info"></span></div>
                                             @endguest
                                             <ul class="product_marks">
                                                 @if(empty($product->discount_price))
                                                 <li class="product_mark product_new">new</li>
                                                 @else
-                                                <li class="product_mark product_discount">{{$settings->currency}}{{$product->selling_price-$product->discount_price}}</li>
+                                                <li class="product_mark product_discount">{{number_format(($product->selling_price-$product->discount_price)*100/$product->discount_price, 1)}}%</li>
                                                 @endif
 
                                             </ul>
@@ -316,7 +295,7 @@
                                                 <button class="product_cart_button">Add to Cart</button>
                                             </div>
                                         </div>
-                                        <div class="product_fav"><i class="fas fa-heart"></i></div>
+                                        <div class="product_fav"><span  data-id="" id="product-wishlist" class="fas fa-heart text-info"></span></div>
                                         <ul class="product_marks">
                                           <li class="product_mark product_discount">-25%</li>
                                             <li class="product_mark product_new">new</li>
@@ -1615,7 +1594,7 @@
                                     </div>
                                     <ul class="trends_marks">
                                         @if($product->discount_price != 0)
-                                        <li class="trends_mark trends_new">{{$settings->currency}}{{ceil($product->selling_price *100/$product->discount_price)}}</li>
+                                        <li class="trends_mark trends_new">{{number_format(($product->selling_price-$product->discount_price)*100/$product->discount_price, 1)}}%</li>
                                         @else
                                         <li class="trends_mark trends_new">new</li>
                                         @endif
@@ -1662,11 +1641,7 @@
                                     <div class="review_name">{{$item->user->name}}</div>
                                     <div class="review_rating_container">
                                         <div class="rating_r rating_r_4 review_rating"><i></i><i></i><i></i><i></i><i></i></div><br>
-
                                         <div class="review_time">{{ Illuminate\Support\Carbon::parse($item->created_at)->diffForHumans() }} </div>
-
-
-
                                     </div>
                                     <div class="review_text"><p>{{$item->review_name}}</p></div>
                                 </div>
@@ -1705,7 +1680,7 @@
                         <!-- Recently Viewed Item -->
                         @foreach ($populerProduct as $product)
                         <div class="owl-item">
-                            <div class="viewed_item discount d-flex flex-column align-items-center justify-content-center text-center">
+                            <div class="viewed_item is_new discount d-flex flex-column align-items-center justify-content-center text-center">
                                 <div class="viewed_image"><img src="{{asset($product->thumbnail)}}" alt=""></div>
                                 <div class="viewed_content text-center">
                                     @if($product->discount_price != 0)
@@ -1717,9 +1692,9 @@
                                 </div>
                                 <ul class="item_marks">
                                     @if($product->discount_price != 0)
-                                    <li class="item_mark item_discount">{{$settings->currency}}{{ceil($product->selling_price *100/$product->discount_price)}}</li>
+                                    <li class="item_mark item_discount">{{number_format(($product->selling_price-$product->discount_price)*100/$product->discount_price, 1)}}%<</li>
                                     @else
-                                    <li class="item_mark item_discount">new</li>
+                                    <li class="item_mark item_new">new</li>
                                     @endif
                                 </ul>
                             </div>
@@ -1784,13 +1759,13 @@
 
 
 
-   <!--Single product review modal-->
-   <div class="modal" id="myModal">
-    <div class="modal-dialog modal-lg">
+   <!--Single product view modal-->
+   <div class="modal" id="myModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-md">
         <div class="modal-content">
         <div class="modal-header">
-            <h4 class="modal-title">Single Views</h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"></h4>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
         </div>
         <div class="modal_body">
 
@@ -1811,12 +1786,43 @@
     });
 
     // edit modal script
-   $(document).on('click', '#show', function() {
+    $(document).on('click', '#show', function() {
       let id = $(this).data('id');
-      $.get('modal/view/'+id, function(data){
+      $.ajax({
+        url : "{{ route('modal.view') }}",
+        type: 'get',
+        anyne: false,
+        async: false,
+        data : {
+            id : id,
+        },
+        success:function(data){
         $('.modal_body').html(data);
+      }
       });
-    })
+    });
+//    $(document).on('click', '#show', function() {
+//       let id = $(this).data('id');
+//       $.get('modal/view/'+id, function(data){
+//         $('.modal_body').html(data);
+//       });
+//     });
+
+    // insert wishlist data
+    $(document).on('click','#product-wishlist',function(e) {
+    e.preventDefault();
+    let id = $(this).data('id');
+    $.ajax({
+        url: "{{ route('add.wishlist') }}",
+        type: 'get',
+        data: { id : id},
+        success:function(data) {
+            toastr.success(data);
+             $('.wishlist_count').load(location.href+' .wishlist_count');
+        }
+    });
+    });
+
     </script>
 
 @endsection

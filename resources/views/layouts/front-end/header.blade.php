@@ -1,5 +1,6 @@
 @php
- $category=App\Models\Category::all();
+ $category = App\Models\Category::all();
+ $wishlist = App\Models\Wishlist::where('user_id',auth()->id())->count();
 @endphp
 <header class="header">
 
@@ -19,7 +20,6 @@
                                         <ul>
                                             <li><a href="#">English</a></li>
                                             <li><a href="#">Bangla</a></li>
-
                                         </ul>
                                     </li>
                                     <li>
@@ -27,7 +27,6 @@
                                         <ul>
                                             <li><a href="#">$ US dollar</a></li>
                                             <li><a href="#">৳ BDT Taka </a></li>
-
                                         </ul>
                                     </li>
                                     @guest
@@ -95,7 +94,7 @@
                 <!-- Logo -->
                 <div class="col-lg-2 col-sm-3 col-3 order-1">
                     <div class="logo_container">
-                        <div class="logo"><a href="#">Ecommerce</a></div>
+                        <div class="logo"><a href="{{route('home')}}">Ecommerce</a></div>
                     </div>
                 </div>
 
@@ -133,7 +132,7 @@
                         <div class="wishlist d-flex flex-row align-items-center justify-content-end">
                             <div class="wishlist_icon"><img src="{{asset('front-end/assets/images/heart.png')}}" alt=""></div>
                             <div class="wishlist_content">
-                                <div class="wishlist_text"><a href="#">Wishlist</a></div>
+                                <div class="wishlist_text"><a href="{{route('wishlist')}}">Wishlist</a></div>
                                 <div class="wishlist_count"><span class="text-primary">(@if(empty($wishlist))  @else {{$wishlist}}  @endif)</span></div>
                             </div>
                         </div>
@@ -143,11 +142,11 @@
                             <div class="cart_container d-flex flex-row align-items-center justify-content-end">
                                 <div class="cart_icon">
                                     <img src="{{asset('front-end/assets/images/cart.png')}}" alt="">
-                                    <div class="cart_count"><span>10</span></div>
+                                    <div class="cart_count"><span>{{Cart::count()}}</span></div>
                                 </div>
                                 <div class="cart_content">
-                                    <div class="cart_text"><a href="#">Cart</a></div>
-                                    <div class="cart_price">$85</div>
+                                    <div class="cart_text"><a href="{{route('cart')}}">Cart</a></div>
+                                    <div class="cart_price">{{$settings->currency}} {{Cart::total()}}</div>
                                 </div>
                             </div>
                         </div>
@@ -180,17 +179,17 @@
                             @php
                             $subcat=App\Models\Subcategory::where('category_id',$row->id)->get();
                             @endphp
-                                <li class="hassubs"><a href="#">{{$row->category_name}}<i class="fas fa-chevron-right"></i></a>
+                                <li class="hassubs"><a href="{{route('category.product',$row->id)}}">{{$row->category_name}}<i class="fas fa-chevron-right"></i></a>
                                     <ul>
                                         @foreach ($subcat as $row)
                                         @php
                                         $childcat=App\Models\Childcategory::where('subcategory_id',$row->id)->get();
                                         @endphp
                                         <li class="hassubs">
-                                            <a href="#">{{$row->subcategory_name}}<i class="fas fa-chevron-right"></i></a>
+                                            <a href="{{route('category.product',$row->id)}}">{{$row->subcategory_name}}<i class="fas fa-chevron-right"></i></a>
                                             <ul>
                                                 @foreach ( $childcat as $row)
-                                                <li><a href="#">{{$row->childcategory_name}}<i class="fas fa-chevron-right"></i></a></li>
+                                                <li><a href="{{route('category.product',$row->id)}}">{{$row->childcategory_name}}<i class="fas fa-chevron-right"></i></a></li>
                                                 @endforeach
                                             </ul>
                                         </li>
@@ -362,6 +361,10 @@
 
 </header>
 
-
+<script>
+//     window.onbeforeunload = () => {
+//   return "Do you really want to close?";
+// }
+</script>
 
 
