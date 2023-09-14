@@ -21,7 +21,8 @@ return new class extends Migration
             $table->string('coupon_code')->nullable();
             $table->string('delivery_charge')->nullable();
             $table->string('tax')->nullable();
-            $table->string('status')->nullable();
+            $table->integer('status')->default(0);
+            $table->integer('tracking')->default(0);
             $table->string('payment_by')->nullable();
             $table->string('payment_code')->nullable();
             $table->string('email')->nullable();

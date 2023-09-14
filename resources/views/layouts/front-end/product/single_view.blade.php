@@ -116,7 +116,6 @@
         </div>
     </div>
 </div>
-
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
 
@@ -170,13 +169,13 @@
            price : price,
         },
         success:function(data) {
+        $(document).find('#myModal .close').trigger('click');
             toastr.success(data);
            //$('')[0].reset();
-          // $('.modal_body').load(location.href+' .modal_body');
-           window.location.reload();
+        //   $('#modal-close').load(location.href+' #modal-close');
+          // window.location.reload();
+           $('.cart').load(location.href+' .cart');
 
-                //$('.cart').load(location.href+' .cart');
-            $(document).find('#myModal .close').trigger('click');
         }
     });
     });

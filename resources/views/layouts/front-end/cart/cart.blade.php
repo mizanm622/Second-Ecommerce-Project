@@ -33,36 +33,59 @@
                                             <div class="cart_item_title">Name</div><!--Product name-->
                                             <div class="cart_item_text">{{$product->name}}</div>
                                         </div>
-                                        @if($product->options->color == null)
-                                        @else
-                                        <div class="cart_item_color cart_info_col"><!--Product Color-->
-                                            <div class="cart_item_title">Color</div>
-                                            <div class="cart_item_text">
-                                                <select type="text" data-id="{{$product->rowId}}" id="color" class="form-control form-control-sm ml-0" name="color" style="width:80px" >
-                                                    @foreach ($colors as $color)
-                                                    <option value="{{$color}}" @if($color == $product->options->color) selected="" @endif>{{$color}}</option>
-                                                    @endforeach
-                                                </select>
+                                        @if($product->options->color == null and count($colors) > 0)
+                                            <div class="cart_item_color cart_info_col"><!--Product Color-->
+                                                <div class="cart_item_title">Color</div>
+                                                <div class="cart_item_text">
+                                                    <select type="text" data-id="{{$product->rowId}}" id="color" class="form-control form-control-sm ml-0" name="color" style="width:80px" >
+                                                        @foreach ($colors as $color)
+                                                         <option value="{{$color}}">{{$color}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>
-                                        @endif
-                                        @if($product->options->size == null)
+                                        @elseif ($product->options->color == null and  $colors == null)
+
                                         @else
+                                            <div class="cart_item_color cart_info_col"><!--Product Color-->
+                                                <div class="cart_item_title">Color</div>
+                                                <div class="cart_item_text">
+                                                    <select type="text" data-id="{{$product->rowId}}" id="color" class="form-control form-control-sm ml-0" name="color" style="width:80px" >
+                                                        @foreach ($colors as $color)
+                                                            <option value="{{$color}}" @if($color == $product->options->color) selected="" @endif>{{$color}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        @endif
+                                        @if($product->options->size == null and $products->size !=null)
                                         <div class="cart_item_color cart_info_col"><!--Product Size-->
                                             <div class="cart_item_title">Size</div>
                                             <div class="cart_item_text">
                                                 <select type="text" data-id="{{$product->rowId}}" id="size" class="form-control form-control-sm ml-0" name="size" style="width:80px" >
                                                     @foreach ($sizes as $size)
-                                                    <option value="{{$size}}" @if($size == $product->options->size) selected="" @endif>{{$size}}</option>
+                                                        <option value="{{$size}}">{{$size}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         </div>
+                                        @elseif($product->options->size == null and $products->size == null)
+
+                                        @else
+                                            <div class="cart_item_color cart_info_col"><!--Product Size-->
+                                                <div class="cart_item_title">Size</div>
+                                                <div class="cart_item_text">
+                                                    <select type="text" data-id="{{$product->rowId}}" id="size" class="form-control form-control-sm ml-0" name="size" style="width:80px" >
+                                                        @foreach ($sizes as $size)
+                                                            <option value="{{$size}}" @if($size == $product->options->size) selected="" @endif>{{$size}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
                                         @endif
                                         <div class="cart_item_quantity cart_info_col"><!--Product Quantity-->
                                             <div class="cart_item_title">Quantity</div>
                                             <div class="cart_item_text">
-
                                                 <input name="quantity" id="quantity" data-id="{{$product->rowId}}" class="form-control form-control-sm " type="number" min="1" pattern="[1-9]*" value="{{$product->qty}}" style="width:80px">
                                             </div>
                                         </div>
@@ -173,7 +196,6 @@
                 },
                 success:function(data) {
                     toastr.success(data);
-
                 }
             });
     });
@@ -194,7 +216,7 @@
                 },
                 success:function(data) {
                      toastr.success(data);
-                     $('.cart_section').load(location.href+' .cart_section');
+                     //$('.cart_section').load(location.href+' .cart_section');
                 }
             });
     });

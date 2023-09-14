@@ -74,6 +74,6 @@ public function cartDestroy(){
     return response()->json('Items Successfullt Deleted!');
    }
 
-  
+
 
 }

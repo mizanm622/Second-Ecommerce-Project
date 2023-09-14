@@ -54,14 +54,11 @@
                                    <li>
                                      <a href="#"><span class="fas fa-chevron-down"></span> {{auth()->user()->name}} </a>
                                         <ul style="width:250px; padding:10px">
-                                            <li><a  href="{{route('user.profile')}}">Profile</a></li>
-                                            <li><a  href="">Settings</a></li>
-                                            <li><a  href="">Order List</a></li>
-                                            <li><a  href="{{ route('user.logout') }}">Log Out</a></li>
+                                            <li><a  href="{{route('user.profile')}}"><span class="fas fa-user"></span>Profile</a></li>
+                                            <li><a  href="{{ route('user.logout') }}"><span class="fas fa-user"></span>Log Out</a></li>
                                         </ul>
                                     </li>
                                     @endguest
-
                                    <li>
                                       @guest
                                             <a href=""><span class="fas fa-chevron-down"></span> Register</a>

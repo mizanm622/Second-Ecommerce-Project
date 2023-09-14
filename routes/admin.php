@@ -140,8 +140,19 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
 
     });
 
+    });
 
-
+    //orders routes
+    Route::group(['prefix'=>'order'], function(){
+        Route::get('/pending', 'OrderController@orderPendng')->name('order.pending');
+        Route::get('/tracking', 'OrderController@orderTracking')->name('order.tracking');
+        Route::get('/complete', 'OrderController@orderComplete')->name('order.complete');
+        Route::get('/status-change', 'OrderController@orderStatus')->name('order.status');
+        Route::get('/tracking-change', 'OrderController@trackingStatus')->name('tracking.status');
+        // Route::post('/store', 'OrderController@store')->name('page.store');
+        // Route::get('/delete/{id}', 'OrderController@delete')->name('page.delete');
+        // Route::get('/edit/{id}', 'OrderController@edit');
+        // Route::post('/update', 'OrderController@update')->name('page.update');
 
     });
 });

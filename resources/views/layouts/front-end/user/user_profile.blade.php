@@ -40,7 +40,7 @@
             </div>
         </div>
         <!--End Menu area-->
-        <!--Menu body area-->
+        <!--Menu area-->
         <div class="col-8">
             <div id="accordion">
                 <div class="card"><!--Home Content-->
@@ -88,12 +88,11 @@
                   </div><!--End Home Content-->
                   <!--Orders List-->
                   <div id="Orders" class="collapse" aria-labelledby="Orders" data-parent="#accordion">
-
                     @foreach ($address as $items)
                     <div class="single-order-area"><!--Single Order area-->
                         <div class="card-header"><!--Collapse button-->
                             <button class="btn btn-block btn-primary" type="button" data-toggle="collapse" data-target="#{{$items->id}}" aria-expanded="false" aria-controls="collapseExample">
-                                <div class=""> <span class="text-left col-4">#{{$loop->iteration}} Your Ordered Items</span>  <span class="text-center col-4">{!!$items->status == null ? '<i class="fa fa-spinner fa-spin" style="font-size:24px;color:red"></i>' : '<i class="fa fa-check" style="font-size:24px;color:green"></i>'!!}</span> <span class="text-right col-4">{{$items->order_date}}</span></div>
+                                <div class=""> <span class="text-left col-4">#{{$loop->iteration}} Your Ordered Items</span> Status: <span class="text-center col-4">{!!$items->status == 0 ? '<i class="fa fa-spinner fa-spin" style="font-size:24px;color:red"></i>' : '<i class="fa fa-check" style="font-size:24px;color:green"></i>'!!}</span>Tracking: <span class="text-center col-4">{!!$items->tracking == 0 ? '<i class="fa fa-spinner fa-spin" style="font-size:24px;color:red"></i>' : '<i class="fa fa-check" style="font-size:24px;color:green"></i>'!!}</span>  <span class="text-right col-4">{{$items->order_date}}</span></div>
                             </button>
                         </div><!--End Collapse button-->
 

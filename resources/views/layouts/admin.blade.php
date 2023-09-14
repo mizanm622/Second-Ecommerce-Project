@@ -33,7 +33,9 @@
     <!--Summernote css cdn-->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 
-
+    <!--Bootstrap css-->
+    <link rel="stylesheet" type="text/css" href="{{asset('front-end/assets/styles/bootstrap4/bootstrap.min.css')}}">
+    <link href="{{asset('front-end/assets/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css')}}" rel="stylesheet" type="text/css">
 
     <!-- Icons. Uncomment required icon fonts -->
     <link rel="stylesheet" href="{{asset('assets/vendor/fonts/boxicons.css')}}" />

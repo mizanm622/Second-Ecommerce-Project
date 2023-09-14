@@ -174,31 +174,33 @@
 
                         <div class="product_panel panel active">
                             <div class="featured_slider slider">
-
                                 <!-- Slider Item -->
                                 @foreach ($featuredProduct as $product)
-
 
                                     <div class="featured_slider_item">
                                         <div class="border_active"></div>
                                         <div class="product_item discount d-flex flex-column align-items-center justify-content-center text-center">
                                             <a href="{{route('product.details',$product->id)}}">
                                                 <div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{{asset( $product->thumbnail)}}" alt="" width="60" height="80"></div>
+                                                <input type="hidden" name="name" value="{{$product->name}}">
+                                                <input type="hidden" name="image" value="{{$product->thumbnail}}">
+                                                <div class="large-view">
+                                                    <a class="btn btn-info btn-sm" id="show" data-id="{{$product->id}}" href="javascript:void(0)" data-toggle="modal" data-target="#myModal">Large View</a>
+                                                </div>
                                                 <div class="product_content">
                                                     @if ($product->discount_price == '0')
-                                                    <div class="product_price discount">{{$settings->currency}} {{$product->selling_price}}</div>
+                                                        <input type="hidden" name="price" value="{{$product->selling_price}}">
+                                                        <div class="product_price discount">{{$settings->currency}} {{$product->selling_price}}</div>
                                                     @else
-                                                    <div class="product_price discount">{{$settings->currency}} {{$product->discount_price}} <span> {{$settings->currency}} {{$product->selling_price}}</span></div>
+                                                        <input type="hidden" name="price" value="{{$product->discount_price}}">
+                                                        <div class="product_price discount">{{$settings->currency}} {{$product->discount_price}} <span> {{$settings->currency}} {{$product->selling_price}}</span></div>
                                                     @endif
                                                     {{-- <div class="product_price discount">$225<span>$300</span></div> --}}
                                                     <div class="product_name"><div><a href="">{{substr($product->name, 0, 30) }}</a></div></div>
+
+                                                    <input type="hidden" name="quantity" value="1">
                                                     <div class="product_extras">
-                                                        <div class="product_color">
-                                                            <input type="radio" checked name="product_color" style="background:#b19c83">
-                                                            <input type="radio" name="product_color" style="background:#000000">
-                                                            <input type="radio" name="product_color" style="background:#999999">
-                                                        </div>
-                                                        <a class="product_cart_button btn" id="show" data-id="{{$product->id}}" href="" data-toggle="modal" data-target="#myModal">Add to Cart</a>
+                                                        <a class="product_cart_button btn" id="cart" data-id="{{$product->id}}" href="javascript:void(0)" >Add to Cart</a>
                                                     </div>
                                                 </div>
                                             </a>
@@ -226,7 +228,6 @@
 
                         <div class="product_panel panel">
                             <div class="featured_slider slider">
-
                                 <!-- Slider Item -->
                                 @foreach ($populerProduct as $product)
                                     <div class="featured_slider_item">
@@ -234,26 +235,29 @@
                                         <div class="product_item discount d-flex flex-column align-items-center justify-content-center text-center">
                                             <a href="{{route('product.details',$product->id)}}">
                                                 <div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{{asset( $product->thumbnail)}}" alt="" width="60" height="80"></div>
+                                                <input type="hidden" name="name" value="{{$product->name}}">
+                                                <input type="hidden" name="image" value="{{$product->thumbnail}}">
+                                                <div class="large-view">
+                                                    <a class="btn btn-info btn-sm" id="show" data-id="{{$product->id}}" href="javascript:void(0)" data-toggle="modal" data-target="#myModal">Large View</a>
+                                                </div>
                                                 <div class="product_content">
+
                                                     @if ($product->discount_price == '0')
-                                                    <div class="product_price discount">{{$settings->currency}} {{$product->selling_price}}</div>
+                                                        <input type="hidden" name="price" value="{{$product->selling_price}}">
+                                                        <div class="product_price discount">{{$settings->currency}} {{$product->selling_price}}</div>
                                                     @else
-                                                    <div class="product_price discount">{{$settings->currency}} {{$product->discount_price}} <span> {{$settings->currency}} {{$product->selling_price}}</span></div>
+                                                        <input type="hidden" name="price" value="{{$product->discount_price}}">
+                                                        <div class="product_price discount">{{$settings->currency}} {{$product->discount_price}} <span> {{$settings->currency}} {{$product->selling_price}}</span></div>
                                                     @endif
-                                                    {{-- <div class="product_price discount">$225<span>$300</span></div> --}}
                                                     <div class="product_name"><div><a href="">{{substr($product->name, 0, 30) }}</a></div></div>
+                                                    <input type="hidden" name="quantity" value="1">
                                                     <div class="product_extras">
-                                                        <div class="product_color">
-                                                            <input type="radio" checked name="product_color" style="background:#b19c83">
-                                                            <input type="radio" name="product_color" style="background:#000000">
-                                                            <input type="radio" name="product_color" style="background:#999999">
-                                                        </div> 
-                                                        <a class="product_cart_button btn" id="show" data-id="{{$product->id}}" href="javascript:void(0)" data-toggle="modal" data-target="#myModal">Add to Cart</a>
+                                                        <a class="product_cart_button btn" id="cart" data-id="{{$product->id}}" href="javascript:void(0)">Add to Cart</a>
                                                     </div>
                                                 </div>
                                             </a>
                                             @guest
-                                            <div class="product_fav"><a class="btn" href="" data-toggle="popover" title="Please login to continue" ><i  class="fas fa-heart"></i></a></div>
+                                            <div class="product_fav"><a class="btn" href="javascript:void(0)" data-toggle="popover" title="Please login to continue" ><i  class="fas fa-heart"></i></a></div>
                                             @else
                                             <div class="product_fav"><span  data-id="{{$product->id}}" id="product-wishlist" class="fas fa-heart text-info"></span></div>
                                             @endguest
@@ -1765,7 +1769,7 @@
         <div class="modal-content">
         <div class="modal-header">
             <h4 class="modal-title"></h4>
-            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+            <button type="button" id="close" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
         </div>
         <div class="modal_body">
 
@@ -1822,6 +1826,41 @@
         }
     });
     });
+
+    $(document).on('click','#cart',function(e) {
+    e.preventDefault();
+// $('.loading').removeClass('d-none');
+let id = $(this).data('id');
+let cart_item = $(this).closest('.featured_slider_item');
+let name = cart_item.find('input[name="name"]').val();
+let image = cart_item.find('input[name="image"]').val();
+let color = cart_item.find('select[name="color"]').val();
+let size = cart_item.find('select[name="size"]').val();
+let quantity = cart_item.find('input[name="quantity"]').val();
+let price = cart_item.find('input[name="price"]').val();
+let url = "{{route('add.to.cart')}}";
+$.ajax({
+     url : url,
+    type : 'get',
+   async : false,
+    data : {
+        id   : id,
+        name : name,
+       image : image,
+       color : color,
+        size : size,
+    quantity : quantity,
+       price : price,
+    },
+    success:function(data) {
+        toastr.success(data);
+        //  $('#wishlist-to-cart')[0].reset();
+          $('.cart').load(location.href+' .cart');
+
+    }
+});
+});
+
 
     </script>
 

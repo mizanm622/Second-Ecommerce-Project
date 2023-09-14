@@ -94,6 +94,58 @@
 
         </ul>
       </li>
+      <!--Offer area-->
+      <li class="menu-item">
+        <a href="#" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bx-dock-top"></i>
+          <div data-i18n="Account Settings">Offers</div>
+        </a>
+        <ul class="menu-sub">
+          <li class="menu-item">
+            <a href="{{route('coupon.index')}}" class="menu-link">
+              <div data-i18n="Account">Coupon</div>
+            </a>
+          </li>
+
+          <li class="menu-item">
+            <a href="{{route('campaing.index')}}" class="menu-link">
+              <div data-i18n="Connections">E-Campaing</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="{{route('pickup.index')}}" class="menu-link">
+              <div data-i18n="Connections">Pickup Point</div>
+            </a>
+          </li>
+
+        </ul>
+      </li>
+      <!--Orders area-->
+      <li class="menu-item">
+        <a href="#" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bx-dock-top"></i>
+          <div data-i18n="Account Settings">Orders</div>
+        </a>
+        <ul class="menu-sub">
+          <li class="menu-item">
+            <a href="{{route('order.pending')}}" class="menu-link">
+              <div data-i18n="Account">Pending Orders</div>
+            </a>
+          </li>
+
+          <li class="menu-item">
+            <a href="{{route('order.tracking')}}" class="menu-link">
+              <div data-i18n="Connections">Tracking Orders</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="{{route('order.complete')}}" class="menu-link">
+              <div data-i18n="Connections">Complete Orders</div>
+            </a>
+          </li>
+
+        </ul>
+      </li>
             <!--Setting area-->
       <li class="menu-item">
         <a href="#" class="menu-link menu-toggle">
@@ -129,32 +181,7 @@
 
         </ul>
       </li>
-      <!--Offer area-->
-      <li class="menu-item">
-        <a href="#" class="menu-link menu-toggle">
-          <i class="menu-icon tf-icons bx bx-dock-top"></i>
-          <div data-i18n="Account Settings">Offer</div>
-        </a>
-        <ul class="menu-sub">
-          <li class="menu-item">
-            <a href="{{route('coupon.index')}}" class="menu-link">
-              <div data-i18n="Account">Coupon</div>
-            </a>
-          </li>
 
-          <li class="menu-item">
-            <a href="{{route('campaing.index')}}" class="menu-link">
-              <div data-i18n="Connections">E-Campaing</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="{{route('pickup.index')}}" class="menu-link">
-              <div data-i18n="Connections">Pickup Point</div>
-            </a>
-          </li>
-
-        </ul>
-      </li>
 
 
       <!-- Tables -->
