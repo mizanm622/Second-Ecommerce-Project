@@ -3,16 +3,11 @@
 @section('admin-content')
 <!-- Basic Bootstrap Table -->
 <!-- include libraries(jQuery, bootstrap) -->
-
-    <div class="container-xxl flex-grow-1 container-p-y">
-       <h4 class="fw-bold py-3 mb-4">Product Table</h4>
-         <div class="card">
-
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4">Product Table</h4>
+    <div class="card">
         <h5 class="card-header " > <a class="btn btn-primary" href="{{route('product.index')}}">+ Add New</a></h5>
-
-
         <div class="row">
-
             <div class="form-group col-3">
                 <label class="form-label" for="basic-default-company">Category</label>
                 <select class="form-control submitable" name="category_id" id="category_id" >
@@ -22,7 +17,6 @@
                     @endforeach
                 </select>
             </div>
-
             <div class="form-group col-3">
                 <label class="form-label " for="basic-default-company">Subcategory</label>
                 <select class="form-control submitable" name="subcategory_id" id="subcategory_id">
@@ -32,7 +26,6 @@
                     @endforeach
                 </select>
             </div>
-
             <div class="form-group col-3">
                 <label class="form-label" for="basic-default-company">Brand</label>
                 <select class="form-control submitable" name="brand_id" id="brand_id">
@@ -42,7 +35,6 @@
                     @endforeach
                 </select>
             </div>
-
             <div class="form-group col-3">
                 <label class="form-label" for="basic-default-company">Warehouse</label>
                 <select class="form-control submitable" name="warehouse_id" id="warehouse_id">
@@ -52,65 +44,55 @@
                     @endforeach
                 </select>
             </div>
-
-
         </div>
-
-
-            <div class="table-responsive text-nowrap table-border">
+        <div class="table-responsive text-nowrap table-border">
             <table class="table ytable">
                 <thead>
-                <tr>
-                    <th>SL</th>
-                    <th>Name</th>
-                    <th>Cat.Name</th>
-                    <th>Subcat.Name</th>
-                    <th>Brand Name</th>
-                    <th>Code</th>
-                    <th>Featured</th>
-                    <th>status</th>
-                    <th>Thumb</th>
-                    <th>Image</th>
-                    <th>Actions</th>
-                </tr>
+                    <tr>
+                        <th>SL</th>
+                        <th>Name</th>
+                        <th>Cat.Name</th>
+                        <th>Subcat.Name</th>
+                        <th>Brand Name</th>
+                        <th>Code</th>
+                        <th>Featured</th>
+                        <th>status</th>
+                        <th>Thumb</th>
+                        <th>Image</th>
+                        <th>Actions</th>
+                    </tr>
                 </thead>
-                <tbody class="table-border-bottom-0">
-
-                </tbody>
+                    <tbody class="table-border-bottom-0">
+                    </tbody>
             </table>
-            </div>
-
-            </div>
-
-          </div>
-
-  <!--/ Basic Bootstrap Table -->
-
-   <!-- Category Update Modal area--->
-   <div class="col-lg-4 col-md-6">
-    <div class="mt-3">
-      <!-- Button trigger modal -->
-      <!-- Update Category Modal -->
-      <div class="modal fade" id="updateModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title text-center" id="exampleModalLabel1">Product Description</h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal_body">
-
-            </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
+  <!--/ Basic Bootstrap Table -->
+   <!-- Category Update Modal area--->
+<div class="col-lg-4 col-md-6">
+    <div class="mt-3">
+        <!-- Button trigger modal -->
+        <!-- Update Category Modal -->
+        <div class="modal fade" id="updateModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-center" id="exampleModalLabel1">Product Description</h5>
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                            ></button>
+                        </div>
+                    <div class="modal_body">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -119,7 +101,7 @@
   {{-- <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script> --}}
 
   <script>
-
+// search category
 $(document).on('click', '#search', function(e){
     e.preventDefault();
     let category_id = $('#category_id').val();
@@ -142,10 +124,9 @@ $(document).on('click', '#search', function(e){
 
    });
 
+   // edit product
    $(document).on('click', '.edit', function(){
-    // let url=`{{url('product/edit/#ID') }}`
     let id=$(this).data('id');
-    //  url = url.replace("#ID", id)
       $.get('/product/view/'+id, function(data){
         $('.modal_body').html(data);
       });

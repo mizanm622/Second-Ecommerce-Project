@@ -1,5 +1,5 @@
 
-<div class="modal-body">
+<div class="modal-body"><!--Single product view modal-->
     <div class="row">
         <div class="col-xl-4 col-sm-6">
             <div class="img-thumb">
@@ -36,26 +36,21 @@
                         <tr><th>Delivery Method :</th><td>{!! $data->cash_on_delivery == 1 ? '<i class="bx bxs-message-alt-check text-success"></i>' : '<i class="bx bxs-message-alt-x text-danger"></i>'!!}</td></tr>
                     </thead>
                 </table>
-
             </div>
-
         </div>
-
     </div>
-
     <div class="row">
-      <div class="description">
+    <div class="description">
         <p class="tw-600">Description: {{$data->description}}</p>
         <video src="{{$data->video}}"></video>
-      </div>
     </div>
     </div>
-    <div class="modal-footer">
+</div>
+<div class="modal-footer">
     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
         Close
     </button>
-    </div>
-
+</div>
 
 
 <!-- include summernote css/js -->

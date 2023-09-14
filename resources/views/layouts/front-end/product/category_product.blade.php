@@ -268,12 +268,10 @@ $subcat_id = 0;
             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" >&times;</button>
         </div>
         <div class="modal_body">
-
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
         </div>
-
         </div>
     </div>
 </div>

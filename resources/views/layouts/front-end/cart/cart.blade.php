@@ -2,15 +2,12 @@
 
 @section('home-content')
 
-<!-- Cart -->
-@php
-    $cart = Cart::count();
-@endphp
+<!-- Cart area-->
 <div class="cart_section">
     <div class="container">
         <div class="row">
             <div class="col">
-                @if ($cart == 0)
+                @if (count(Cart::content()) == 0)
                 <div class="empty-cart text-center mb-5">
 
                     <img src="front-end/assets/images/shopping-cart.png" alt="" class="img-responsive m-auto" width="150" height="150">
@@ -19,7 +16,7 @@
             </div>
 
             <div class="col-lg-10 offset-lg-1">
-                <div class="cart_container">
+                <div class="cart_container"><!--Cart container area-->
                     <div class="cart_title">Shopping Cart</div>
                      @foreach ($cartProducts as $product)
                         @php
@@ -27,18 +24,18 @@
                         $colors=explode(',',$products->color);
                         $sizes=explode(',',$products->size);
                         @endphp
-                        <div class="cart_items">
+                        <div class="cart_items"><!--Cart items area-->
                             <ul class="cart_list">
                                 <li class="cart_item clearfix">
                                     <div class="cart_item_image" style="width:70px; height:100px"><img src="{{asset($product->options->image)}}" alt="{{$product->options->image}}" class="img-responsive img-thumbnail" width="60" height="90"></div>
                                     <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
                                         <div class="cart_item_name cart_info_col">
-                                            <div class="cart_item_title">Name</div>
+                                            <div class="cart_item_title">Name</div><!--Product name-->
                                             <div class="cart_item_text">{{$product->name}}</div>
                                         </div>
                                         @if($product->options->color == null)
                                         @else
-                                        <div class="cart_item_color cart_info_col">
+                                        <div class="cart_item_color cart_info_col"><!--Product Color-->
                                             <div class="cart_item_title">Color</div>
                                             <div class="cart_item_text">
                                                 <select type="text" data-id="{{$product->rowId}}" id="color" class="form-control form-control-sm ml-0" name="color" style="width:80px" >
@@ -50,9 +47,8 @@
                                         </div>
                                         @endif
                                         @if($product->options->size == null)
-
                                         @else
-                                        <div class="cart_item_color cart_info_col">
+                                        <div class="cart_item_color cart_info_col"><!--Product Size-->
                                             <div class="cart_item_title">Size</div>
                                             <div class="cart_item_text">
                                                 <select type="text" data-id="{{$product->rowId}}" id="size" class="form-control form-control-sm ml-0" name="size" style="width:80px" >
@@ -63,33 +59,31 @@
                                             </div>
                                         </div>
                                         @endif
-                                        <div class="cart_item_quantity cart_info_col">
+                                        <div class="cart_item_quantity cart_info_col"><!--Product Quantity-->
                                             <div class="cart_item_title">Quantity</div>
                                             <div class="cart_item_text">
 
                                                 <input name="quantity" id="quantity" data-id="{{$product->rowId}}" class="form-control form-control-sm " type="number" min="1" pattern="[1-9]*" value="{{$product->qty}}" style="width:80px">
                                             </div>
                                         </div>
-                                        <div class="cart_item_price cart_info_col">
+                                        <div class="cart_item_price cart_info_col"><!--Product unit price-->
                                             <div class="cart_item_title">Unit Price</div>
                                             <div class="cart_item_text">{{$settings->currency}}{{$product->price}}</div>
                                         </div>
                                         <div class="cart_item_total cart_info_col">
-                                            <div class="cart_item_title">Subtotal</div>
+                                            <div class="cart_item_title">Subtotal</div><!--Product subtotal price-->
                                             <div class="cart_item_text">{{$settings->currency}}{{$product->price*$product->qty}}</div>
                                         </div>
                                         <div class="cart_item_total cart_info_col">
-                                            <div class="cart_item_title">Action</div>
+                                            <div class="cart_item_title">Action</div><!--Product action button area-->
                                             <div class="cart_item_text">
                                                 <a href="javascript:void(0)" id="delete" data-id="{{$product->rowId}}"><span class="fas fa-trash text-danger"></span> </a>
-
                                             </div>
-
                                         </div>
                                     </div>
                                 </li>
                             </ul>
-                        </div>
+                        </div><!--End Cart items area-->
 
                     @endforeach
                     <!-- Order Total -->
@@ -100,12 +94,12 @@
                         </div>
                     </div>
 
-                    <div class="cart_buttons">
+                    <div class="cart_buttons"><!--Ckeckout area-->
                          <a id="destroy-item" class="button cart_button_clear text-danger" href="{{route('cart.item.destroy')}}">Empty Cart</a>
                          <a id="check-out" class="button cart_button_checkout" href="{{route('checkout')}}">Check Out</a>
 
                     </div>
-                </div>
+                </div><!--End Cart container area-->
             </div>
             @endif
         </div>
