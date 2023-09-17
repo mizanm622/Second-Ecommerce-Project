@@ -1,8 +1,13 @@
 <?php
 
 namespace App\Providers;
+
+use App\Models\Category;
+use App\Models\Page;
 use Illuminate\Pagination\Paginator;
 use App\Models\Setting;
+use App\Models\Subcategory;
+use App\Models\Wishlist;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\ServiceProvider;
 
@@ -48,14 +53,16 @@ class AppServiceProvider extends ServiceProvider
 //     $delivery =0;
 //    }
 
-
-
-
-
-
-        Paginator::useBootstrap();
+        $category = Category::all();
+        $wishlist = Wishlist::where('user_id',auth()->id())->count();
+        $populerCategory = Subcategory::all();
+        $pages =Page ::all();
         $settings=Setting::first();
-        view()->share('settings',$settings);
-        // view()->share('delivery',$delivery);
+        Paginator::useBootstrap();
+         view()->share('settings',$settings);
+         view()->share('footerPages',$pages);
+         view()->share('populerCategory',$populerCategory);
+         view()->share('category',$category);
+         view()->share('wishlist',$wishlist);
     }
 }

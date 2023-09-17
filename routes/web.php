@@ -31,9 +31,11 @@ Route::group(['namespace' => 'App\Http\Controllers\User',],function(){
     Route::get('/user/logout', 'HomeController@logout')->name('user.logout');
     Route::get('/modal/view', 'HomeController@modalView')->name('modal.view');
 
+    //category wise product view route
     Route::get('/category/product/{id}', 'HomeController@categoryProduct')->name('category.product');
     Route::post('/product/filter-by-price', 'HomeController@productPriceFilter')->name('price.filter');
-    // Route::get('/category/product/{id}', 'HomeController@categoryProduct')->name('childcategory.product');
+
+    Route::get('/page/{id}', 'HomeController@pageView')->name('page');
 
 
 

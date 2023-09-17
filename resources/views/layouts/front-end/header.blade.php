@@ -1,7 +1,4 @@
-@php
- $category = App\Models\Category::all();
- $wishlist = App\Models\Wishlist::where('user_id',auth()->id())->count();
-@endphp
+
 <header class="header">
 
     <!-- Top Bar -->

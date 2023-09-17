@@ -15,43 +15,72 @@
         <div class="card-body">
             <form action="{{route('website.update', $data->id)}}"  enctype="multipart/form-data" method="post">
                 @csrf
-            <div class="form-group mb-3">
-                <label for="nameBasic" class="form-label">Currency</label>
-                <select type="text" id="currency" name="currency" class="form-control" value="{{$data->currency}}">
-                    <option value="৳" {{$data->currency== '৳' ? 'selected': ''}}> Taka</option>
-                    <option value="$" {{$data->currency== '$' ? 'selected': ''}}> USD</option>
-                </select>
+            <div class="row">
+                <div class="form-group mb-3 col-6">
+                    <label for="nameBasic" class="form-label">Website Name<span class="text-danger fw-bold">*</span></label>
+                    <input type="text" id="name" name="name" class="form-control" value="{{$data->name}}"/>
+                </div>
+                <div class="form-group mb-3 col-6">
+                    <label for="nameBasic" class="form-label">Currency<span class="text-danger fw-bold">*</span></label>
+                    <select type="text" id="currency" name="currency" class="form-control" value="{{$data->currency}}">
+                        <option value="৳" {{$data->currency== '৳' ? 'selected': ''}}> Taka</option>
+                        <option value="$" {{$data->currency== '$' ? 'selected': ''}}> USD</option>
+                    </select>
+                </div>
             </div>
-            <div class="form-group mb-3">
-                <label for="nameBasic" class="form-label">Phone(One)</label>
-                <input type="phone" id="phone_one" name="phone_one" class="form-control" value="{{$data->phone_one}}"/>
-            </div>
-            <div class="form-group mb-3">
-                <label for="nameBasic" class="form-label">Phone(Two)</label>
-                <input type="phone" id="phone_two" name="phone_two" class="form-control" value="{{$data->phone_two}}"/>
+            <div class="row">
+                <div class="form-group mb-3 col-6">
+                    <label for="nameBasic" class="form-label">Phone(One)<span class="text-danger fw-bold">*</span></label>
+                    <input type="phone" id="phone_one" name="phone_one" class="form-control" value="{{$data->phone_one}}"/>
+                </div>
+                <div class="form-group mb-3 col-6">
+                    <label for="nameBasic" class="form-label">Phone(Two)</label>
+                    <input type="phone" id="phone_two" name="phone_two" class="form-control" value="{{$data->phone_two}}"/>
 
+                </div>
             </div>
-            <div class="form-group mb-3">
-                <label for="nameBasic" class="form-label">Main Email</label>
-                <input type="email" id="main_email" name="main_email" class="form-control" value="{{$data->main_email}}" />
-            </div>
-            <div class="form-group mb-3">
-                <label for="nameBasic" class="form-label">Support Email</label>
-                <input type="email" id="support_email" name="support_email" class="form-control" value="{{$data->support_email}}"/>
+            <div class="row">
+                <div class="form-group mb-3 col-6">
+                    <label for="nameBasic" class="form-label">Main Email<span class="text-danger fw-bold">*</span></label>
+                    <input type="email" id="main_email" name="main_email" class="form-control" value="{{$data->main_email}}" />
+                </div>
+                <div class="form-group mb-3 col-6">
+                    <label for="nameBasic" class="form-label">Support Email</label>
+                    <input type="email" id="support_email" name="support_email" class="form-control" value="{{$data->support_email}}"/>
 
+                </div>
             </div>
-            <div class="form-group mb-3">
-                <label for="nameBasic" class="form-label">Address</label>
-                <input type="text" id="address" name="address" class="form-control" value="{{$data->address}}"/>
+            <div class="row">
+                <div class="form-group mb-3 col-6">
+                    <label for="nameBasic" class="form-label">Village/Area<span class="text-danger fw-bold">*</span></label>
+                    <input type="text" id="address" name="address" class="form-control" value="{{$data->address}}"/>
+                </div>
+                <div class="form-group mb-3 col-3">
+                    <label for="nameBasic" class="form-label">Town<span class="text-danger fw-bold">*</span></label>
+                    <input type="text" id="town" name="town" class="form-control" value="{{$data->town}}"/>
+                </div>
+                <div class="form-group mb-3 col-3">
+                    <label for="nameBasic" class="form-label">City<span class="text-danger fw-bold">*</span></label>
+                    <input type="text" id="city" name="city" class="form-control" value="{{$data->city}}"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group mb-3 col-6">
+                    <label for="nameBasic" class="form-label">Country<span class="text-danger fw-bold">*</span></label>
+                    <input type="text" id="country" name="country" class="form-control" value="{{$data->country}}"/>
+                </div>
+                <div class="form-group mb-3 col-6">
+                    <label for="nameBasic" class="form-label">Zip Code<span class="text-danger fw-bold">*</span></label>
+                    <input type="text" id="zip" name="zip" class="form-control" value="{{$data->zip}}"/>
+                </div>
             </div>
 
-            <strong class="strong">Social Area *</strong>
+            <strong class="strong">Social Area <span class="text-danger fw-bold">*</span></strong>
             <div class="form-group mb-3">
                 <label for="nameBasic" class="form-label">Facebook</label>
                 <input type="text" id="facebook" name="facebook" class="form-control" value="{{$data->facebook}}"/>
             </div>
             <div class="form-group mb-3">
-                <div class="col mb-3">
                 <label for="nameBasic" class="form-label">Youtube</label>
                 <input type="text" id="youtube" name="youtube" class="form-control" value="{{$data->youtube}}"/>
             </div>
@@ -67,27 +96,28 @@
                 <label for="nameBasic" class="form-label">Twitter</label>
                 <input type="text" id="twitter" name="twitter" class="form-control" value="{{$data->twitter}}"/>
             </div>
-            <div class="form-group mb-3">
-                <label for="nameBasic" class="form-label">Logo</label>
-                <input type="file" id="logo" name="logo" class="form-control dropify" />
-                <div class="row">
-                    <div class="col-3">
-                        <img src="{{asset($data->logo)}}" height="50px" alt="Logo ">
+            <div class="row">
+                <div class="form-group mb-3 col-6">
+                    <label for="nameBasic" class="form-label">Logo<span class="text-danger fw-bold">*</span></label>
+                    <input type="file" id="logo" name="logo" class="form-control dropify" />
+                    <div class="row">
+                        <div class="col-3">
+                            <img src="{{asset($data->logo)}}" height="50px" alt="Logo ">
+                        </div>
                     </div>
+                    <input type="hidden" name="old_logo" value="{{$data->logo}}">
                 </div>
-                <input type="hidden" name="old_logo" value="{{$data->logo}}">
-            </div>
-            <div class="form-group mb-3">
-                <label for="nameBasic" class="form-label">Favicon</label>
-                <input type="file" id="favicon" name="favicon" class="form-control dropify"/>
-                <div class="row">
-                    <div class="col-3">
-                        <img src="{{asset($data->favicon)}}" height="50px" alt="Logo ">
+                <div class="form-group mb-3 col-6">
+                    <label for="nameBasic" class="form-label">Favicon<span class="text-danger fw-bold">*</span></label>
+                    <input type="file" id="favicon" name="favicon" class="form-control dropify"/>
+                    <div class="row">
+                        <div class="col-3">
+                            <img src="{{asset($data->favicon)}}" height="50px" alt="Logo ">
+                        </div>
                     </div>
+                    <input type="hidden" name="old_favicon" value="{{$data->favicon}}">
                 </div>
-                <input type="hidden" name="old_favicon" value="{{$data->favicon}}">
             </div>
-
             <button type="submit" class="btn btn-primary text-center m-auto">Update</button>
           </form>
         </div>

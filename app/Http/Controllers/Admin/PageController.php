@@ -29,11 +29,13 @@ class PageController extends Controller
                 $actionbtn=' <a href="" data-bs-toggle="modal" class="edit" data-id="'.$row->id.'" data-bs-target="#updateModal"> <i class="bx bx-edit"></i></a>| <a id="delete" href="'.route('page.delete',$row->id).'"><i class="bx bx-trash" ></i></a> ';
                 return $actionbtn;
             })
+            ->editColumn('description', function($row){
+                $description =substr($row->description_one, 0, 15);
+                return $description .'.......';
+            })
+
             ->rawColumns(['action'])->make(true);
-
         }
-
-
         return view('admin.setting.page.index');
     }
      // store page from here
@@ -42,15 +44,21 @@ class PageController extends Controller
         $validate=$request->validate([
             'page_name'=>'required',
             'page_title'=>'required',
-            'page_position'=>'required',
         ]);
 
-        $data = Page::insert([
+        $data = Page::create([
             'page_name'=>$request->page_name,
             'page_title'=>$request->page_title,
-            'page_position'=>$request->page_position,
             'page_slug'=>Str::slug($request->page_name),
-            'page_description'=>$request->page_description,
+            'heading_one'=>$request->heading_one,
+            'description_one'=>$request->description_one,
+            'image_one'=>$request->image_one,
+            'heading_two'=>$request->heading_two,
+            'description_two'=>$request->description_two,
+            'image_two'=>$request->image_two,
+            'heading_three'=>$request->heading_three,
+            'description_three'=>$request->description_three,
+            'image_three'=>$request->image_three,
 
    ]);
 
@@ -77,17 +85,55 @@ class PageController extends Controller
         $validate = $request->validate([
             'page_name'=>'required|max:255',
             'page_title'=>'required',
-            'page_description'=>'required',
-            'page_position'=>'required',
         ]);
 
+        if(!empty($request->image_one)){
+            $image_one=$request->image_one;
+            $photoName=uniqid().'.'.$image_one->getClientOriginalExtension();
+            $img_one_path=$image_one->move('files/pages/',$photoName);
+            if(file_exists($request->img_one_old)){
+                unlink($request->img_one_old);
+            }
+        }else{
+
+            $img_one_path=$request->img_one_old;
+        }
+        if(!empty($request->image_two)){
+            $image_two=$request->image_two;
+            $photoName=uniqid().'.'.$image_two->getClientOriginalExtension();
+            $img_two_path=$image_two->move('files/pages/',$photoName);
+            if(file_exists($request->img_two_old)){
+                unlink($request->img_two_old);
+            }
+        }else{
+
+            $img_two_path=$request->img_two_old;
+        }
+        if(!empty($request->image_three)){
+            $image_three=$request->image_three;
+            $photoName=uniqid().'.'.$image_three->getClientOriginalExtension();
+            $img_three_path=$image_three->move('files/pages/',$photoName);
+            if(file_exists($request->img_three_old)){
+                unlink($request->img_three_old);
+            }
+        }else{
+
+            $img_three_path=$request->img_three_old;
+        }
 
         Page::where('id', $request->id)->update([
-                 'page_name'=>$request->page_name,
-                 'page_title'=>$request->page_title,
-                 'page_position'=>$request->page_position,
-            'page_description'=>$request->page_description,
-            'page_slug'=>Str::slug($request->page_name, '-'),
+                'page_name'=>$request->page_name,
+               'page_title'=>$request->page_title,
+                'page_slug'=>Str::slug($request->page_name, '-'),
+              'heading_one'=>$request->heading_one,
+          'description_one'=>$request->description_one,
+            '    image_one'=>$img_one_path,
+              'heading_two'=>$request->heading_two,
+          'description_two'=>$request->description_two,
+                'image_two'=>$img_two_path,
+            'heading_three'=>$request->heading_three,
+        'description_three'=>$request->description_three,
+              'image_three'=>$img_three_path,
         ]);
 
         $notification=array('msg' => 'Page Successfully Updeted! ', 'alert-type' => 'info');

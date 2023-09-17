@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('admin-content')
+<link rel="stylesheet" href="{{asset('assets/vendor/css/dropify.min.css')}}" class="template-customizer-core-css" />
 <!-- Basic Bootstrap Table -->
 <!-- include libraries(jQuery, bootstrap) -->
 
@@ -36,7 +37,7 @@
             <!-- Button trigger modal -->
             <!--Insert Category Modal -->
             <div class="modal fade" id="insertModal" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog" role="document">
+                <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel1">Add New Page</h5>
@@ -47,41 +48,76 @@
                                 aria-label="Close"
                             ></button>
                         </div>
-                        <form action="{{route('page.store')}}" method="post" id="add-form">
+                        <form action="{{route('page.store')}}" method="post" id="add-form" enctype="multipart/form-data">
                             @csrf
                             <div class="modal-body">
 
                             <div class="row">
-                                <div class="col mb-3">
-                                <label for="nameBasic" class="form-label">Page Name</label>
-                                <input type="text" id="page_name" name="page_name" class="form-control" placeholder="Enter Page Name" required/>
+                                <div class="col-6 mb-3">
+                                    <label for="nameBasic" class="form-label">Page Name</label>
+                                    <input type="text" id="page_name" name="page_name" class="form-control" placeholder="Enter Page Name" required/>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col mb-3">
-                                <label for="nameBasic" class="form-label">Title Name</label>
-                                <input type="text" id="page_title" name="page_title" class="form-control" placeholder="Enter Page Title" required/>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col mb-3">
-                                <label for="nameBasic" class="form-label">Page Position</label>
-                                <select class="form-control" name="page_position" id="page_position" required>
-                                    <option value="1">First</option>
-                                    <option value="2">Second</option>
-                                    <option value="3">Third</option>
-                                </select>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col mb-3">
-                                <label for="nameBasic" class="form-label">Page Description</label>
-                                <textarea name="page_description" id="summernote" class="form-control" cols="30" rows="5">
 
-                                </textarea>
+                                <div class="col-6 mb-3">
+                                    <label for="nameBasic" class="form-label">Title Name</label>
+                                    <input type="text" id="page_title" name="page_title" class="form-control" placeholder="Enter Page Title" required/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 mb-3">
+                                    <label for="nameBasic" class="form-label">Heading(One)</label>
+                                    <input type="text" id="header_one" name="header_one" class="form-control" placeholder="Enter Page Title" required/>
+                                </div>
+                                <div class="col-4 mb-3">
+                                    <label for="nameBasic" class="form-label">Heading(two)</label>
+                                    <input type="text" id="header_two" name="header_two" class="form-control" placeholder="Enter Page Title" required/>
+                                </div>
+                                <div class="col-4 mb-3">
+                                    <label for="nameBasic" class="form-label">Heading(three)</label>
+                                    <input type="text" id="header_three" name="header_three" class="form-control" placeholder="Enter Page Title" required/>
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="col-4 mb-3">
+                                    <label for="nameBasic" class="form-label">Image(One)</label>
+                                    <input type="file" id="image_one" name="image_one" class="form-control dropify" placeholder="Enter Page Title" required/>
+                                </div>
+
+                                <div class="col-4 mb-3">
+                                    <label for="nameBasic" class="form-label">Image(two)</label>
+                                    <input type="file" id="image_two" name="image_two" class="form-control dropify" placeholder="Enter Page Title" required/>
+                                </div>
+
+                                <div class="col-4 mb-3">
+                                    <label for="nameBasic" class="form-label">Image(three)</label>
+                                    <input type="file" id="image_three" name="image_three" class="form-control dropify" placeholder="Enter Page Title" required/>
+                                </div>
+
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col- mb-3">
+                                    <label for="nameBasic" class="form-label">Description(One)</label>
+                                    <textarea name="description_one" id="description_one" class="form-control" cols="30" rows="5">
+                                    </textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col- mb-3">
+                                    <label for="nameBasic" class="form-label">Description(two)</label>
+                                    <textarea name="description_two" id="description_two" class="form-control" cols="30" rows="5">
+                                    </textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col- mb-3">
+                                    <label for="nameBasic" class="form-label">Description(three)</label>
+                                    <textarea name="description_three" id="description_three" class="form-control" cols="30" rows="5">
+                                    </textarea>
+                                </div>
+                            </div>
                             </div>
                             <div class="modal-footer">
                             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
@@ -101,10 +137,10 @@
             <!-- Button trigger modal -->
             <!-- Update Category Modal -->
             <div class="modal fade" id="updateModal" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog" role="document">
+                <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel1">Update Child Category</h5>
+                        <h5 class="modal-title" id="exampleModalLabel1">Update Page</h5>
                         <button
                             type="button"
                             class="btn-close"
@@ -123,10 +159,21 @@
 
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.1/js/jquery.dataTables.min.js"></script>
-
+  <script src="{{asset('assets/vendor/js/dropify.min.js')}}"></script>
   {{-- <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script> --}}
 
+
+
   <script type="text/javascript">
+
+    $('.dropify').dropify({
+        messages: {
+            'default': 'Drag and drop a file here or click',
+
+        }
+    });
+
+
    $(function childcategory(){
     $.noConflict();
     var table=$('.ytable').DataTable({
@@ -139,7 +186,7 @@
             {data:'page_title', name:'page_title'},
             {data:'page_slug',  name:'page_slug'},
             {data:'page_position', name:'page_position'},
-            {data:'page_description', name:'page_description'},
+            {data:'description', name:'description'},
             {data:'action', name:'action', orderable:true, searchable:true},
 
         ]

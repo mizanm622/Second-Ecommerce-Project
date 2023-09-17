@@ -17,7 +17,16 @@ return new class extends Migration
             $table->string('page_name')->nullable();
             $table->string('page_slug')->nullable();
             $table->string('page_title')->nullable();
-            $table->string('page_description')->nullable();
+            $table->text('page_description')->nullable();
+            $table->string('heading_one')->nullable();
+            $table->text('description_one')->nullable();
+            $table->string('image_one')->nullable();
+            $table->string('heading_two')->nullable();
+            $table->text('description_two')->nullable();
+            $table->string('image_two')->nullable();
+            $table->string('heading_three')->nullable();
+            $table->text('description_three')->nullable();
+            $table->string('image_three')->nullable();
             $table->timestamps();
         });
     }

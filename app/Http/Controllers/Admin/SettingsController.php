@@ -77,41 +77,46 @@ class SettingsController extends Controller
     //update website setting from here
     public function wedsiteUpdate(Request $request, $id){
 
+                // dd($request->old_favicon);
 
             if(!empty($request->logo)){
-                unlink($request->old_logo);
-
-
                 $logo=$request->logo;
                 $photoName=uniqid().'.'.$logo->getClientOriginalExtension();
                 $logo_path=$logo->move('files/setting/',$photoName);
-
+                if(file_exists($request->old_logo)){
+                    unlink($request->old_logo);
+                }
             }else{
 
                 $logo_path=$request->old_logo;
             }
-
-
             if(!empty($request->favicon)){
-                 unlink($request->old_favicon);
-                 $favicon=$request->favicon;
+                $favicon=$request->favicon;
                  $photoName=uniqid().'.'.$favicon->getClientOriginalExtension();
                  $favi_path=$favicon->move('files/setting/',$photoName);
+                 if(file_exists($request->old_favicon)){
+                    unlink($request->old_favicon);
+                }
                 }
                 else{
-                    $favi_path=$request->old_favicon;
-                }
+                 $favi_path=$request->old_favicon;
+            }
 
 
 
 
         Setting::where('id',$id)->update([
+            'name'=>$request->name,
             'currency'=>$request->currency,
             'phone_one'=>$request->phone_one,
             'phone_two'=>$request->phone_two,
             'main_email'=>$request->main_email,
             'support_email'=>$request->support_email,
             'address'=>$request->address,
+            'town'=>$request->town,
+            'city'=>$request->city,
+            'country'=>$request->country,
+            'zip'=>$request->zip,
             'facebook'=>$request->facebook,
             'youtube'=>$request->youtube,
             'instagram'=>$request->instagram,

@@ -176,7 +176,10 @@
                             <div class="featured_slider slider">
                                 <!-- Slider Item -->
                                 @foreach ($featuredProduct as $product)
-
+                                    @php
+                                    $colors=explode(',',$product->color);
+                                    $sizes=explode(',',$product->size);
+                                    @endphp
                                     <div class="featured_slider_item">
                                         <div class="border_active"></div>
                                         <div class="product_item discount d-flex flex-column align-items-center justify-content-center text-center">
@@ -184,8 +187,8 @@
                                                 <div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{{asset( $product->thumbnail)}}" alt="" width="60" height="80"></div>
                                                 <input type="hidden" name="name" value="{{$product->name}}">
                                                 <input type="hidden" name="image" value="{{$product->thumbnail}}">
-                                                <div class="large-view">
-                                                    <a class="btn btn-info btn-sm" id="show" data-id="{{$product->id}}" href="javascript:void(0)" data-toggle="modal" data-target="#myModal">Large View</a>
+                                                <div class="view">
+                                                    <a class="btn btn-link btn-sm m-0 p-0" id="show" data-id="{{$product->id}}" href="javascript:void(0)" data-toggle="modal" data-target="#myModal">View</a>
                                                 </div>
                                                 <div class="product_content">
                                                     @if ($product->discount_price == '0')
@@ -200,7 +203,40 @@
 
                                                     <input type="hidden" name="quantity" value="1">
                                                     <div class="product_extras">
-                                                        <a class="product_cart_button btn" id="cart" data-id="{{$product->id}}" href="javascript:void(0)" >Add to Cart</a>
+                                                        <div class="extra-option row">
+                                                            @isset($product->color)
+                                                                <div class="color text-left">
+                                                                    <select type="text" name="color" class="form-control form-control-sm" id="">
+                                                                        <option value="">Colors</option>
+                                                                        @foreach ($colors as $color)
+                                                                            <option value="{{$color}}">{{$color}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            @endisset
+                                                            @isset($product->size)
+                                                                <div class="size text-center">
+                                                                    <select type="text" name="size" class="form-control form-control-sm" id="">
+                                                                        <option value="">Sizes</option>
+                                                                        @foreach ($sizes as $size)
+                                                                            <option value="{{$size}}">{{$size}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            @endisset
+                                                            @if(empty($product->size) or empty($product->color))
+                                                            <div class="optional-quantity text-right">
+                                                                <input type="number" name="quantity" class="form-control form-control-sm " min="1" max="9" value="1">
+                                                            </div>
+                                                            @else
+                                                            <div class="quantity text-right">
+                                                                <input type="number" name="quantity" class="form-control form-control-sm " min="1" max="9" value="1">
+                                                            </div>
+                                                            @endif
+                                                        </div>
+                                                        <div class="add-to-cart-btn">
+                                                            <a class="product_cart_button btn" id="cart" data-id="{{$product->id}}" href="javascript:void(0)">Add to Cart</a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </a>
@@ -230,18 +266,21 @@
                             <div class="featured_slider slider">
                                 <!-- Slider Item -->
                                 @foreach ($populerProduct as $product)
+                                @php
+                                    $colors=explode(',',$product->color);
+                                    $sizes=explode(',',$product->size);
+                                @endphp
                                     <div class="featured_slider_item">
                                         <div class="border_active"></div>
                                         <div class="product_item discount d-flex flex-column align-items-center justify-content-center text-center">
-                                            <a href="{{route('product.details',$product->id)}}">
+                                            <a class="details-view m-0 p-0" href="{{route('product.details',$product->id)}}">
                                                 <div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{{asset( $product->thumbnail)}}" alt="" width="60" height="80"></div>
                                                 <input type="hidden" name="name" value="{{$product->name}}">
                                                 <input type="hidden" name="image" value="{{$product->thumbnail}}">
-                                                <div class="large-view">
-                                                    <a class="btn btn-info btn-sm" id="show" data-id="{{$product->id}}" href="javascript:void(0)" data-toggle="modal" data-target="#myModal">Large View</a>
+                                                <div class="view">
+                                                    <a class="btn btn-link btn-sm m-0 p-0" id="show" data-id="{{$product->id}}" href="javascript:void(0)" data-toggle="modal" data-target="#myModal">View</a>
                                                 </div>
                                                 <div class="product_content">
-
                                                     @if ($product->discount_price == '0')
                                                         <input type="hidden" name="price" value="{{$product->selling_price}}">
                                                         <div class="product_price discount">{{$settings->currency}} {{$product->selling_price}}</div>
@@ -252,7 +291,41 @@
                                                     <div class="product_name"><div><a href="">{{substr($product->name, 0, 30) }}</a></div></div>
                                                     <input type="hidden" name="quantity" value="1">
                                                     <div class="product_extras">
-                                                        <a class="product_cart_button btn" id="cart" data-id="{{$product->id}}" href="javascript:void(0)">Add to Cart</a>
+                                                        <div class="extra-option row">
+                                                            @isset($product->color)
+                                                                <div class="color text-left">
+                                                                    <select type="text" name="color" class="form-control form-control-sm" id="">
+                                                                        <option value="">Colors</option>
+                                                                        @foreach ($colors as $color)
+                                                                            <option value="{{$color}}">{{$color}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            @endisset
+                                                            @isset($product->size)
+                                                                <div class="size text-center">
+                                                                    <select type="text" name="size" class="form-control form-control-sm" id="">
+                                                                        <option value="">Sizes</option>
+                                                                        @foreach ($sizes as $size)
+                                                                            <option value="{{$size}}">{{$size}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            @endisset
+                                                            @if(empty($product->size) or empty($product->color))
+                                                            <div class="optional-quantity text-right">
+                                                                <input type="number" name="quantity" class="form-control form-control-sm " min="1" max="9" value="1">
+                                                            </div>
+                                                            @else
+                                                            <div class="quantity text-right">
+                                                                <input type="number" name="quantity" class="form-control form-control-sm " min="1" max="9" value="1">
+                                                            </div>
+                                                            @endif
+                                                        </div>
+                                                        <div class="add-to-cart-btn">
+                                                            <a class="product_cart_button btn" id="cart" data-id="{{$product->id}}" href="javascript:void(0)">Add to Cart</a>
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </a>
@@ -1864,4 +1937,31 @@ $.ajax({
 
     </script>
 
+<style>
+    .optional-quantity {
+    margin-left: 65px;
+}
+.optional-quantity{
+    text-align: right;
+}
+.extra-option {
+    padding-left: 11px;
+}
+.color {
+    margin-left: 0px;
+}
+
+.quantity {
+    margin-left: 7px;
+}
+.color select{
+    width:60px;
+}
+.size select{
+    width:60px;
+}
+.quantity select{
+    width:30px;
+}
+</style>
 @endsection

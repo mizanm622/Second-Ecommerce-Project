@@ -52,10 +52,9 @@ $subcat_id = 0;
                     <div class="sidebar_section">
                         <div class="sidebar_title">Categories</div>
                         <ul class="sidebar_categories">
-                            @foreach ($subcategories as $subcategory)
+                            @foreach ($populerCategory as $subcategory)
                             <li><img class="img-thumbnail rounded-circle" src="{{asset($subcategory->subcategory_logo)}}" alt="{{$subcategory->subcategory_name}}" width="30" height="30"> <a href="{{route('category.product',$subcategory->id)}}">{{$subcategory->subcategory_name}}</a></li>
                             @endforeach
-
                         </ul>
                     </div>
                     <div class="sidebar_section filter_by_section">
@@ -72,31 +71,22 @@ $subcat_id = 0;
                                 </div>
                                 <input type="hidden" name="id" value="{{$subcat_id}}">
                                 <input class="btn btn-outline-success form-control ml-0" type="submit" value="Search">
-
                             </form>
                         </div>
                     </div>
-
                     <div class="sidebar_section">
                         <div class="sidebar_subtitle brands_subtitle">Brands</div>
                         <ul class="brands_list">
                             @foreach ($brands as $brand)
-
                             <li class="brand"><img class="img-thumbnail rounded" src="{{asset($brand->brand_logo)}}" alt="" width="30" height="30"> <a href="{{route('category.product',$brand->id)}}">{{$brand->brand_name}}</a></li>
                             @endforeach
-
-
-
                         </ul>
                     </div>
                 </div>
-
             </div>
 
             <div class="col-lg-9">
-
                 <!-- Shop Content -->
-
                 <div class="shop_content">
                     <div class="shop_bar clearfix">
                         <div class="shop_product_count"><span class="badge badge-primary text-light">{{count($products)}}</span> products found</div>
@@ -121,50 +111,86 @@ $subcat_id = 0;
                         <!-- Product Item -->
 
                         @foreach ($products as $product)
-
+                        @php
+                            $colors=explode(',',$product->color);
+                            $sizes=explode(',',$product->size);
+                        @endphp
 
                             <div class="product_item is_new discount">
                                 <div class="product_border"></div>
                                 <a href="{{route('product.details',$product->id)}}" tabindex="0">
                                 <div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{{asset( $product->thumbnail)}}" alt="" width="60" height="80"></div>
+                                <input type="hidden" name="name" value="{{$product->name}}">
+                                <input type="hidden" name="image" value="{{$product->thumbnail}}">
+                                <div class="view">
+                                    <a class="btn btn-link btn-sm m-0 p-0" id="show" data-id="{{$product->id}}" href="javascript:void(0)" data-toggle="modal" data-target="#cartModal">View</a>
+                                </div>
                                 <div class="product_content">
                                     @if ($product->discount_price == '0')
-                                    <div class="product_price discount">{{$settings->currency}} {{$product->selling_price}}</div>
+                                        <input type="hidden" name="price" value="{{$product->selling_price}}">
+                                        <div class="product_price discount">{{$settings->currency}} {{$product->selling_price}}</div>
                                     @else
-                                    <div class="product_price discount">{{$settings->currency}} {{$product->discount_price}} <span> {{$settings->currency}} {{$product->selling_price}}</span></div>
+                                        <input type="hidden" name="price" value="{{$product->discount_price}}">
+                                        <div class="product_price discount">{{$settings->currency}} {{$product->discount_price}} <span> {{$settings->currency}} {{$product->selling_price}}</span></div>
                                     @endif
-                                    <div class="product_name"><div><a href="">{{substr($product->name,0,15)}}</a> </div></div>
+                                    <div class="product_name cat-product"><div><a href="">{{substr($product->name,0,15)}}</a> </div></div>
+                                        <div class="product-extra-area">
+                                            <div class="extra-option row">
+                                                @isset($product->color)
+                                                    <div class="color text-left">
+                                                        <select type="text" name="color" class="form-control form-control-sm" id="">
+                                                            <option value="">Colors</option>
+                                                            @foreach ($colors as $color)
+                                                                <option value="{{$color}}">{{$color}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                @endisset
+                                                @isset($product->size)
+                                                    <div class="size text-center">
+                                                        <select type="text" name="size" class="form-control form-control-sm" id="">
+                                                            <option value="">Sizes</option>
+                                                            @foreach ($sizes as $size)
+                                                                <option value="{{$size}}">{{$size}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                @endisset
+                                                @if(empty($product->size) or empty($product->color))
+                                                <div class="optional-quantity text-right">
+                                                    <input type="number" name="quantity" class="form-control form-control-sm " min="1" max="9" value="1">
+                                                </div>
+                                                @else
+                                                <div class="quantity text-right">
+                                                    <input type="number" name="quantity" class="form-control form-control-sm " min="1" max="9" value="1">
+                                                </div>
+                                                @endif
+                                            </div>
+                                            <div class="product-cart mt-1">
+                                                <a class="btn btn-primary btn-block" id="cart" data-id="{{$product->id}}" href="javascript:void(0)">Add to Cart</a>
+                                            </div>
+                                        </div>
                                 </div>
                                 </a>
-                                <div class="product_single_view">
-                                    <a class="btn btn-primary btn-sm" id="show" data-id="{{$product->id}}" href="javascript:void(0)" data-toggle="modal" data-target="#cartModal">Add to Cart</a>
-                                </div>
                                 @guest
-                                <div class="product_fav"><a class="btn" href="" data-toggle="popover" title="Please login to continue" ><i  class="fas fa-heart"></i></a></div>
+                                    <div class="product_fav"><a class="btn" href="" data-toggle="popover" title="Please login to continue" ><i  class="fas fa-heart"></i></a></div>
                                 @else
-                                <div class="product_fav"><span  data-id="{{$product->id}}" id="product-wishlist" class="fas fa-heart text-info"></span></div>
+                                    <div class="product_fav"><span  data-id="{{$product->id}}" id="product-wishlist" class="fas fa-heart text-info"></span></div>
                                 @endguest
                                 <ul class="product_marks">
                                     @if($product->discount_price != 0)
-                                    <li class="product_mark product_discount">{{number_format(($product->selling_price-$product->discount_price)*100/$product->discount_price, 1)}}%</li>
+                                        <li class="product_mark product_discount">{{number_format(($product->selling_price-$product->discount_price)*100/$product->discount_price, 1)}}%</li>
                                     @else
-                                    <li class="product_mark product_new">new</li>
+                                        <li class="product_mark product_new">new</li>
                                     @endif
                                 </ul>
                             </div>
                         @endforeach
-
                     </div>
-
-                    <!-- Shop Page Navigation -->
-
+                    <!-- Shop Page Pagination -->
                     <div class="shop_page_nav d-flex flex-row">
                         {{$products->links()}}
-                        {{-- <div class="page_prev d-flex flex-column align-items-center justify-content-center"><i class="fas fa-chevron-left"></i></div>
-                        <ul class="page_nav d-flex flex-row">
 
-                        </ul>
-                        <div class="page_next d-flex flex-column align-items-center justify-content-center"><i class="fas fa-chevron-right"></i></div> --}}
                     </div>
 
                 </div>
@@ -238,21 +264,15 @@ $subcat_id = 0;
         <div class="row">
             <div class="col">
                 <div class="brands_slider_container">
-
                     <!-- Brands Slider -->
-
                     <div class="owl-carousel owl-theme brands_slider">
                         @foreach ($brands as $brand)
                         <div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img class="img-responsive" src="{{asset($brand->brand_logo)}}" alt="" width="90" height="50"></div></div>
                         @endforeach
-
-
                     </div>
-
                     <!-- Brands Slider Navigation -->
                     <div class="brands_nav brands_prev"><i class="fas fa-chevron-left"></i></div>
                     <div class="brands_nav brands_next"><i class="fas fa-chevron-right"></i></div>
-
                 </div>
             </div>
         </div>
@@ -341,5 +361,67 @@ $.ajax({
         }
     });
     });
+
+    // add to cart product
+    $(document).on('click','#cart',function(e) {
+         e.preventDefault();
+        // $('.loading').removeClass('d-none');
+        let id = $(this).data('id');
+        let cart_item = $(this).closest('.product_item');
+        let name = cart_item.find('input[name="name"]').val();
+        let image = cart_item.find('input[name="image"]').val();
+        let color = cart_item.find('select[name="color"]').val();
+        let size = cart_item.find('select[name="size"]').val();
+        let quantity = cart_item.find('input[name="quantity"]').val();
+        let price = cart_item.find('input[name="price"]').val();
+        let url = "{{route('add.to.cart')}}";
+        $.ajax({
+            url : url,
+            type : 'get',
+        async : false,
+            data : {
+                id   : id,
+                name : name,
+            image : image,
+            color : color,
+                size : size,
+            quantity : quantity,
+            price : price,
+            },
+            success:function(data) {
+                toastr.success(data);
+                //  $('#wishlist-to-cart')[0].reset();
+                $('.cart').load(location.href+' .cart');
+
+            }
+        });
+        });
 </script>
+<style>
+    .optional-quantity {
+    margin-left: 65px;
+}
+.optional-quantity{
+    text-align: right;
+}
+.extra-option {
+    padding-left: 11px;
+}
+.color {
+    margin-left: 0px;
+}
+
+.quantity {
+    margin-left: 7px;
+}
+.color select{
+    width:60px;
+}
+.size select{
+    width:60px;
+}
+.quantity select{
+    width:30px;
+}
+</style>
 @endsection

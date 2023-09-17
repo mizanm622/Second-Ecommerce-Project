@@ -27,92 +27,113 @@
                     <div class="description">
                         <div class="product-header">
                             <div class="product-name">
-                                <h4 class="m-0 pb-2">{{$featuredProduct->name}}</h4><!--Product name-->
-                                <input type="hidden" value="{{$featuredProduct->name}}" id="name" name="name">
-                                <input type="hidden" value="{{$featuredProduct->thumbnail}}" id="image" name="image">
+                                <h4 class="m-0 pb-2"><span>Name: </span>{{$featuredProduct->name}}</h4><!--Product name-->
+                                @if(empty($review))
+
+                                @elseif (ceil($review->avg('review_rating')) == 5)
+                                    <span>Review Rating: </span>
+                                    <span class="text-warning fas fa-star checked"></span>
+                                    <span class="text-warning fas fa-star checked"></span>
+                                    <span class="text-warning fas fa-star checked"></span>
+                                    <span class="text-warning fas fa-star checked"></span>
+                                    <span class="text-warning fas fa-star checked"></span>
+
+
+                                @elseif (ceil($review->avg('review_rating')) == 4)
+                                    <span>Review Rating: </span>
+                                    <span class="text-warning fas fa-star checked"></span>
+                                    <span class="text-warning fas fa-star checked"></span>
+                                    <span class="text-warning fas fa-star checked"></span>
+                                    <span class="text-warning fas fa-star checked"></span>
+                                    <span class="text-muted fas fa-star"></span>
+
+                                @elseif (ceil($review->avg('review_rating')) == 3)
+                                    <span>Review Rating: </span>
+                                    <span class="text-warning fas fa-star checked"></span>
+                                    <span class="text-warning fas fa-star checked"></span>
+                                    <span class="text-warning fas fa-star checked"></span>
+                                    <span class="text-muted fas fa-star"></span>
+                                    <span class="text-muted fas fa-star"></span>
+
+                                @elseif (ceil($review->avg('review_rating')) == 2)
+                                    <span>Review Rating: </span>
+                                    <span class="text-warning fas fa-star checked"></span>
+                                    <span class="text-warning fas fa-star checked"></span>
+                                    <span class="text-muted fas fa-star"></span>
+                                    <span class="text-muted fas fa-star"></span>
+                                    <span class="text-muted fas fa-star"></span>
+
+                                @elseif (ceil($review->avg('review_rating')) == 1)
+                                    <span>Review Rating: </span>
+                                    <span class="text-warning fas fa-star checked"></span>
+                                    <span class="text-muted fas fa-star"></span>
+                                    <span class="text-muted fas fa-star"></span>
+                                    <span class="text-muted fas fa-star"></span>
+                                    <span class="text-muted fas fa-star"></span>
+
+                                @endif
                             </div>
+
+
                             @if ($featuredProduct->discount_price == 0)
-                                <input type="hidden" value="{{$featuredProduct->selling_price}}" id="price" name="price">
-                                <div class="price"><h5 class="m-0 p-0"><span class="text-danger">{{$settings->currency}} {{$featuredProduct->selling_price}}</span> </h5></div>
+
+                                <div class="price"><h5 class="p-0"><span class="">Price: </span>{{$settings->currency}} {{$featuredProduct->selling_price}} </h5></div>
                             @else
-                                <input type="hidden" value="{{$featuredProduct->discount_price}}" id="price" name="price">
-                                <div class="price"><h5 class="m-0 p-0"><del>{{$settings->currency}}{{$featuredProduct->selling_price}}</del> <span class="text-danger">{{$settings->currency}} {{$featuredProduct->discount_price}}</span> </h5></div>
+                            <div class="price"><h5 class="p-0 mt-1"><span class="">Reguler Price: </span>{{$settings->currency}} {{$featuredProduct->selling_price}} </h5></div>
+                                <div class="price"><h5 class="text-danger p-0"></span>Discount Price:</span>{{$settings->currency}}{{$featuredProduct->discount_price}} </h5></div>
                             @endif
                             @if (isset($featuredProduct->stack_quantity))
-                                <div class="quantity"><h6 class="m-0 pt-1">Available Stack <span class="badge badge-success badge-md px-3">{{$featuredProduct->stack_quantity}}</span></h6></div>
+                                <div class="qty"><h5 class="p-0"> <span>Available Stack:</span> <span class="badge badge-success badge-md px-3">{{$featuredProduct->stack_quantity}}</span></h5></div>
                             @else
-                                <div class="quantity"><h6 class="m-0 pt-1" disabled >Stack Request <span class="badge badge-success badge-md px-3"> 0 </span></h6></div>
+                                <div class="qty"><h5 class="p-0" disabled><span class="">Stack Request:</span><span class="badge badge-success badge-md px-3"> 0 </span></h5></div>
                             @endif
                         </div>
                         <div class="product-body mt-4">
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="quantity"><!--Product quantity-->
-                                        <div class="mb-3">
-                                            <div class="form-group">
-                                                <label class="form-label" for="basic-default-company">Quantit:</label>
-                                                <input type="number" id="quantity" class="form-control form-control-sm ml-0" min="1" max="9" value="1" name="quantity" style="margin-left:0px !important">
-                                            </div>
+                            <div class="color"><!--Product color-->
+                                @isset($featuredProduct->color)
+                                <div class="mb-3">
+                                    <div class="color-area">
+                                        <div class="title">
+                                            <h5 class="p-0"><span>Available Colors:</span>
+                                            @foreach ($colors as $color)
+                                                <span class="text-info" >{{$color}},</span>
+                                            @endforeach
+                                            </h5>
                                         </div>
                                     </div>
                                 </div>
+                                @endisset
                             </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="color"><!--Product color-->
-                                        @isset($featuredProduct->color)
-                                        <div class="mb-3">
-                                            <div class="form-group">
-                                                <label class="form-label" for="basic-default-company">Color:</label>
-                                                <select type="text" class="form-control form-control-sm ml-0" id="color" name="color" style="margin-left:0px !important" >
-                                                    @foreach ($colors as $color)
-                                                    <option value="{{$color}}">{{$color}}</option>
+                            <div class="size"><!--Product size-->
+                                @isset($featuredProduct->size)
+                                    <div class="mb-3">
+                                        <div class="size-area">
+                                            <div class="title">
+                                                <h5 class="p-0"><span>Avaiiable Sizes:</span>
+                                                    @foreach ($sizes as $size)
+                                                        <span class="text-info">{{$size}},</span>
                                                     @endforeach
-                                                </select>
+                                                </h5>
                                             </div>
                                         </div>
-                                        @endisset
                                     </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="size"><!--Product size-->
-                                        @isset($featuredProduct->size)
-                                            <div class="mb-3">
-                                                <div class="form-group">
-                                                    <label class="form-label" for="basic-default-company">Size:</label>
-                                                    <select type="text" class="form-control form-control-sm ml-0" id="size" name="size" style="margin-left:0px !important" >
-                                                        @foreach ($sizes as $size)
-                                                        <option value="{{$size}}">{{$size}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        @endisset
-                                    </div>
-                                </div>
+                                @endisset
                             </div>
                         </div>
                     </div>
+                    <div class="row pt-2 text-center"><!--Cart & Wishlist button area-->
+                        <div class="col-12">
+                            @guest
+                                <div class="wishlist"><a class="btn btn-info btn-md "  href="" data-toggle="popover" title="Please login to continue"><i class="fas fa-heart"></i> Add to Wishlist</a> </div>
+                            @else
+                                <div class="wishlist"><a class="btn btn-info btn-md" id="product-wishlist" data-id="{{$featuredProduct->id}}" href="javascript:void(0)"><i class="fas fa-heart"></i> Add to Wishlist</a> </div>
+                            @endguest
+                        </div>
+                    </div><!--End Cart & Wishlist button area-->
                 </div>
+
             </div>
-            <div class="row pt-2"><!--Cart & Wishlist button area-->
-                <div class="col-6">
-                    <div class="form-group">
-                        @guest
-                            <button  data-toggle="popover" title="Please login to continue" class="form-control btn btn-primary btn-md text-light" ><i  class="fa fa-shopping-cart"></i> Add to Cart</button>
-                        @else
-                            <a href="javascript:void(0)" data-id="{{$featuredProduct->id}}" class="form-control btn btn-primary btn-md text-light" id="cart" name="cart"><i  class="fa fa-shopping-cart"></i> Add to Cart</a>
-                        @endguest
-                    </div>
-                </div>
-                <div class="col-6">
-                    @guest
-                        <div class="wishlist"><a class="btn btn-info btn-md "  href="" data-toggle="popover" title="Please login to continue"><i class="fas fa-heart"></i> Add to Wishlist</a> </div>
-                    @else
-                        <div class="wishlist"><a class="btn btn-info btn-md" id="product-wishlist" data-id="{{$featuredProduct->id}}" href="javascript:void(0)"><i class="fas fa-heart"></i> Add to Wishlist</a> </div>
-                    @endguest
-                </div>
-            </div><!--End Cart & Wishlist button area-->
+
         </div>
     </div>
 </div>

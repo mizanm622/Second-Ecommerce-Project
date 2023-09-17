@@ -110,11 +110,11 @@ p a:hover::after
 }
 ::selection
 {
-	
+
 }
 p::selection
 {
-	
+
 }
 h1{font-size: 48px;}
 h2{font-size: 36px;}
@@ -129,14 +129,14 @@ h1, h2, h3, h4, h5, h6
 	-webkit-text-shadow: rgba(0,0,0,.01) 0 0 1px;
 	text-shadow: rgba(0,0,0,.01) 0 0 1px;
 }
-h1::selection, 
-h2::selection, 
-h3::selection, 
-h4::selection, 
-h5::selection, 
+h1::selection,
+h2::selection,
+h3::selection,
+h4::selection,
+h5::selection,
 h6::selection
 {
-	
+
 }
 .form-control
 {
@@ -602,15 +602,15 @@ section
 	line-height: 50px;
 	color: #a3a3a3 !important;
 }
-.header_search_input::-moz-placeholder /* Firefox 19+ */ 
+.header_search_input::-moz-placeholder /* Firefox 19+ */
 {
 	font-size: 16px !important;
 	font-weight: 300;
 	line-height: 50px;
 	color: #a3a3a3 !important;
-} 
+}
 .header_search_input:-ms-input-placeholder
-{ 
+{
 	font-size: 16px !important;
 	font-weight: 300;
 	line-height: 50px;
@@ -669,7 +669,7 @@ section
 }
 .custom_dropdown_placeholder i
 {
-	
+
 }
 .custom_list
 {
@@ -1394,7 +1394,7 @@ select option
 	justify-content: center;
 	align-items: center;
 	position: relative;
-	width: 20%;
+	width: 25%;
 	background: #FFFFFF;
 	cursor: pointer;
 	padding-top: 40px;
@@ -1426,11 +1426,31 @@ select option
 {
 	width: 100%;
 }
+.product-extra-area{
+    width: 100%;
+	background: #FFFFFF;
+	visibility: hidden;
+	-webkit-transition: max-height 200ms ease;
+	-moz-transition: max-height 200ms ease;
+	-ms-transition: max-height 200ms ease;
+	-o-transition: max-height 200ms ease;
+	transition: max-height 200ms ease;
+}
+.product_item:hover .product-extra-area
+{
+	max-height: 300px;
+}
+.product_item:hover .extra-option,
+.product_item:hover .product-cart
+{
+	visibility: visible;
+	opacity: 1;
+}
 .product_price
 {
 	font-size: 16px;
 	font-weight: 500;
-	margin-top: 25px;
+	margin-top: 10px;
 }
 .product_item.discount
 {
@@ -1463,7 +1483,10 @@ select option
 .product_name div
 {
 	width: 100%;
-	
+
+}
+.product_name.cat-product{
+    font-size: 14px;
 }
 .product_name div a
 {
@@ -1574,7 +1597,7 @@ select option
 {
 	display: inline-block;
 	visibility: visible;
-	opacity: 1;	
+	opacity: 1;
 }
 
 /*********************************
@@ -1587,7 +1610,7 @@ select option
 	height: 50px;
 	margin-top: 80px;
 }
-.page_prev, 
+.page_prev,
 .page_next
 {
 	width: 50px;
@@ -1596,7 +1619,7 @@ select option
 	border-radius: 5px;
 	cursor: pointer;
 }
-.page_prev i, 
+.page_prev i,
 .page_next i
 {
 	font-size: 12px;
@@ -1607,7 +1630,7 @@ select option
 	-o-transition: all 200ms ease;
 	transition: all 200ms ease;
 }
-.page_prev:hover i, 
+.page_prev:hover i,
 .page_next:hover i
 {
 	color: #636363;
@@ -2084,9 +2107,9 @@ select option
 {
 	font-size: 16px;
 	color: rgba(0,0,0,0.3);
-} 
+}
 .newsletter_input:-ms-input-placeholder
-{ 
+{
 	font-size: 16px;
 	color: rgba(0,0,0,0.3);
 }
@@ -2249,7 +2272,7 @@ select option
 }
 .footer_list_2
 {
-	margin-top: 42px !important; 
+	margin-top: 42px !important;
 }
 
 .copyright
@@ -2273,7 +2296,7 @@ select option
 }
 .logos
 {
-	
+
 }
 .logos_list li
 {

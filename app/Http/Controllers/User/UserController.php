@@ -109,13 +109,12 @@ class UserController extends Controller
     // user profile
     public function userProfile(){
 
-        $user = User::all();
         $wishlist = Wishlist::where('user_id',auth()->id())->latest()->get();
         $shippingInfo = Shipping::where('user_id',auth()->id())->first();
-        $address =  OrderAddress::where('user_id',auth()->id())->where('order_date', date('Y-m-d'))->get();
-        $orderItems = OrderDetail::where('user_id',auth()->id())->where('order_date', date('Y-m-d'))->get();
+        $address =  OrderAddress::where('user_id',auth()->id())->latest()->get();
+        $orderItems = OrderDetail::where('user_id',auth()->id())->latest()->get();
 
-        return view('layouts.front-end.user.user_profile',compact('user','wishlist','shippingInfo','address','orderItems'));
+        return view('layouts.front-end.user.user_profile',get_defined_vars());
     }
 
 
