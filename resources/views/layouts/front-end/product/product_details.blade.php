@@ -77,67 +77,63 @@
                     <div class="product_text"><span class="text-info">Stack: </span>({{$products->stack_quantity}} ) | <span class="text-info">Unit: </span>{{$products->unit}} Pcs</div>
 
                     <div class="order_info d-flex flex-row">
-                        <!--Start form-->
-                        <form action="{{route('add.to.cart')}}" method="post" id="add-to-cart">
-                            @csrf
-                            <input type="hidden" value="{{$products->name}}" name="name">
-                            <input type="hidden" value="{{$products->thumbnail}}" name="image">
+                        <input type="hidden" value="{{$products->name}}" name="name">
+                        <input type="hidden" value="{{$products->thumbnail}}" name="image">
 
-                            <div class="clearfix" style="z-index: 1000;">
-                               <div class="row">
+                        <div class="clearfix" style="z-index: 1000;">
+                            <div class="row">
                                 @isset($products->color)
-                                    <div class="mb-3 col-6"><!-- Product color -->
-                                        <label class="form-label" for="basic-default-company">Color</label>
+                                    <div class="mb-3 col-6 pl-0 pr-4"><!-- Product color -->
+                                        <label class="form-label pl-2" for="basic-default-company">Color:</label>
                                         <select type="text" class="form-control" name="color" >
                                             @foreach ($colors as $color)
                                             <option value="{{$color}}">{{$color}}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                    @endisset
-                                    @isset($products->size)
-                                    <div class="mb-3 col-6"><!-- Product size -->
-                                        <label class="form-label" for="basic-default-company">Size</label>
-                                        <select type="text" class="form-control" name="size">
-                                            @foreach ($sizes as $size)
-                                            <option value="{{$size}}">{{$size}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    @endisset
+                                @endisset
+                                @isset($products->size)
+                                <div class="mb-3 col-6 pl-4"><!-- Product size -->
+                                    <label class="form-label pl-2" for="basic-default-company">Size:</label>
+                                    <select type="text" class="form-control" name="size">
+                                        @foreach ($sizes as $size)
+                                        <option value="{{$size}}">{{$size}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-
-                                <div class="product_quantity clearfix"><!-- Product Quantity -->
-                                    <span>Quantity: </span>
-                                    <input id="quantity_input" name="quantity" type="text" min="1" pattern="[1-9]*" value="1">
-                                    <div class="quantity_buttons">
-                                        <div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fas fa-chevron-up"></i></div>
-                                        <div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fas fa-chevron-down"></i></div>
+                                @endisset
+                            </div>
+                            <div class="row">
+                                <div class="col-6"><!-- Product Quantity -->
+                                    <div class="product-quantities">
+                                        <label class="form-label" for="basic-default-company">Quantity:</label>
+                                        <input id="" name="quantity" type="number" class="form-control" min="1" pattern="[1-9]*" value="1">
                                     </div>
                                 </div>
                             </div>
-                            @if ($products->discount_price == 0)
-                            <input type="hidden" value="{{$products->selling_price}}" name="price">
-                            <div class="banner_price">{{$settings->currency}} {{$products->selling_price}}</div>
-                            @else
-                            <input type="hidden" value="{{$products->discount_price}}" name="price">
-                            <div class="banner_price"><span> {{$settings->currency}} {{$products->selling_price}}</span>{{$settings->currency}} {{$products->discount_price}} </div>
 
-                            @endif
-                            <div class="button_container">
-                                @guest
-                                <a class="btn btn-primary btn-md" data-toggle="popover" title="Please login to continue" data-content=""href=""><span class="fas fa-shopping-cart"></span> Add to Cart</a>
-                                <a class="btn btn-info btn-md" href="" data-toggle="popover" title="Please login to continue" data-content=""><span class="fas fa-heart"></span> Add to Wishlist</a>
-
+                            <div class="row">
+                                @if ($products->discount_price == 0)
+                                    <input type="hidden" value="{{$products->selling_price}}" name="price">
+                                    <div class="banner_price">{{$settings->currency}} {{$products->selling_price}}</div>
                                 @else
-                                <input type="hidden" value="{{$products->id}}" name="id">
-                                <button type="submit" class="btn btn-primary btn-md" href="#"><span class="fas fa-shopping-cart"></span>Add to Cart</button>
-                                <a class="btn btn-info btn-md" id="product-wishlist" data-id="{{$products->id}}" href="javascript:void(0)"><span class="fas fa-heart"></span> Add to Wishlist</a>
-                                <div class="product_fav"><span class="fas fa-heart"></span></div>
-                                @endguest
+                                    <input type="hidden" value="{{$products->discount_price}}" name="price">
+                                    <div class="banner_price"><span> {{$settings->currency}} {{$products->selling_price}}</span>{{$settings->currency}} {{$products->discount_price}} </div>
+                                @endif
                             </div>
-                        </form>
-                        <!--End form-->
+                            <div class="row">
+                                <div class="button_container">
+                                    @guest
+                                        <a class="btn btn-primary btn-md" data-toggle="popover" title="Please login to continue" data-content=""href=""><span class="fas fa-shopping-cart"></span> Add to Cart</a>
+                                        <a class="btn btn-info btn-md" href="" data-toggle="popover" title="Please login to continue" data-content=""><span class="fas fa-heart"></span> Add to Wishlist</a>
+                                    @else
+                                        <button type="submit" class="btn btn-primary btn-md" href="javascript:void(0)" data-id="{{$products->id}}" id="cart"><span class="fas fa-shopping-cart"></span>Add to Cart</button>
+                                        <a class="btn btn-info btn-md" id="product-wishlist" data-id="{{$products->id}}" href="javascript:void(0)"><span class="fas fa-heart"></span> Add to Wishlist</a>
+                                        <div class="product_fav"><span class="fas fa-heart"></span></div>
+                                    @endguest
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -524,28 +520,62 @@
         data: { id : id},
         success:function(data) {
             toastr.success(data);
-             $('.wishlist_count').load(location.href+' .wishlist_count');
+             $('.wishlist').load(location.href+' .wishlist');
         }
     });
     });
 
-    $('#add-to-cart').submit(function(e) {
+
+    $(document).on('click','#cart',function(e) {
     e.preventDefault();
-    var url = $(this).attr('action');
-    var request = $(this).serialize();
-    $.ajax({
-        url: url,
-        type: 'post',
-        anyne: false,
-        data: request,
-        success:function(data) {
-            toastr.success(data);
-             $('#add-to-cart')[0].reset();
-             $('.cart_price').load(location.href+' .cart_price');
+// $('.loading').removeClass('d-none');
+let id = $(this).data('id');
+let cart_item = $(this).closest('.order_info');
+let name = cart_item.find('input[name="name"]').val();
+let image = cart_item.find('input[name="image"]').val();
+let color = cart_item.find('select[name="color"]').val();
+let size = cart_item.find('select[name="size"]').val();
+let quantity = cart_item.find('input[name="quantity"]').val();
+let price = cart_item.find('input[name="price"]').val();
+let url = "{{route('add.to.cart')}}";
+$.ajax({
+     url : url,
+    type : 'get',
+   async : false,
+    data : {
+        id   : id,
+        name : name,
+       image : image,
+       color : color,
+        size : size,
+    quantity : quantity,
+       price : price,
+    },
+    success:function(data) {
+        toastr.success(data);
+        //  $('#wishlist-to-cart')[0].reset();
+          $('.cart').load(location.href+' .cart');
 
-        }
-    });
-    });
+    }
+});
+});
+    // $('#add-to-cart').submit(function(e) {
+    // e.preventDefault();
+    // var url = $(this).attr('action');
+    // var request = $(this).serialize();
+    // $.ajax({
+    //     url: url,
+    //     type: 'post',
+    //     anyne: false,
+    //     data: request,
+    //     success:function(data) {
+    //         toastr.success(data);
+    //          $('#add-to-cart')[0].reset();
+    //          $('.cart_price').load(location.href+' .cart_price');
+
+    //     }
+    // });
+    // });
     </script>
 @endsection
 

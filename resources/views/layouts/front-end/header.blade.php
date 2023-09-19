@@ -1,4 +1,6 @@
-
+@php
+     $wishlist = App\Models\Wishlist::where('user_id',auth()->id())->count();
+@endphp
 <header class="header">
 
     <!-- Top Bar -->
@@ -7,8 +9,8 @@
         <div class="container">
             <div class="row">
                 <div class="col d-flex flex-row">
-                    <div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{asset('front-end/assets/images/phone.png')}}" alt=""></div>+38 068 005 3570</div>
-                    <div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{asset('front-end/assets/images/mail.png')}}" alt=""></div><a href="https://colorlib.com/cdn-cgi/l/email-protection#234542505750424f465063444e424a4f0d404c4e"><span class="__cf_email__" data-cfemail="34525547404755585147745359555d581a575b59">[email&#160;protected]</span></a></div>
+                    <div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{asset('front-end/assets/images/phone.png')}}" alt=""></div>{{$settings->phone_one}}</div>
+                    <div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{asset('front-end/assets/images/mail.png')}}" alt=""></div>{{$settings->main_email}}</div>
                     <div class="top_bar_content ml-auto">
                         <div class="top_bar_menu">
                             <ul class="standard_dropdown top_bar_dropdown">
@@ -124,10 +126,13 @@
                 <div class="col-lg-4 col-9 order-lg-3 order-2 text-lg-left text-right">
                     <div class="wishlist_cart d-flex flex-row align-items-center justify-content-end">
                         <div class="wishlist d-flex flex-row align-items-center justify-content-end">
-                            <div class="wishlist_icon"><img src="{{asset('front-end/assets/images/heart.png')}}" alt=""></div>
+                            <div class="wishlist_icon">
+                                <img src="{{asset('front-end/assets/images/heart.png')}}" alt="">
+                                <div class="wishlist_count"><span class="">@if(empty($wishlist))  @else {{$wishlist}}  @endif</span></div>
+                            </div>
                             <div class="wishlist_content">
                                 <div class="wishlist_text"><a href="{{route('wishlist')}}">Wishlist</a></div>
-                                <div class="wishlist_count"><span class="text-primary">(@if(empty($wishlist))  @else {{$wishlist}}  @endif)</span></div>
+
                             </div>
                         </div>
 
@@ -140,7 +145,7 @@
                                 </div>
                                 <div class="cart_content">
                                     <div class="cart_text"><a href="{{route('cart')}}">Cart</a></div>
-                                    <div class="cart_price">{{$settings->currency}} {{Cart::total()}}</div>
+                                    <div class="cart_price">{{$settings->currency}} {{Cart::subtotal()}}</div>
                                 </div>
                             </div>
                         </div>

@@ -85,7 +85,7 @@
             </div>
             <div class="col-4">
                 <div class="item-area">
-                    <div class="card">><!--Items area-->
+                    <div class="card"><!--Items area-->
                         <div class="card-header">
                             <h4 class="text-center">Your Items List</h4>
                         </div>
@@ -108,12 +108,12 @@
                                 </tbody>
                             </table><!--End Product table-->
                         </div>
-                    </div>><!--End Items area-->
+                    </div><!--End Items area-->
                 </div>
             </div>
             <div class="col-4">
                 <div class="payment-area">
-                    <div class="card">><!--Order calculation area-->
+                    <div class="card"><!--Order calculation area-->
                         <div class="card-header">
                             <h4 class="text-center">Orders Calculation</h4>
                         </div>
@@ -232,8 +232,7 @@
 </div>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
-
-
+        // order submit
         $('#order-submit').submit(function(e) {
         e.preventDefault();
         var url = $(this).attr('action');
@@ -248,6 +247,7 @@
                 toastr.success(data);
                 $('#order-submit')[0].reset();
                 $('.table').load(location.href+' .table');
+                $('.cart').load(location.href+' .cart');
 
             }
         });

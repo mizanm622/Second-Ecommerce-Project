@@ -27,6 +27,7 @@ class HomeController extends Controller
         $bannerProduct = Product::where('product_slider',1)->latest()->get();
         $wishlist = Wishlist::where('user_id',auth()->id())->count();
         $featuredProduct = Product::where('featured',1)->latest()->limit(16)->get();
+        $bestRatedProduct = Product::where('selling_quantity','>',1)->latest()->limit(16)->get();
         $populerProduct = Product::where('featured',1)->where('view_count','>',1)->latest()->limit(16)->get();
         $trendingProduct = Product::where('featured',1)->where('trending',1)->latest()->limit(20)->get();
         $todaysDeal = Product::where('todays_deal',1)->latest()->get();
@@ -89,7 +90,7 @@ class HomeController extends Controller
 
     // page view from here
     public function pageView($id){
-        
+
         $pages = Page::findorfail($id);
 
         return view('layouts.front-end.pages.page', compact('pages'));

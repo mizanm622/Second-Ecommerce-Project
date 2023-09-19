@@ -120,6 +120,7 @@
         $.get('/remove/wishlist/'+id, function(data){
             toastr.success(data);
             $('.cart_section').load(location.href+' .cart_section');
+            $('.wishlist').load(location.href+' .wishlist');
         });
         });
 
@@ -135,6 +136,7 @@
                 success:function(data) {
                     toastr.success(data);
                     $('.cart_section').load(location.href+' .cart_section');
+                     $('.wishlist').load(location.href+' .wishlist');
                 }
         });
     });

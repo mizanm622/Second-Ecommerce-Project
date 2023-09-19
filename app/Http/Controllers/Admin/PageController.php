@@ -29,9 +29,29 @@ class PageController extends Controller
                 $actionbtn=' <a href="" data-bs-toggle="modal" class="edit" data-id="'.$row->id.'" data-bs-target="#updateModal"> <i class="bx bx-edit"></i></a>| <a id="delete" href="'.route('page.delete',$row->id).'"><i class="bx bx-trash" ></i></a> ';
                 return $actionbtn;
             })
-            ->editColumn('description', function($row){
+            ->editColumn('heading_one', function($row){
+                $heading =substr($row->heading_one,0, 10);
+                return $heading .'...';
+            })
+            ->editColumn('description_one', function($row){
                 $description =substr($row->description_one, 0, 15);
-                return $description .'.......';
+                return $description .'...';
+            })
+            ->editColumn('heading_two', function($row){
+                $heading =substr($row->heading_two,0, 10);
+                return $heading .'...';
+            })
+            ->editColumn('description_two', function($row){
+                $description =substr($row->description_two, 0, 15);
+                return $description .'...';
+            })
+            ->editColumn('heading_three', function($row){
+                $heading =substr($row->heading_three,0, 10);
+                return $heading .'...';
+            })
+            ->editColumn('description_three', function($row){
+                $description =substr($row->description_three, 0, 15);
+                return $description .'...';
             })
 
             ->rawColumns(['action'])->make(true);
@@ -44,7 +64,24 @@ class PageController extends Controller
         $validate=$request->validate([
             'page_name'=>'required',
             'page_title'=>'required',
+            'heading_one'=>'required',
+            'description_one'=>'required',
         ]);
+
+        $image_one=$request->image_one;
+        $photoName=uniqid().'.'.$image_one->getClientOriginalExtension();
+        $img_one_path=$image_one->move('files/pages/',$photoName);
+
+
+        $image_two=$request->image_two;
+        $photoName=uniqid().'.'.$image_two->getClientOriginalExtension();
+        $img_two_path=$image_two->move('files/pages/',$photoName);
+
+
+        $image_three=$request->image_three;
+        $photoName=uniqid().'.'.$image_three->getClientOriginalExtension();
+        $img_three_path=$image_three->move('files/pages/',$photoName);
+
 
         $data = Page::create([
             'page_name'=>$request->page_name,
@@ -52,20 +89,18 @@ class PageController extends Controller
             'page_slug'=>Str::slug($request->page_name),
             'heading_one'=>$request->heading_one,
             'description_one'=>$request->description_one,
-            'image_one'=>$request->image_one,
+            'image_one'=>$img_one_path,
             'heading_two'=>$request->heading_two,
             'description_two'=>$request->description_two,
-            'image_two'=>$request->image_two,
+            'image_two'=>$img_two_path,
             'heading_three'=>$request->heading_three,
             'description_three'=>$request->description_three,
-            'image_three'=>$request->image_three,
+            'image_three'=>$img_three_path,
 
    ]);
 
    $notification=array('msg' => 'Page Successfully Inserted! ', 'alert-type' => 'success');
    return redirect()->back()->with($notification);
-
-
 
     }
 
@@ -85,7 +120,10 @@ class PageController extends Controller
         $validate = $request->validate([
             'page_name'=>'required|max:255',
             'page_title'=>'required',
+            'heading_one'=>'required',
+            'description_one'=>'required',
         ]);
+
 
         if(!empty($request->image_one)){
             $image_one=$request->image_one;
@@ -127,7 +165,7 @@ class PageController extends Controller
                 'page_slug'=>Str::slug($request->page_name, '-'),
               'heading_one'=>$request->heading_one,
           'description_one'=>$request->description_one,
-            '    image_one'=>$img_one_path,
+                'image_one'=>$img_one_path,
               'heading_two'=>$request->heading_two,
           'description_two'=>$request->description_two,
                 'image_two'=>$img_two_path,

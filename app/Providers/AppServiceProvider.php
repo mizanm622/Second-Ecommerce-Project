@@ -54,7 +54,7 @@ class AppServiceProvider extends ServiceProvider
 //    }
 
         $category = Category::all();
-        $wishlist = Wishlist::where('user_id',auth()->id())->count();
+       // $wishlist = Wishlist::where('user_id',auth()->id())->count();
         $populerCategory = Subcategory::all();
         $pages =Page ::all();
         $settings=Setting::first();
@@ -63,6 +63,6 @@ class AppServiceProvider extends ServiceProvider
          view()->share('footerPages',$pages);
          view()->share('populerCategory',$populerCategory);
          view()->share('category',$category);
-         view()->share('wishlist',$wishlist);
+        //  view()->share('wishlist',$wishlist);
     }
 }

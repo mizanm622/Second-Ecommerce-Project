@@ -10,15 +10,18 @@
          <div class="card">
                 <h5 class="card-header " > <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#insertModal">+ Add New</button></h5>
             <div class="table-responsive text-nowrap table-border">
-                <table class="table ytable">
+                <table class="table ytable table-responsive">
                     <thead>
                     <tr>
                         <th>SL</th>
-                        <th>Page Name</th>
-                        <th>Page Title</th>
-                        <th>Page Slug</th>
-                        <th>Page Position</th>
-                        <th>Description</th>
+                        <th>P.Name</th>
+                        <th>P.Title</th>
+                        <th>H.One</th>
+                        <th>Des.One</th>
+                        <th>H.Two</th>
+                        <th>Des.Two</th>
+                        <th>H.Three</th>
+                        <th>Des.Three</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -66,15 +69,15 @@
                             <div class="row">
                                 <div class="col-4 mb-3">
                                     <label for="nameBasic" class="form-label">Heading(One)</label>
-                                    <input type="text" id="header_one" name="header_one" class="form-control" placeholder="Enter Page Title" required/>
+                                    <input type="text" id="heading_one" name="heading_one" class="form-control" placeholder="Enter Page Title" required/>
                                 </div>
                                 <div class="col-4 mb-3">
                                     <label for="nameBasic" class="form-label">Heading(two)</label>
-                                    <input type="text" id="header_two" name="header_two" class="form-control" placeholder="Enter Page Title" required/>
+                                    <input type="text" id="heading_two" name="heading_two" class="form-control" placeholder="Enter Page Title" required/>
                                 </div>
                                 <div class="col-4 mb-3">
                                     <label for="nameBasic" class="form-label">Heading(three)</label>
-                                    <input type="text" id="header_three" name="header_three" class="form-control" placeholder="Enter Page Title" required/>
+                                    <input type="text" id="heading_three" name="heading_three" class="form-control" placeholder="Enter Page Title" required/>
                                 </div>
                             </div>
 
@@ -184,9 +187,12 @@
             {data:'DT_RowIndex', name:'DT_RowIndex'},
             {data:'page_name', name:'page_name'},
             {data:'page_title', name:'page_title'},
-            {data:'page_slug',  name:'page_slug'},
-            {data:'page_position', name:'page_position'},
-            {data:'description', name:'description'},
+            {data:'heading_one',  name:'heading_one'},
+            {data:'description_one',  name:'description_one'},
+            {data:'heading_two',  name:'heading_two'},
+            {data:'description_two',  name:'description_two'},
+            {data:'heading_three',  name:'heading_three'},
+            {data:'description_three', name:'description_three'},
             {data:'action', name:'action', orderable:true, searchable:true},
 
         ]

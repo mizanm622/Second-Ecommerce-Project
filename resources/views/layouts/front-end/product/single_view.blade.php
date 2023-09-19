@@ -211,7 +211,7 @@
         data: { id : id},
         success:function(data) {
             toastr.success(data);
-             $('.wishlist_count').load(location.href+' .wishlist_count');
+             $('.wishlist').load(location.href+' .wishlist');
         }
     });
     });

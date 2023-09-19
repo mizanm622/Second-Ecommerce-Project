@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Coupon;
 use App\Models\OrderAddress;
 use App\Models\OrderDetail;
+use App\Models\Product;
 use App\Models\Shipping;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
@@ -127,14 +128,20 @@ class CheckoutController extends Controller
             'product_image'=> $product->options->image,
             'order_date'=> date('Y-m-d'),
         ]);
+
+        Product::where('id',$product->id)->decrement('stack_quantity',$product->qty);
+        Product::where('id',$product->id)->increment('selling_quantity',$product->qty);
     }
+
     session()->forget('coupon');
     Cart::destroy();
-     return redirect()->route('order.status');
+     return response()->json('Order Successfully Submited!');
     }
+
    // show recent order
    public function orderStatus(){
 
+    //no implementation
     $address =  OrderAddress::where('user_is',auth()->id())->where('order_date', date('Y-m-d'))->first();
     $orderItems = OrderDetail::where('user_is',auth()->id())->where('order_date', date('Y-m-d'))->get();
     return view('layouts.front-end.cart.order_check', compact('address','orderItems'));

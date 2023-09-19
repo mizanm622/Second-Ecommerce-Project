@@ -16,7 +16,7 @@
 <!-- Banner -->
 <div id="owl-demo" class="owl-carousel owl-theme" >
 @foreach ($bannerProduct as $row)
-<div class="item">
+<div class="item main_slider_item">
   <div class="banner">
     <div class="banner_background" style="background-image:url(front-end/assets/images/banner_background.jpg)"></div>
     <div class="container fill_height">
@@ -25,15 +25,26 @@
               <div class="banner_product_image"><img src="{{asset($row->thumbnail)}}" alt="" width="150" height="250"></div>
                 <div class="col-lg-5 offset-lg-4 fill_height">
                     <div class="banner_content">
+                        <input type="hidden" name="name" value="{{$row->name}}">
+                        <input type="hidden" name="image" value="{{$row->thumbnail}}">
                         <h1 class="banner_text">{{$row->name}}</h1>
                         @if ($row->discount_price == '0')
+                        <input type="hidden" name="price" value="{{$row->selling_price}}">
                         <div class="banner_price">{{$settings->currency}} {{$row->selling_price}}</div>
                         @else
+                        <input type="hidden" name="price" value="{{$row->discount_price}}">
                         <div class="banner_price"><span> {{$settings->currency}} {{$row->selling_price}}</span>{{$settings->currency}} {{$row->discount_price}} </div>
                         @endif
+                        <input type="hidden" name="quantity" value="1">
                         <div class="banner_product_name">{{$row->brand->brand_name}}</div>
-                        <div class="button banner_button"><a href="#">Shop Now</a></div>
-                        <div class="button banner_button"><a href="{{route('product.details',$row->id)}}">Show Details</a></div>
+                        @guest
+                            <div class="button banner_button"><a href="" id="">Shop Now</a></div>
+                            <div class="button banner_button"><a href="{{route('product.details',$row->id)}}">Show Details</a></div>
+                        @else
+
+                            <div class="button banner_button"><a href="javascript:void(0)" data-id="{{$row->id}}" id="cart_item">Shop Now</a></div>
+                            <div class="button banner_button"><a href="{{route('product.details',$row->id)}}">Show Details</a></div>
+                        @endguest
                     </div>
                 </div>
             </div>
@@ -56,7 +67,12 @@
                         <!-- Reviews Slider Item -->
                          @foreach ($campaing as $item)
                          @php
-                             $remainingTime=Illuminate\Support\Carbon::now()->diffInDays(Illuminate\Support\Carbon::parse($item->end_date));
+                         $remainingTime = 0;
+
+                         if(date('Y-m-d', strtotime(date('Y-m-d'))) <= date('Y-m-d', strtotime($item->end_date))){
+                            $remainingTime=Illuminate\Support\Carbon::now()->diffInDays(Illuminate\Support\Carbon::parse(date('Y-m-d', strtotime($item->end_date))));
+                         }
+
                          @endphp
                         @if ( $remainingTime != 0)
                         <div class="owl-item">
@@ -118,7 +134,7 @@
                                         <div class="available">
                                             <div class="available_line d-flex flex-row justify-content-start">
                                                 <div class="available_title">Available: <span>{{$deals->stack_quantity}}</span></div>
-                                                <div class="sold_title ml-auto">Already sold: <span>28</span></div>
+                                                <div class="sold_title ml-auto">Already Sold: <span>{{$deals->selling_quantity}}</span></div>
                                             </div>
                                             <div class="available_bar"><span style="width:17%"></span></div>
                                         </div>
@@ -200,14 +216,12 @@
                                                     @endif
                                                     {{-- <div class="product_price discount">$225<span>$300</span></div> --}}
                                                     <div class="product_name"><div><a href="">{{substr($product->name, 0, 30) }}</a></div></div>
-
-                                                    <input type="hidden" name="quantity" value="1">
                                                     <div class="product_extras">
                                                         <div class="extra-option row">
                                                             @isset($product->color)
                                                                 <div class="color text-left">
                                                                     <select type="text" name="color" class="form-control form-control-sm" id="">
-                                                                        <option value="">Colors</option>
+                                                                        <option>Colors</option>
                                                                         @foreach ($colors as $color)
                                                                             <option value="{{$color}}">{{$color}}</option>
                                                                         @endforeach
@@ -217,7 +231,7 @@
                                                             @isset($product->size)
                                                                 <div class="size text-center">
                                                                     <select type="text" name="size" class="form-control form-control-sm" id="">
-                                                                        <option value="">Sizes</option>
+                                                                        <option >Sizes</option>
                                                                         @foreach ($sizes as $size)
                                                                             <option value="{{$size}}">{{$size}}</option>
                                                                         @endforeach
@@ -226,11 +240,11 @@
                                                             @endisset
                                                             @if(empty($product->size) or empty($product->color))
                                                             <div class="optional-quantity text-right">
-                                                                <input type="number" name="quantity" class="form-control form-control-sm " min="1" max="9" value="1">
+                                                                <input type="number" name="quantity" class="form-control form-control-sm " min="1" max="9" maxlength="2" value="1">
                                                             </div>
                                                             @else
                                                             <div class="quantity text-right">
-                                                                <input type="number" name="quantity" class="form-control form-control-sm " min="1" max="9" value="1">
+                                                                <input type="number" name="quantity" class="form-control form-control-sm " min="1" max="9" maxlength="2" value="1">
                                                             </div>
                                                             @endif
                                                         </div>
@@ -289,13 +303,13 @@
                                                         <div class="product_price discount">{{$settings->currency}} {{$product->discount_price}} <span> {{$settings->currency}} {{$product->selling_price}}</span></div>
                                                     @endif
                                                     <div class="product_name"><div><a href="">{{substr($product->name, 0, 30) }}</a></div></div>
-                                                    <input type="hidden" name="quantity" value="1">
+
                                                     <div class="product_extras">
                                                         <div class="extra-option row">
                                                             @isset($product->color)
                                                                 <div class="color text-left">
                                                                     <select type="text" name="color" class="form-control form-control-sm" id="">
-                                                                        <option value="">Colors</option>
+                                                                        <option>Colors</option>
                                                                         @foreach ($colors as $color)
                                                                             <option value="{{$color}}">{{$color}}</option>
                                                                         @endforeach
@@ -305,7 +319,7 @@
                                                             @isset($product->size)
                                                                 <div class="size text-center">
                                                                     <select type="text" name="size" class="form-control form-control-sm" id="">
-                                                                        <option value="">Sizes</option>
+                                                                        <option>Sizes</option>
                                                                         @foreach ($sizes as $size)
                                                                             <option value="{{$size}}">{{$size}}</option>
                                                                         @endforeach
@@ -314,11 +328,11 @@
                                                             @endisset
                                                             @if(empty($product->size) or empty($product->color))
                                                             <div class="optional-quantity text-right">
-                                                                <input type="number" name="quantity" class="form-control form-control-sm " min="1" max="9" value="1">
+                                                                <input type="number" name="quantity" class="form-control form-control-sm" min="1" max="9" maxlength="2" value="1">
                                                             </div>
                                                             @else
                                                             <div class="quantity text-right">
-                                                                <input type="number" name="quantity" class="form-control form-control-sm " min="1" max="9" value="1">
+                                                                <input type="number" name="quantity" class="form-control form-control-sm " min="1" max="9" maxlength="2" value="1">
                                                             </div>
                                                             @endif
                                                         </div>
@@ -354,40 +368,92 @@
 
                         <div class="product_panel panel">
                             <div class="featured_slider slider">
-
+                              @foreach ($bestRatedProduct as $product)
                                 <!-- Slider Item -->
+                                @php
+                                    $colors=explode(',',$product->color);
+                                    $sizes=explode(',',$product->size);
+                                @endphp
                                 <div class="featured_slider_item">
                                     <div class="border_active"></div>
                                     <div class="product_item discount d-flex flex-column align-items-center justify-content-center text-center">
-                                        <div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{{asset('front-end/assets/images/featured_1.png')}}" alt=""></div>
-                                        <div class="product_content">
-                                            <div class="product_price discount">$225<span>$300</span></div>
-                                            <div class="product_name"><div><a href="product.html">Huawei MediaPad...</a></div></div>
-                                            <div class="product_extras">
-                                                <div class="product_color">
-                                                    <input type="radio" checked name="product_color" style="background:#b19c83">
-                                                    <input type="radio" name="product_color" style="background:#000000">
-                                                    <input type="radio" name="product_color" style="background:#999999">
-                                                </div>
-                                                <button class="product_cart_button">Add to Cart</button>
+                                        <a class="details-view m-0 p-0" href="{{route('product.details',$product->id)}}">
+                                            <div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{{asset( $product->thumbnail)}}" alt="" width="60" height="80"></div>
+                                            <input type="hidden" name="name" value="{{$product->name}}">
+                                            <input type="hidden" name="image" value="{{$product->thumbnail}}">
+                                            <div class="view">
+                                                <a class="btn btn-link btn-sm m-0 p-0" id="show" data-id="{{$product->id}}" href="javascript:void(0)" data-toggle="modal" data-target="#myModal">View</a>
                                             </div>
-                                        </div>
-                                        <div class="product_fav"><span  data-id="" id="product-wishlist" class="fas fa-heart text-info"></span></div>
+                                            <div class="product_content">
+                                                @if ($product->discount_price == '0')
+                                                    <input type="hidden" name="price" value="{{$product->selling_price}}">
+                                                    <div class="product_price discount">{{$settings->currency}} {{$product->selling_price}}</div>
+                                                @else
+                                                    <input type="hidden" name="price" value="{{$product->discount_price}}">
+                                                    <div class="product_price discount">{{$settings->currency}} {{$product->discount_price}} <span> {{$settings->currency}} {{$product->selling_price}}</span></div>
+                                                @endif
+                                                <div class="product_name"><div><a href="">{{substr($product->name, 0, 30) }}</a></div></div>
+
+                                                <div class="product_extras">
+                                                    <div class="extra-option row">
+                                                        @isset($product->color)
+                                                            <div class="color text-left">
+                                                                <select type="text" name="color" class="form-control form-control-sm" id="">
+                                                                    <option>Colors</option>
+                                                                    @foreach ($colors as $color)
+                                                                        <option value="{{$color}}">{{$color}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        @endisset
+                                                        @isset($product->size)
+                                                            <div class="size text-center">
+                                                                <select type="text" name="size" class="form-control form-control-sm" id="">
+                                                                    <option>Sizes</option>
+                                                                    @foreach ($sizes as $size)
+                                                                        <option value="{{$size}}">{{$size}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        @endisset
+                                                        @if(empty($product->size) or empty($product->color))
+                                                        <div class="optional-quantity text-right">
+                                                            <input type="number" name="quantity" class="form-control form-control-sm" min="1" max="9" maxlength="2" value="1">
+                                                        </div>
+                                                        @else
+                                                        <div class="quantity text-right">
+                                                            <input type="number" name="quantity" class="form-control form-control-sm " min="1" max="9" maxlength="2" value="1">
+                                                        </div>
+                                                        @endif
+                                                    </div>
+                                                    <div class="add-to-cart-btn">
+                                                        <a class="product_cart_button btn" id="cart" data-id="{{$product->id}}" href="javascript:void(0)">Add to Cart</a>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </a>
+                                        @guest
+                                        <div class="product_fav"><a class="btn" href="javascript:void(0)" data-toggle="popover" title="Please login to continue" ><i  class="fas fa-heart"></i></a></div>
+                                        @else
+                                        <div class="product_fav"><span  data-id="{{$product->id}}" id="product-wishlist" class="fas fa-heart text-info"></span></div>
+                                        @endguest
                                         <ul class="product_marks">
-                                          <li class="product_mark product_discount">-25%</li>
+                                            @if(empty($product->discount_price))
                                             <li class="product_mark product_new">new</li>
+                                            @else
+                                            <li class="product_mark product_discount">{{number_format(($product->selling_price-$product->discount_price)*100/$product->discount_price, 1)}}%</li>
+                                            @endif
+
                                         </ul>
                                     </div>
                                 </div>
-
+                                @endforeach
                             </div>
                             <div class="featured_slider_dots_cover"></div>
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
         </div>
     </div>
@@ -1453,121 +1519,83 @@
                         <div class="bestsellers_slider slider">
 
                             <!-- Best Sellers Item -->
+                            @foreach ($bestRatedProduct as $product)
+                            @php
+                                $rating = App\Models\Review::where('product_id',$product->id)->avg('review_rating');
+                            @endphp
+
                             <div class="bestsellers_item discount">
                                 <div class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                    <div class="bestsellers_image"><img src="{{asset('front-end/assets/images/best_1.png')}}" alt=""></div>
+                                    <div class="bestsellers_image"><img src="{{asset($product->thumbnail)}}" alt=""></div>
                                     <div class="bestsellers_content">
-                                        <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                        <div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a></div>
-                                        <div class="rating_r rating_r_4 bestsellers_rating"><i></i><i></i><i></i><i></i><i></i></div>
-                                        <div class="bestsellers_price discount">$225<span>$300</span></div>
+                                        <div class="bestsellers_category"><a href="#">{{$product->subcategory->subcategory_name}}</a></div>
+                                        <div class="bestsellers_name">{{$product->name}}</div>
+                                        @if(round($rating) ==0)
+                                        <div class="rating_r rating_r_4 bestsellers_rating"></div>
+                                        @elseif (round($rating) == 5)
+                                            <div class="rating_r rating_r_4 bestsellers_rating">
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-warning fas fa-star checked"></span>
+                                            </div>
+
+
+                                        @elseif (round($rating) == 4)
+                                            <div class="rating_r rating_r_4 bestsellers_rating">
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-muted fas fa-star"></span>
+                                            </div>
+                                        @elseif (round($rating) == 3)
+                                            <div class="rating_r rating_r_4 bestsellers_rating">
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-muted fas fa-star"></span>
+                                                <span class="text-muted fas fa-star"></span>
+                                            </div>
+                                        @elseif (round($rating) == 2)
+                                            <div class="rating_r rating_r_4 bestsellers_rating">
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-muted fas fa-star"></span>
+                                                <span class="text-muted fas fa-star"></span>
+                                                <span class="text-muted fas fa-star"></span>
+                                            </div>
+                                        @elseif (round($rating) == 1)
+                                            <div class="rating_r rating_r_4 bestsellers_rating">
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-muted fas fa-star"></span>
+                                                <span class="text-muted fas fa-star"></span>
+                                                <span class="text-muted fas fa-star"></span>
+                                                <span class="text-muted fas fa-star"></span>
+                                            </div>
+                                        @endif
+
+                                        @if ($product->discount_price == 0)
+                                            <div class="bestsellers_price discount">{{$settings->currency}} {{$product->selling_price}}</div>
+                                        @else
+                                            <div class="bestsellers_price discount">{{$settings->currency}} {{$product->discount_price}}<span>{{$settings->currency}} {{$product->selling_price}}</span></div>
+                                        @endif
                                     </div>
                                 </div>
-                                <div class="bestsellers_fav active"><i class="fas fa-heart"></i></div>
+                                <div class="bestsellers_fav active"><span  data-id="{{$product->id}}" id="product-wishlist" class="fas fa-heart text-info"></span></div>
                                 <ul class="bestsellers_marks">
-                                    <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                    <li class="bestsellers_mark bestsellers_new">new</li>
+                                    @if(empty($product->discount_price))
+                                        <li class="bestsellers_mark bestsellers_new">new</li>
+                                    @else
+                                        <li class="bestsellers_mark bestsellers_discount">{{number_format(($product->selling_price-$product->discount_price)*100/$product->discount_price, 1)}}%</li>
+                                    @endif
                                 </ul>
                             </div>
-
-                            <!-- Best Sellers Item -->
-                            <div class="bestsellers_item discount">
-                                <div class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                    <div class="bestsellers_image"><img src="{{asset('front-end/assets/images/best_2.png')}}" alt=""></div>
-                                    <div class="bestsellers_content">
-                                        <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                        <div class="bestsellers_name"><a href="product.html">Samsung J730F...</a></div>
-                                        <div class="rating_r rating_r_4 bestsellers_rating"><i></i><i></i><i></i><i></i><i></i></div>
-                                        <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                    </div>
-                                </div>
-                                <div class="bestsellers_fav"><i class="fas fa-heart"></i></div>
-                                <ul class="bestsellers_marks">
-                                    <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                    <li class="bestsellers_mark bestsellers_new">new</li>
-                                </ul>
-                            </div>
-
-                            <!-- Best Sellers Item -->
-                            <div class="bestsellers_item">
-                                <div class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                    <div class="bestsellers_image"><img src="{{asset('front-end/assets/images/best_3.png')}}" alt=""></div>
-                                    <div class="bestsellers_content">
-                                        <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                        <div class="bestsellers_name"><a href="product.html">Nomi Black White</a></div>
-                                        <div class="rating_r rating_r_4 bestsellers_rating"><i></i><i></i><i></i><i></i><i></i></div>
-                                        <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                    </div>
-                                </div>
-                                <div class="bestsellers_fav"><i class="fas fa-heart"></i></div>
-                                <ul class="bestsellers_marks">
-                                    <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                    <li class="bestsellers_mark bestsellers_new">new</li>
-                                </ul>
-                            </div>
-
-                            <!-- Best Sellers Item -->
-                            <div class="bestsellers_item">
-                                <div class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                    <div class="bestsellers_image"><img src="{{asset('front-end/assets/images/best_4.png')}}" alt=""></div>
-                                    <div class="bestsellers_content">
-                                        <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                        <div class="bestsellers_name"><a href="product.html">Samsung Charm Gold</a></div>
-                                        <div class="rating_r rating_r_4 bestsellers_rating"><i></i><i></i><i></i><i></i><i></i></div>
-                                        <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                    </div>
-                                </div>
-                                <div class="bestsellers_fav"><i class="fas fa-heart"></i></div>
-                                <ul class="bestsellers_marks">
-                                    <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                    <li class="bestsellers_mark bestsellers_new">new</li>
-                                </ul>
-                            </div>
-
-                            <!-- Best Sellers Item -->
-                            <div class="bestsellers_item discount">
-                                <div class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                    <div class="bestsellers_image"><img src="{{asset('front-end/assets/images/best_5.png')}}" alt=""></div>
-                                    <div class="bestsellers_content">
-                                        <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                        <div class="bestsellers_name"><a href="product.html">Beoplay H7</a></div>
-                                        <div class="rating_r rating_r_4 bestsellers_rating"><i></i><i></i><i></i><i></i><i></i></div>
-                                        <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                    </div>
-                                </div>
-                                <div class="bestsellers_fav active"><i class="fas fa-heart"></i></div>
-                                <ul class="bestsellers_marks">
-                                    <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                    <li class="bestsellers_mark bestsellers_new">new</li>
-                                </ul>
-                            </div>
-
-                            <!-- Best Sellers Item -->
-                            <div class="bestsellers_item">
-                                <div class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-                                    <div class="bestsellers_image"><img src="{{asset('front-end/assets/images/best_6.png')}}" alt=""></div>
-                                    <div class="bestsellers_content">
-                                        <div class="bestsellers_category"><a href="#">Headphones</a></div>
-                                        <div class="bestsellers_name"><a href="product.html">Huawei MediaPad T3</a></div>
-                                        <div class="rating_r rating_r_4 bestsellers_rating"><i></i><i></i><i></i><i></i><i></i></div>
-                                        <div class="bestsellers_price discount">$225<span>$300</span></div>
-                                    </div>
-                                </div>
-                                <div class="bestsellers_fav active"><i class="fas fa-heart"></i></div>
-                                <ul class="bestsellers_marks">
-                                    <li class="bestsellers_mark bestsellers_discount">-25%</li>
-                                    <li class="bestsellers_mark bestsellers_new">new</li>
-                                </ul>
-                            </div>
-
+                            @endforeach
                         </div>
                     </div>
-
-
-
-
                 </div>
-
             </div>
         </div>
     </div>
@@ -1655,36 +1683,35 @@
 
                         <!-- Trends Slider Item -->
                             <div class="owl-item">
-                                <div class="trends_item is_new">
-                                    <div class="trends_image d-flex flex-column align-items-center justify-content-center"><img src="{{asset($product->thumbnail)}}" alt=""></div>
-                                    <div class="trends_content">
-                                        <div class="trends_category"><a href="#">{{$product->childcategory->childcategory_name}}</a></div>
-                                             @if($product->discount_price != 0)
-                                            <div class="trends_price text-danger">{{$settings->currency}}{{$product->discount_price}}</div>
-                                            @else
-                                            <div class="trends_price text-danger">{{$settings->currency}}{{$product->selling_price}}</div>
-                                            @endif
-                                        <div class="trends_info clearfix">
-                                            <div class="trends_name"><a href="{{route('product.details',$product->id)}}">{{$product->name}}</a></div>
-
+                                <div class="trends_item is_new discount">
+                                    <a href="{{route('product.details',$product->id)}}">
+                                        <div class="trends_image d-flex flex-column align-items-center justify-content-center"><img src="{{asset($product->thumbnail)}}" alt="{{$product->thumbnail}}" width="80" height="160"></div>
+                                        <div class="trends_content">
+                                            <div class="trends_category d-block">{{$product->subcategory->subcategory_name}}</div>
+                                                @if($product->discount_price != 0)
+                                                    <div class="trends_price text-danger d-block">{{$settings->currency}}{{$product->discount_price}}<del class="text-muted pl-2">{{$settings->currency}}{{$product->selling_price}}</del></div>
+                                                @else
+                                                    <div class="trends_price text-danger d-block">{{$settings->currency}}{{$product->selling_price}}</div>
+                                                @endif
+                                            <div class="trends_info clearfix">
+                                                <div class="trends_name d-block">{{substr($product->name,0,18)}}</div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </a>
                                     <ul class="trends_marks">
                                         @if($product->discount_price != 0)
-                                        <li class="trends_mark trends_new">{{number_format(($product->selling_price-$product->discount_price)*100/$product->discount_price, 1)}}%</li>
+                                            <li class="trends_mark trends_discount">{{number_format(($product->selling_price-$product->discount_price)*100/$product->discount_price, 1)}}%</li>
                                         @else
-                                        <li class="trends_mark trends_new">new</li>
+                                            <li class="trends_mark trends_new">new</li>
                                         @endif
                                     </ul>
-                                    <div class="trends_fav"><i class="fas fa-heart"></i></div>
+                                    <div class="trends_fav"><i  data-id="{{$product->id}}" id="product-wishlist" class="fas fa-heart text-info"></i></div>
                                 </div>
                             </div>
                         @endforeach
-
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
@@ -1710,6 +1737,9 @@
 
                         @foreach ($latestReview as $item)
 
+                        @php
+                            $rating = App\Models\Review::where('product_id',$item->product->id)->avg('review_rating');
+                        @endphp
 
                         <div class="owl-item">
                             <div class="review d-flex flex-row align-items-start justify-content-start">
@@ -1717,7 +1747,51 @@
                                 <div class="review_content">
                                     <div class="review_name">{{$item->user->name}}</div>
                                     <div class="review_rating_container">
-                                        <div class="rating_r rating_r_4 review_rating"><i></i><i></i><i></i><i></i><i></i></div><br>
+                                        @if(round($rating) ==0)
+                                        <div class="rating_r rating_r_4 review_rating"></div><br>
+                                        @elseif (round($rating) == 5)
+                                            <div class="rating_r rating_r_4 review_rating">
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-warning fas fa-star checked"></span>
+                                            </div><br>
+
+
+                                        @elseif (round($rating) == 4)
+                                            <div class="rating_r rating_r_4 review_rating">
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-muted fas fa-star"></span>
+                                            </div><br>
+                                        @elseif (round($rating) == 3)
+                                            <div class="rating_r rating_r_4 review_rating">
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-muted fas fa-star"></span>
+                                                <span class="text-muted fas fa-star"></span>
+                                            </div><br>
+                                        @elseif (round($rating) == 2)
+                                            <div class="rating_r rating_r_4 review_rating">
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-muted fas fa-star"></span>
+                                                <span class="text-muted fas fa-star"></span>
+                                                <span class="text-muted fas fa-star"></span>
+                                            </div><br>
+                                        @elseif (round($rating) == 1)
+                                            <div class="rating_r rating_r_4 review_rating">
+                                                <span class="text-warning fas fa-star checked"></span>
+                                                <span class="text-muted fas fa-star"></span>
+                                                <span class="text-muted fas fa-star"></span>
+                                                <span class="text-muted fas fa-star"></span>
+                                                <span class="text-muted fas fa-star"></span>
+                                            </div><br>
+                                        @endif
                                         <div class="review_time">{{ Illuminate\Support\Carbon::parse($item->created_at)->diffForHumans() }} </div>
                                     </div>
                                     <div class="review_text"><p>{{$item->review_name}}</p></div>
@@ -1725,7 +1799,6 @@
                             </div>
                         </div>
                         @endforeach
-
                     </div>
                     <div class="reviews_dots"></div>
                 </div>
@@ -1758,15 +1831,17 @@
                         @foreach ($populerProduct as $product)
                         <div class="owl-item">
                             <div class="viewed_item is_new discount d-flex flex-column align-items-center justify-content-center text-center">
-                                <div class="viewed_image"><img src="{{asset($product->thumbnail)}}" alt=""></div>
-                                <div class="viewed_content text-center">
-                                    @if($product->discount_price != 0)
-                                    <div class="viewed_price text-danger">{{$settings->currency}}{{$product->discount_price}}</div>
-                                    @else
-                                    <div class="viewed_price text-danger">{{$settings->currency}}{{$product->selling_price}}</div>
-                                    @endif
-                                    <div class="viewed_name"><a href="{{route('product.details',$product->id)}}">{{$product->name}}</a></div>
-                                </div>
+                                <a href="{{route('product.details',$product->id)}}">
+                                    <div class="viewed_image"><img src="{{asset($product->thumbnail)}}" alt=""></div>
+                                    <div class="viewed_content text-center">
+                                        @if($product->discount_price != 0)
+                                            <div class="viewed_price text-danger">{{$settings->currency}}{{$product->discount_price}}</div>
+                                        @else
+                                            <div class="viewed_price text-danger">{{$settings->currency}}{{$product->selling_price}}</div>
+                                        @endif
+                                        <div class="viewed_name">{{substr($product->name, 0 ,15)}}</div>
+                                    </div>
+                                </a>
                                 <ul class="item_marks">
                                     @if($product->discount_price != 0)
                                     <li class="item_mark item_discount">{{number_format(($product->selling_price-$product->discount_price)*100/$product->discount_price, 1)}}%<</li>
@@ -1895,7 +1970,7 @@
         data: { id : id},
         success:function(data) {
             toastr.success(data);
-             $('.wishlist_count').load(location.href+' .wishlist_count');
+             $('.wishlist').load(location.href+' .wishlist');
         }
     });
     });
@@ -1905,6 +1980,41 @@
 // $('.loading').removeClass('d-none');
 let id = $(this).data('id');
 let cart_item = $(this).closest('.featured_slider_item');
+let name = cart_item.find('input[name="name"]').val();
+let image = cart_item.find('input[name="image"]').val();
+let color = cart_item.find('select[name="color"]').val();
+let size = cart_item.find('select[name="size"]').val();
+let quantity = cart_item.find('input[name="quantity"]').val();
+let price = cart_item.find('input[name="price"]').val();
+let url = "{{route('add.to.cart')}}";
+$.ajax({
+     url : url,
+    type : 'get',
+   async : false,
+    data : {
+        id   : id,
+        name : name,
+       image : image,
+       color : color,
+        size : size,
+    quantity : quantity,
+       price : price,
+    },
+    success:function(data) {
+        toastr.success(data);
+        //  $('#wishlist-to-cart')[0].reset();
+          $('.cart').load(location.href+' .cart');
+
+    }
+});
+});
+
+// add to cart from main slider
+$(document).on('click','#cart_item',function(e) {
+    e.preventDefault();
+// $('.loading').removeClass('d-none');
+let id = $(this).data('id');
+let cart_item = $(this).closest('.main_slider_item');
 let name = cart_item.find('input[name="name"]').val();
 let image = cart_item.find('input[name="image"]').val();
 let color = cart_item.find('select[name="color"]').val();

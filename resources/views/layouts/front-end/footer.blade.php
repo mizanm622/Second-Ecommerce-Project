@@ -36,7 +36,7 @@
 						<div class="footer_title">Find it Fast</div>
 						<ul class="footer_list">
                             @foreach ($populerCategory as $subcategory)
-                            <li><img class="img-thumbnail rounded-circle" src="{{asset($subcategory->subcategory_logo)}}" alt="{{$subcategory->subcategory_name}}" width="30" height="30"> <a href="{{route('category.product',$subcategory->id)}}">{{$subcategory->subcategory_name}}</a></li>
+                            <li><span class="far fa-hand-point-right text-primary fw-bold"></span> <a href="{{route('category.product',$subcategory->id)}}">{{$subcategory->subcategory_name}}</a></li>
                             @endforeach
 						</ul>
 
@@ -46,11 +46,9 @@
 				<div class="col-lg-2">
 					<div class="footer_column">
                         <div class="footer_title">Pages</div>
-						<ul class="footer_list footer_list_2">
-
+						<ul class="footer_list">
                             @foreach ($footerPages as $footerPage)
-
-							<li><a href="{{route('page',$footerPage->id)}}">{{$footerPage->page_title}}</a></li>
+							<li><span class="far fa-hand-point-right text-primary fw-bold"></span> <a href="{{route('page',$footerPage->id)}}">{{$footerPage->page_name}}</a></li>
                             @endforeach
 
 						</ul>
@@ -61,13 +59,13 @@
 					<div class="footer_column">
 						<div class="footer_title">Customer Care</div>
 						<ul class="footer_list">
-							<li><a href="{{route('user.profile')}}">My Account</a></li>
-							<li><a href="{{route('user.profile')}}">Order Tracking</a></li>
-							<li><a href="{{route('user.profile')}}">Wish List</a></li>
-							<li><a href="#">Customer Services</a></li>
-							<li><a href="#">Returns / Exchange</a></li>
-							<li><a href="#">FAQs</a></li>
-							<li><a href="#">Product Support</a></li>
+							<li><span class="fas fa-user-circle text-primary pr-1"></span><a href="{{route('user.profile')}}"> My Account</a></li>
+							<li><span class="fas fa-map-marker-alt text-primary pr-1"></span><a href="{{route('user.profile')}}">Order Tracking</a></li>
+							<li><span class="fas fa-heart text-primary pr-1"></span><a href="{{route('user.profile')}}">Wish List</a></li>
+							<li><span class="fab fa-servicestack text-primary pr-1"><a href="#">Customer Services</a></li>
+							<li><span class="fas fa-exchange-alt text-primary pr-1"><a href="#">Returns / Exchange</a></li>
+							<li><span class="far fa-question-circle text-primary pr-1"><a href="#">FAQs</a></li>
+							<li><span class="fas fa-ambulance text-primary pr-1"></span> <a href="#">Product Support</a></li>
 						</ul>
 					</div>
 				</div>

@@ -17,7 +17,7 @@ $(document).ready(function()
 {
 	"use strict";
 
-	/* 
+	/*
 
 	1. Vars and Inits
 
@@ -38,7 +38,7 @@ $(document).ready(function()
 		setHeader();
 	});
 
-	/* 
+	/*
 
 	2. Set Header
 
@@ -69,7 +69,7 @@ $(document).ready(function()
 		}
 	}
 
-	/* 
+	/*
 
 	3. Init Custom Dropdown
 
@@ -126,15 +126,15 @@ $(document).ready(function()
 		});
 
 
-		$('select').on('change', function (e)
-		{
-			placeholder.text(this.value);
+		// $('select').on('change', function (e)
+		// {
+		// 	placeholder.text(this.value);
 
-			$(this).animate({width: placeholder.width() + 'px' });
-		});
+		// 	$(this).animate({width: placeholder.width() + 'px' });
+		// });
 	}
 
-	/* 
+	/*
 
 	4. Init Page Menu
 
@@ -213,7 +213,7 @@ $(document).ready(function()
 	function initGoogleMap()
 	{
 		var myLatlng = new google.maps.LatLng(51.507098, -0.126270);
-    	var mapOptions = 
+    	var mapOptions =
     	{
     		center: myLatlng,
 	       	zoom: 14,
@@ -421,7 +421,7 @@ $(document).ready(function()
 			map: map,
 			icon: image
 		});
-   
+
 		// Re-center map after window resize
 		google.maps.event.addDomListener(window, 'resize', function()
 		{

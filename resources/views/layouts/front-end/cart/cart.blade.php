@@ -9,7 +9,6 @@
             <div class="col">
                 @if (count(Cart::content()) == 0)
                 <div class="empty-cart text-center mb-5">
-
                     <img src="front-end/assets/images/shopping-cart.png" alt="" class="img-responsive m-auto" width="150" height="150">
                 </div>
                @else
@@ -27,7 +26,7 @@
                         <div class="cart_items"><!--Cart items area-->
                             <ul class="cart_list">
                                 <li class="cart_item clearfix">
-                                    <div class="cart_item_image" style="width:70px; height:100px"><img src="{{asset($product->options->image)}}" alt="{{$product->options->image}}" class="img-responsive img-thumbnail" width="60" height="90"></div>
+                                    <div class="cart_item_image" style="width:70px; height:100px"><img src="{{asset($product->options->image)}}" alt="{{$product->options->image}}" class="img-responsive img-thumbnail"></div>
                                     <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
                                         <div class="cart_item_name cart_info_col">
                                             <div class="cart_item_title">Name</div><!--Product name-->
@@ -52,7 +51,7 @@
                                                 <div class="cart_item_text">
                                                     <select type="text" data-id="{{$product->rowId}}" id="color" class="form-control form-control-sm ml-0" name="color" style="width:80px" >
                                                         @foreach ($colors as $color)
-                                                            <option value="{{$color}}" @if($color == $product->options->color) selected="" @endif>{{$color}}</option>
+                                                            <option value="{{$color}}" @if($product->options->color == $color) selected="" @endif>{{$color}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -77,7 +76,7 @@
                                                 <div class="cart_item_text">
                                                     <select type="text" data-id="{{$product->rowId}}" id="size" class="form-control form-control-sm ml-0" name="size" style="width:80px" >
                                                         @foreach ($sizes as $size)
-                                                            <option value="{{$size}}" @if($size == $product->options->size) selected="" @endif>{{$size}}</option>
+                                                            <option value="{{$size}}" @if($product->options->size == $size ) selected="" @endif>{{$size}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>

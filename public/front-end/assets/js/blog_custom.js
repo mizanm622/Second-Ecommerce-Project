@@ -16,7 +16,7 @@ $(document).ready(function()
 {
 	"use strict";
 
-	/* 
+	/*
 
 	1. Vars and Inits
 
@@ -35,7 +35,7 @@ $(document).ready(function()
 		setHeader();
 	});
 
-	/* 
+	/*
 
 	2. Set Header
 
@@ -66,7 +66,7 @@ $(document).ready(function()
 		}
 	}
 
-	/* 
+	/*
 
 	3. Init Custom Dropdown
 
@@ -123,15 +123,15 @@ $(document).ready(function()
 		});
 
 
-		$('select').on('change', function (e)
-		{
-			placeholder.text(this.value);
+		// $('select').on('change', function (e)
+		// {
+		// 	placeholder.text(this.value);
 
-			$(this).animate({width: placeholder.width() + 'px' });
-		});
+		// 	$(this).animate({width: placeholder.width() + 'px' });
+		// });
 	}
 
-	/* 
+	/*
 
 	4. Init Page Menu
 

@@ -341,7 +341,7 @@
                success:function(data){
                 toastr.success(data);
                 $('.table').load(location.href+' .table');
-                $('.wishlist_content').load(location.href+' .wishlist_content');
+                $('.wishlist').load(location.href+' .wishlist');
                }
             });
         });
