@@ -128,7 +128,7 @@
                         <div class="wishlist d-flex flex-row align-items-center justify-content-end">
                             <div class="wishlist_icon">
                                 <img src="{{asset('front-end/assets/images/heart.png')}}" alt="">
-                                <div class="wishlist_count"><span class="">@if(empty($wishlist))  @else {{$wishlist}}  @endif</span></div>
+                                <div class="wishlist_count"><span class="">@if(empty($wishlist)) 0 @else {{$wishlist}}  @endif</span></div>
                             </div>
                             <div class="wishlist_content">
                                 <div class="wishlist_text"><a href="{{route('wishlist')}}">Wishlist</a></div>

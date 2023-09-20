@@ -164,7 +164,7 @@
 
                     </div><!--End row-->
 
-
+                    <button type="submit" class="btn btn-md btn-primary">Submit</button>
                 </div>
                 </div>
             </div>
@@ -181,46 +181,56 @@
                         <label class="form-label" for="basic-icon-default-fullname">Product Image</label>
                         <input type="file" class="form-control dropify" name="image" placeholder="Product Image" required>
                     </div>
+                    <div class="row">
+                        <div class="mb-3 col-6">
+                            <label class="form-label" for="basic-icon-default-fullname">Featured </label>
+                            <div class="form-check form-switch">
+                                <input type="hidden" name="featured" value="0">
+                                <input class="form-check-input btn" type="checkbox" value="1" name="featured" role="switch" checked>
+                            </div>
+                        </div>
+                        <div class="mb-3 col-6">
+                            <label class="form-label" for="basic-icon-default-fullname">New</label>
+                            <div class="form-check form-switch">
+                                <input type="hidden" name="is_new" value="0">
+                                <input class="form-check-input btn" type="checkbox" value="1" name="is_new" role="switch"  checked>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-6">
+                            <label class="form-label" for="basic-icon-default-fullname">Trending </label>
+                            <div class="form-check form-switch">
+                                <input type="hidden" name="trending" value="0">
+                                <input class="form-check-input btn" type="checkbox" value="1" name="trending" role="switch" id="flexSwitchCheckChecked" checked>
+                            </div>
+                        </div>
 
-                    <div class="mb-3">
-                        <label class="form-label" for="basic-icon-default-fullname">Featured </label>
-                        <div class="form-check form-switch">
-                            <input type="hidden" name="featured" value="0">
-                            <input class="form-check-input btn" type="checkbox" value="1" name="featured" role="switch" id="flexSwitchCheckChecked" checked>
+                        <div class="mb-3 col-6">
+                            <label class="form-label" for="basic-icon-default-fullname">Slider Show</label>
+                            <div class="form-check form-switch">
+                                <input type="hidden" name="product_slider" value="0">
+                                <input class="form-check-input btn" type="checkbox" value="1" name="product_slider" role="switch" id="flexSwitchCheckChecked" checked>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-6">
+                            <label class="form-label" for="basic-icon-default-fullname">Todays Deal </label>
+                            <div class="form-check form-switch">
+                                <input type="hidden" name="todays_deal" value="0">
+                                <input class="form-check-input btn" type="checkbox" value="1" name="todays_deal" role="switch" id="flexSwitchCheckChecked" checked>
+                            </div>
+                        </div>
+                        <div class="mb-3 col-6">
+                            <label class="form-label" for="basic-icon-default-fullname">Status</label>
+                            <div class="form-check form-switch">
+                                <input type="hidden" name="status" value="0">
+                                <input class="form-check-input btn" type="checkbox" name="status" value="1" role="switch" id="flexSwitchCheckChecked" checked>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label" for="basic-icon-default-fullname">Trending </label>
-                        <div class="form-check form-switch">
-                            <input type="hidden" name="trending" value="0">
-                            <input class="form-check-input btn" type="checkbox" value="1" name="trending" role="switch" id="flexSwitchCheckChecked" checked>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label" for="basic-icon-default-fullname">Slider Show</label>
-                        <div class="form-check form-switch">
-                            <input type="hidden" name="product_slider" value="0">
-                            <input class="form-check-input btn" type="checkbox" value="1" name="product_slider" role="switch" id="flexSwitchCheckChecked" checked>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label" for="basic-icon-default-fullname">Todays Deal </label>
-                        <div class="form-check form-switch">
-                            <input type="hidden" name="todays_deal" value="0">
-                            <input class="form-check-input btn" type="checkbox" value="1" name="todays_deal" role="switch" id="flexSwitchCheckChecked" checked>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="basic-icon-default-fullname">Status</label>
-                        <div class="form-check form-switch">
-                            <input type="hidden" name="status" value="0">
-                            <input class="form-check-input btn" type="checkbox" name="status" value="1" role="switch" id="flexSwitchCheckChecked" checked>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Send</button>
                 </div>
                 </div>
             </div>

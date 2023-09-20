@@ -13,25 +13,46 @@ use App\Models\Pickup;
 class Product extends Model
 {
     use HasFactory;
-    protected $guarded=[];
+    protected $guarded = [];
 
-    public function category(){
+    public function category()
+    {
         return $this->belongsTo( Category::class, 'category_id');
     }
-    public function subcategory(){
+
+    public function subcategory()
+    {
         return $this->belongsTo( Subcategory::class, 'subcategory_id');
     }
-    public function childcategory(){
+
+    public function childcategory()
+    {
         return $this->belongsTo( Childcategory::class, 'childcategory_id');
     }
-    public function brand(){
+
+    public function brand()
+    {
         return $this->belongsTo(Brand::class, 'brand_id');
     }
-    public function pickup(){
+
+    public function pickup()
+    {
         return $this->belongsTo(Pickup::class, 'pickup_id');
     }
-    public function warehouse(){
+
+    public function warehouse()
+    {
         return $this->belongsTo(Warehouse::class, 'id');
+    }
+
+    public function scopeStatus($query)
+    {
+        $query->where('status', 1);
+    }
+
+    public function scopeFeature($query)
+    {
+        $query->where('featured',1);
     }
 
 }

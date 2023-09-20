@@ -25,13 +25,15 @@ class HomeController extends Controller
         $campaing = Campaing::where('status',1)->latest()->get();
         $latestReview = Review::where('review_rating',5)->latest()->get();
         $bannerProduct = Product::where('product_slider',1)->latest()->get();
-        $wishlist = Wishlist::where('user_id',auth()->id())->count();
-        $featuredProduct = Product::where('featured',1)->latest()->limit(16)->get();
+        //$wishlist = Wishlist::where('user_id',auth()->id())->count();
+        $featuredProduct = Product::feature()->latest()->limit(16)->get();
         $bestRatedProduct = Product::where('selling_quantity','>',1)->latest()->limit(16)->get();
         $populerProduct = Product::where('featured',1)->where('view_count','>',1)->latest()->limit(16)->get();
         $trendingProduct = Product::where('featured',1)->where('trending',1)->latest()->limit(20)->get();
         $todaysDeal = Product::where('todays_deal',1)->latest()->get();
+        $newArrivalElectronics = Product::where('is_new',1)->latest()->get();
         //$pages =Page::latest()->get();// Page model uses from App service provider
+
 
         return view('layouts.front-end.home', get_defined_vars());
     }
@@ -64,7 +66,7 @@ class HomeController extends Controller
     // category wise product show
     public function categoryProduct($id){
 
-        $recentView = Product::where('status',1)->latest()->get();
+        $recentView = Product::status()->latest()->get();
         // $pages =Page::latest()->get(); // Page model uses from App service provider
         $populerCategory = Subcategory::all(); // Subcategory model uses from App service provider
                $brands = Brand::latest()->get();

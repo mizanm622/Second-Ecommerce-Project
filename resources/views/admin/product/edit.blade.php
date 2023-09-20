@@ -138,48 +138,55 @@
                 <div class="card mb-4">
                 <div class="card-body">
                     <div class="mb-3">
-                            <label class="form-label" for="basic-icon-default-fullname">Product Thumbnail</label>
-                            <input type="file" class="form-control dropify" name="thumbnail" placeholder="Product Thumbnail">
-                            <div class="row">
-                                <div class="col-3">
-                                    <img src="{{asset($products->thumbnail)}}" height="30px" alt="Logo ">
-                                </div>
+                        <label class="form-label" for="basic-icon-default-fullname">Product Thumbnail</label>
+                        <input type="file" class="form-control dropify" name="thumbnail" placeholder="Product Thumbnail">
+                        <div class="row">
+                            <div class="col-3">
+                                <img src="{{asset($products->thumbnail)}}" height="30px" alt="Logo ">
                             </div>
-                            <input type="hidden" name="old_thumbnail" value="{{$products->thumbnail}}">
+                        </div>
+                        <input type="hidden" name="old_thumbnail" value="{{$products->thumbnail}}">
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label" for="basic-icon-default-fullname">Product Image</label>
                         <input type="file" class="form-control dropify" name="image" placeholder="Product Image">
-                            <div class="row">
-                                <div class="col-3">
-                                    <img src="{{asset($products->images)}}" height="30px" alt="Logo ">
-                                </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <img src="{{asset($products->images)}}" height="30px" alt="Logo ">
                             </div>
-                            <input type="hidden" name="old_image" value="{{$products->images}}">
+                        </div>
+                        <input type="hidden" name="old_image" value="{{$products->images}}">
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label" for="basic-icon-default-fullname">Featured </label>
-                            <div class="form-check form-switch">
-                                <input type="hidden" name="featured" value="0">
-                                <input class="form-check-input btn" type="checkbox" value="1" name="featured" role="switch" @if($products->featured == 1) checked @endif>
-                            </div>
+                        <div class="form-check form-switch">
+                            <input type="hidden" name="featured" value="0">
+                            <input class="form-check-input btn" type="checkbox" value="1" name="featured" role="switch" @if($products->featured == 1) checked @endif>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-icon-default-fullname">New</label>
+                        <div class="form-check form-switch">
+                            <input type="hidden" name="is_new" value="0">
+                            <input class="form-check-input btn" type="checkbox" value="1" name="is_new" role="switch" @if($products->is_new == 1) checked @endif>
+                        </div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label" for="basic-icon-default-fullname">Trending </label>
-                            <div class="form-check form-switch">
-                                <input type="hidden" name="trending" value="0">
-                                <input class="form-check-input btn" type="checkbox" value="1" name="trending" role="switch" @if($products->trending == 1) checked @endif>
-                            </div>
+                        <div class="form-check form-switch">
+                            <input type="hidden" name="trending" value="0">
+                            <input class="form-check-input btn" type="checkbox" value="1" name="trending" role="switch" @if($products->trending == 1) checked @endif>
+                        </div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label" for="basic-icon-default-fullname">Slider Show</label>
                         <div class="form-check form-switch">
-                                <input type="hidden" name="product_slider" value="0">
-                                <input class="form-check-input btn" type="checkbox" value="1" name="product_slider" role="switch"  @if($products->product_slider == 1) checked @endif>
+                            <input type="hidden" name="product_slider" value="0">
+                            <input class="form-check-input btn" type="checkbox" value="1" name="product_slider" role="switch"  @if($products->product_slider == 1) checked @endif>
                         </div>
                     </div>
 
@@ -192,9 +199,9 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="basic-icon-default-fullname">Status</label>
-                            <div class="form-check form-switch">
-                                <input type="hidden" name="status" value="0">
-                                <input class="form-check-input btn" type="checkbox" name="status" value="1" role="switch" @if($products->status == 1) checked @endif>
+                        <div class="form-check form-switch">
+                            <input type="hidden" name="status" value="0">
+                            <input class="form-check-input btn" type="checkbox" name="status" value="1" role="switch" @if($products->status == 1) checked @endif>
                         </div>
                     </div>
                     <input type="hidden" name="id" value="{{$products->id}}">

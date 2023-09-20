@@ -29,6 +29,7 @@
                         <tr><th>Warehouse :</th><td>{{$data->warehouse_id}}</td></tr>
                         <tr><th>Unit :</th><td>{{$data->unit}}</td></tr>
                         <tr><th>Featured :</th><td>{!! $data->featured == 1 ? '<i class="bx bxs-message-alt-check text-success"></i>' : '<i class="bx bxs-message-alt-x text-danger"></i>'!!}</td></tr>
+                        <tr><th>New :</th><td>{!! $data->is_new == 1 ? '<i class="bx bxs-message-alt-check text-success"></i>' : '<i class="bx bxs-message-alt-x text-danger"></i>'!!}</td></tr>
                         <tr><th>Trending :</th><td>{!! $data->trending == 1 ? '<i class="bx bxs-message-alt-check text-success"></i>' : '<i class="bx bxs-message-alt-x text-danger"></i>'!!}</td></tr>
                         <tr><th>Status :</th><td>{!! $data->status == 1 ? '<i class="bx bxs-message-alt-check text-success"></i>' : '<i class="bx bxs-message-alt-x text-danger"></i>'!!}</td></tr>
                         <tr><th>Todays Deal :</th><td>{!! $data->todays_deal == 1 ? '<i class="bx bxs-message-alt-check text-success"></i>' : '<i class="bx bxs-message-alt-x text-danger"></i>'!!}</td></tr>
