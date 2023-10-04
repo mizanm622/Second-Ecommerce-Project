@@ -201,7 +201,7 @@
                             <div class="card-body">
                                 <label for="cash_on">Cash on Delivery:</label>
                                 <input type="hidden" name="payment" value="cash-on">
-                            <input type="checkbox" class="btn btn-lg btn-primary" name="payment" value="cash-on" required>
+                            <input type="checkbox" class="btn btn-lg btn-primary" name="payment" value="cash-on">
                             </div>
                         </div>
                         </div>
@@ -215,12 +215,8 @@
                             </div>
                             <div id="online" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                                 <div class="card-body">
-                                    <ol>
-                                        <li>Bkash <input type="checkbox" name="payment" value="bkash"></li>
-                                        <li>Rocket <input type="checkbox" name="payment" value="rocket"></li>
-                                        <li>Nagad <input type="checkbox" name="payment" value="nagad"></li>
-                                        <li>Card <input type="checkbox" name="payment" value="card"></li>
-                                    </ol>
+                                    <label for="cash_on">Bkash/Rocket/Nagad</label>
+                                    <input type="checkbox" name="payment" value="online" required>
                                 </div>
                             </div>
                         </div>
@@ -268,14 +264,9 @@
                 success:function(data){
                     $('#calculation-area').load(location.href+' #calculation-area');
                     if(data == 1){
-
                         $('.status').text('Valid');
-
-
                     }else{
-
                         $('.status').text('In Valid');
-
                     }
 
                     // toastr.success(data);

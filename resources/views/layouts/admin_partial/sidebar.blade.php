@@ -160,7 +160,7 @@
                 </a>
             </li>
             <li class="menu-item">
-                <a href="" class="menu-link">
+                <a href="{{route('payment.gateway')}}" class="menu-link">
                     <div data-i18n="Connections">Payment Getwat Settings</div>
                 </a>
             </li>

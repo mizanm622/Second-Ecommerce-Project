@@ -116,6 +116,12 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
         Route::post('/update/{id}', 'SettingsController@seoUpdate')->name('seo.update');
 
     });
+    //payment gateway
+    Route::group(['prefix'=>'payment'], function(){
+        Route::get('/', 'SettingsController@paymentGateway')->name('payment.gateway');
+        Route::post('payment-gateway/update', 'SettingsController@paymentGatewayUpdate')->name('payment.gateway.update');
+
+    });
       //smtp routes
       Route::group(['prefix'=>'smtp'], function(){
         Route::get('/', 'SettingsController@smtp')->name('smtp.setting');

@@ -173,7 +173,7 @@ $subcat_id = 0;
                                 </div>
                                 </a>
                                 @guest
-                                    <div class="product_fav"><a class="btn" href="" data-toggle="popover" title="Please login to continue" ><i  class="fas fa-heart"></i></a></div>
+                                    <div class="product_fav"><span class="fas fa-heart" data-toggle="popover" title="Please login to continue" ></span></div>
                                 @else
                                     <div class="product_fav"><span  data-id="{{$product->id}}" id="product-wishlist" class="fas fa-heart text-info"></span></div>
                                 @endguest

@@ -75,6 +75,10 @@ Route::group(['namespace' => 'App\Http\Controllers\User',],function(){
     Route::get('/check-coupon', 'CheckoutController@checkCoupon')->name('check.coupon');
     Route::post('/submit-order', 'CheckoutController@submitOrder')->name('submit.order');
     Route::get('/order-status', 'CheckoutController@orderStatus')->name('order.status');
+    // payment gateway route
+    Route::post('success', 'CheckoutController@success')->name('success');
+    Route::post('fail', 'CheckoutController@fail')->name('fail');
+    Route::get('cancel', 'CheckoutController@cancel')->name('cancel');
 
 });
 

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Category;
+use App\Models\OrderAddress;
 use App\Models\Page;
 use Illuminate\Pagination\Paginator;
 use App\Models\Setting;
@@ -29,30 +30,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
 
-        // //calculate cart total
-
-//     $delivery = 0;
-
-//    if(Cart::total() <= 1000){
-//     $delivery =50;
-//    }
-//    elseif(Cart::total() > 1000 and Cart::total() <= 2000){
-//     $delivery =40;
-//    }
-//    elseif(Cart::total() > 2000 and Cart::total() <= 3000){
-//     $delivery =30;
-//    }
-//    elseif(Cart::total() > 3000 and Cart::total() <= 4000){
-//     $delivery =20;
-//    }
-//    elseif(Cart::total() > 4000 and Cart::total() <= 5000){
-//     $delivery =10;
-//    }
-//    elseif(Cart::total() > 5000){
-
-//     $delivery =0;
-//    }
-
+        $total_sell = OrderAddress::sum('total');
         $category = Category::all();
        // $wishlist = Wishlist::where('user_id',auth()->id())->count();
         $populerCategory = Subcategory::all();
@@ -63,6 +41,8 @@ class AppServiceProvider extends ServiceProvider
          view()->share('footerPages',$pages);
          view()->share('populerCategory',$populerCategory);
          view()->share('category',$category);
+         view()->share('category',$category);
+         view()->share('total_sell',$total_sell);
         //  view()->share('wishlist',$wishlist);
     }
 }

@@ -30,8 +30,8 @@ class HomeController extends Controller
         $bestRatedProduct = Product::where('selling_quantity','>',1)->latest()->limit(16)->get();
         $populerProduct = Product::where('featured',1)->where('view_count','>',1)->latest()->limit(16)->get();
         $trendingProduct = Product::where('featured',1)->where('trending',1)->latest()->limit(20)->get();
-        $todaysDeal = Product::where('todays_deal',1)->latest()->get();
-        $newArrivalElectronics = Product::where('is_new',1)->latest()->get();
+        $todaysDeal = Product::todaysdeal()->latest()->get();
+        $newArrivalProducts = Product::new()->latest()->get();
         //$pages =Page::latest()->get();// Page model uses from App service provider
 
 
@@ -74,7 +74,7 @@ class HomeController extends Controller
              ->orWhere('subcategory_id',$id)
              ->orWhere('childcategory_id',$id)
              ->orWhere('brand_id',$id)
-             ->paginate(4);
+             ->paginate(12);
 
              return view('layouts.front-end.product.category_product',get_defined_vars());
 

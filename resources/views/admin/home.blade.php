@@ -10,7 +10,7 @@
               <div class="d-flex align-items-end row">
                 <div class="col-sm-7">
                   <div class="card-body">
-                    <h5 class="card-title text-primary">Congratulations John! 🎉</h5>
+                    <h5 class="card-title text-primary">Congratulations {{auth()->user()->name}}! 🎉</h5>
                     <p class="mb-4">
                       You have done <span class="fw-bold">72%</span> more sales today. Check your new badge in
                       your profile.
@@ -98,7 +98,7 @@
                       </div>
                     </div>
                     <span>Sales</span>
-                    <h3 class="card-title text-nowrap mb-1">$4,679</h3>
+                    <h3 class="card-title text-nowrap mb-1">${{$total_sell}}</h3>
                     <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.42%</small>
                   </div>
                 </div>
@@ -436,7 +436,7 @@
                     <a class="dropdown-item" href="javascript:void(0);">Last Year</a>
                   </div>
                 </div>
-              </div>
+              </div> 
               <div class="card-body">
                 <ul class="p-0 m-0">
                   <li class="d-flex mb-4 pb-1">

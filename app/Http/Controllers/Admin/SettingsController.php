@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\PaymentGateway;
 use App\Models\Seo;
 use App\Models\Setting;
 use App\Models\Smtp;
@@ -17,14 +18,16 @@ class SettingsController extends Controller
         $this->middleware('auth');
     }
 
-    public function seo(){
+    public function seo()
+    {
 
         $data = Seo::first();
 
         return view('admin.setting.seo', compact('data'));
     }
 
-    public function seoUpdate(Request $request, $id){
+    public function seoUpdate(Request $request, $id)
+    {
 
         Seo::where('id',$id)->update([
             'meta_title'=>$request->meta_title,
@@ -44,14 +47,16 @@ class SettingsController extends Controller
     }
 
     //smtp show from here
-    public function smtp(){
+    public function smtp()
+    {
         $data=Smtp::first();
 
         return view('admin.setting.smtp',compact('data'));
     }
 
     //smtp update from here
-    public function smtpUpdate(Request $request, $id){
+    public function smtpUpdate(Request $request, $id)
+    {
 
         Smtp::where('id',$id)->update([
             'mailer'=>$request->mailer,
@@ -68,14 +73,16 @@ class SettingsController extends Controller
     }
 
     //website setting from here
-    public function website(){
+    public function website()
+    {
          $data=Setting::first();
 
          return view('admin.setting.website', compact('data'));
     }
 
     //update website setting from here
-    public function wedsiteUpdate(Request $request, $id){
+    public function wedsiteUpdate(Request $request, $id)
+    {
 
                 // dd($request->old_favicon);
 
@@ -130,4 +137,57 @@ class SettingsController extends Controller
         return redirect()->back()->with($notification);
 
     }
+
+    // Payment getway
+    public function paymentGateway()
+    {
+        $data = PaymentGateway::first();
+        $surjo = PaymentGateway::skip(1)->first();
+        $ssl_commerz = PaymentGateway::skip(2)->first();
+
+        return view('admin.setting.payment_gateway.edit', get_defined_vars());
+    }
+
+    // update gateway
+    public function paymentGatewayUpdate(Request $request)
+    {
+        $validate= $request->validate([
+                'gateway_name'=>'required',
+                'store_id'=>'required',
+                'signature_key'=>'required',
+                'status'=>'required',
+
+        ]);
+
+        if($request->id == 1){
+            PaymentGateway::where('id',$request->id)->update([
+                'gateway_name'=>$request->gateway_name,
+                'store_id'=>$request->store_id,
+                'signature_key'=>$request->signature_key,
+                'status'=>$request->status,
+            ]);
+
+            return response()->json('AAMER Pay Successfully Updated');
+        }elseif($request->id == 2){
+            PaymentGateway::where('id',$request->id)->update([
+                'gateway_name'=>$request->gateway_name,
+                'store_id'=>$request->store_id,
+                'signature_key'=>$request->signature_key,
+                'status'=>$request->status,
+            ]);
+
+            return response()->json('Surjo Pay Successfully Updated');
+        }elseif($request->id == 3){
+            PaymentGateway::where('id',$request->id)->update([
+                'gateway_name'=>$request->gateway_name,
+                'store_id'=>$request->store_id,
+                'signature_key'=>$request->signature_key,
+                'status'=>$request->status,
+            ]);
+
+            return response()->json('SSL Commerz Pay Successfully Updated');
+        }
+
+    }
+
 }

@@ -55,6 +55,15 @@ class Product extends Model
         $query->where('featured',1);
     }
 
+    public function scopeNew($query)
+    {
+        $query->where('is_new',1);
+    }
+    public function scopeTodaysDeal($query)
+    {
+        $query->where('todays_deal',1);
+    }
+
 }
 
 

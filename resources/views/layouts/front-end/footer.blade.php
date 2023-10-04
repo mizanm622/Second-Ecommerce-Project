@@ -1,10 +1,8 @@
 <div class="footer">
-
           <!-- Footer -->
 	<footer class="footer">
 		<div class="container">
 			<div class="row">
-
 				<div class="col-lg-3 footer_col">
 					<div class="footer_column footer_contact">
 						<div class="logo_container">
@@ -30,7 +28,6 @@
 						</div>
 					</div>
 				</div>
-
 				<div class="col-lg-2 offset-lg-2">
 					<div class="footer_column">
 						<div class="footer_title">Find it Fast</div>
@@ -42,7 +39,6 @@
 
 					</div>
 				</div>
-
 				<div class="col-lg-2">
 					<div class="footer_column">
                         <div class="footer_title">Pages</div>
@@ -50,26 +46,23 @@
                             @foreach ($footerPages as $footerPage)
 							<li><span class="far fa-hand-point-right text-primary fw-bold"></span> <a href="{{route('page',$footerPage->id)}}">{{$footerPage->page_name}}</a></li>
                             @endforeach
-
 						</ul>
 					</div>
 				</div>
-
 				<div class="col-lg-2">
 					<div class="footer_column">
 						<div class="footer_title">Customer Care</div>
 						<ul class="footer_list">
 							<li><span class="fas fa-user-circle text-primary pr-1"></span><a href="{{route('user.profile')}}"> My Account</a></li>
-							<li><span class="fas fa-map-marker-alt text-primary pr-1"></span><a href="{{route('user.profile')}}">Order Tracking</a></li>
-							<li><span class="fas fa-heart text-primary pr-1"></span><a href="{{route('user.profile')}}">Wish List</a></li>
-							<li><span class="fab fa-servicestack text-primary pr-1"><a href="#">Customer Services</a></li>
-							<li><span class="fas fa-exchange-alt text-primary pr-1"><a href="#">Returns / Exchange</a></li>
-							<li><span class="far fa-question-circle text-primary pr-1"><a href="#">FAQs</a></li>
-							<li><span class="fas fa-ambulance text-primary pr-1"></span> <a href="#">Product Support</a></li>
+							<li><span class="fas fa-map-marker-alt text-primary pr-1"></span><a href="{{route('user.profile')}}"> Order Tracking</a></li>
+							<li><span class="fas fa-heart text-primary pr-1"></span><a href="{{route('user.profile')}}"> Wish List</a></li>
+							<li><span class="fab fa-servicestack text-primary pr-1"></span><a href="#"> Customer Services</a></li>
+							<li><span class="fas fa-exchange-alt text-primary pr-1"></span><a href="#"> Returns / Exchange</a></li>
+							<li><span class="far fa-question-circle text-primary pr-1"></span><a href="#"> FAQs</a></li>
+							<li><span class="fas fa-ambulance text-primary pr-1"></span><a href="#"> Product Support</a></li>
 						</ul>
 					</div>
 				</div>
-
 			</div>
 		</div>
 	</footer>
@@ -84,7 +77,7 @@
 
 					<div class="copyright_container d-flex flex-sm-row flex-column align-items-center justify-content-start">
 						<div class="copyright_content">
-                        Copyright &copy;<script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://templatespoint.net/" target="_blank">TemplatesPoint</a>
+                        Copyright &copy;<script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.write(new Date().getFullYear());</script> All rights reserved | This template is edited by E-Shop
                         </div>
 						<div class="logos ml-sm-auto">
 							<ul class="logos_list">

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 <link rel="stylesheet" type="text/css" href="{{asset('front-end/assets/styles/product_styles.css')}}">
-
 <link rel="stylesheet" type="text/css" href="{{asset('front-end/assets/styles/product_responsive.css')}}">
+
 <style>
 #owl-demo {
     display: block;
@@ -38,11 +38,11 @@
                         <input type="hidden" name="quantity" value="1">
                         <div class="banner_product_name">{{$row->brand->brand_name}}</div>
                         @guest
-                            <div class="button banner_button"><a href="" id="">Shop Now</a></div>
+                            <div class="button banner_button"><a href="" id=""> <span class="fas fa-shopping-cart"></span> Shop Now</a></div>
                             <div class="button banner_button"><a href="{{route('product.details',$row->id)}}">Show Details</a></div>
                         @else
 
-                            <div class="button banner_button"><a href="javascript:void(0)" data-id="{{$row->id}}" id="cart_item">Shop Now</a></div>
+                            <div class="button banner_button"><a href="javascript:void(0)" data-id="{{$row->id}}" id="cart_item"><span class="fas fa-shopping-cart"></span>Shop Now</a></div>
                             <div class="button banner_button"><a href="{{route('product.details',$row->id)}}">Show Details</a></div>
                         @endguest
                     </div>
@@ -255,7 +255,7 @@
                                                 </div>
                                             </a>
                                             @guest
-                                            <div class="product_fav"><a class="btn" href="" data-toggle="popover" title="Please login to continue" ><i  class="fas fa-heart"></i></a></div>
+                                            <div class="product_fav"><span class="fas fa-heart" data-toggle="popover" title="Please login to continue"></span></div>
                                             @else
                                             <div class="product_fav"><span  data-id="{{$product->id}}" id="product-wishlist" class="fas fa-heart text-info"></span></div>
                                             @endguest
@@ -345,7 +345,7 @@
                                                 </div>
                                             </a>
                                             @guest
-                                            <div class="product_fav"><a class="btn" href="javascript:void(0)" data-toggle="popover" title="Please login to continue" ><i  class="fas fa-heart"></i></a></div>
+                                            <div class="product_fav"><span class="fas fa-heart" data-toggle="popover" title="Please login to continue"></span></div>
                                             @else
                                             <div class="product_fav"><span  data-id="{{$product->id}}" id="product-wishlist" class="fas fa-heart text-info"></span></div>
                                             @endguest
@@ -436,7 +436,7 @@
                                             </div>
                                         </a>
                                         @guest
-                                        <div class="product_fav"><a class="btn" href="javascript:void(0)" data-toggle="popover" title="Please login to continue" ><i  class="fas fa-heart"></i></a></div>
+                                        <div class="product_fav"><span class="fas fa-heart" data-toggle="popover" title="Please login to continue"></span></div>
                                         @else
                                         <div class="product_fav"><span  data-id="{{$product->id}}" id="product-wishlist" class="fas fa-heart text-info"></span></div>
                                         @endguest
@@ -607,19 +607,17 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-9" style="z-index:1;">
-
-
                                 <!-- Product Panel Featured-->
                                 <div class="product_panel panel active">
                                     <div class="arrivals_slider slider">
-                                    @foreach ($newArrivalElectronics as $product)
+                                    @foreach ($newArrivalProducts as $product)
                                         <!-- Slider Item -->
                                         @if($product->category->category_name == 'Electronics')
                                         @php
                                             $colors=explode(',',$product->color);
                                             $sizes=explode(',',$product->size);
                                         @endphp
-                                            <div class="featured_slider_item row-item">
+                                            <div class="arrivals_slider_item row-item">
                                                 <div class="border_active"></div>
                                                 <div class="product_item is_new discount d-flex flex-column align-items-center justify-content-center text-center">
                                                     <a class="details-view m-0 p-0" href="{{route('product.details',$product->id)}}">
@@ -679,7 +677,7 @@
                                                         </div>
                                                     </a>
                                                     @guest
-                                                    <div class="product_fav"><a class="btn" href="javascript:void(0)" data-toggle="popover" title="Please login to continue" ><i  class="fas fa-heart"></i></a></div>
+                                                    <div class="product_fav"><span class="fas fa-heart" data-toggle="popover" title="Please login to continue"></span></div>
                                                     @else
                                                     <div class="product_fav"><span  data-id="{{$product->id}}" id="product-wishlist" class="fas fa-heart text-info"></span></div>
                                                     @endguest
@@ -704,7 +702,7 @@
                             <!-- Product Panel Audio Video-->
                             <div class="product_panel panel">
                                 <div class="arrivals_slider slider">
-                                    @foreach ($newArrivalElectronics as $product)
+                                    @foreach ($newArrivalProducts as $product)
                                     <!-- Slider Item -->
                                         @if($product->category->category_name == 'Vehicles')
                                             <!-- Slider Item -->
@@ -712,7 +710,7 @@
                                             $colors=explode(',',$product->color);
                                             $sizes=explode(',',$product->size);
                                             @endphp
-                                            <div class="featured_slider_item">
+                                            <div class="arrivals_slider_item">
                                                 <div class="border_active"></div>
                                                 <div class="product_item is_new discount d-flex flex-column align-items-center justify-content-center text-center">
                                                     <a class="details-view m-0 p-0" href="{{route('product.details',$product->id)}}">
@@ -772,7 +770,7 @@
                                                         </div>
                                                     </a>
                                                     @guest
-                                                    <div class="product_fav"><a class="btn" href="javascript:void(0)" data-toggle="popover" title="Please login to continue" ><i  class="fas fa-heart"></i></a></div>
+                                                    <div class="product_fav"><span class="fas fa-heart" data-toggle="popover" title="Please login to continue"></span></div>
                                                     @else
                                                     <div class="product_fav"><span  data-id="{{$product->id}}" id="product-wishlist" class="fas fa-heart text-info"></span></div>
                                                     @endguest
@@ -796,14 +794,14 @@
                              <!-- Product Panel Fashion-->
                              <div class="product_panel panel">
                                 <div class="arrivals_slider slider">
-                                    @foreach ($newArrivalElectronics as $product)
+                                    @foreach ($newArrivalProducts as $product)
                                     <!-- Slider Item -->
                                         @if($product->category->category_name == 'Fashions')
                                             @php
                                             $colors=explode(',',$product->color);
                                             $sizes=explode(',',$product->size);
                                             @endphp
-                                            <div class="featured_slider_item">
+                                            <div class="arrivals_slider_item">
                                                 <div class="border_active"></div>
                                                 <div class="product_item is_new discount d-flex flex-column align-items-center justify-content-center text-center">
                                                     <a class="details-view m-0 p-0" href="{{route('product.details',$product->id)}}">
@@ -858,12 +856,11 @@
                                                                 <div class="add-to-cart-btn">
                                                                     <a class="product_cart_button btn" id="cart" data-id="{{$product->id}}" href="javascript:void(0)">Add to Cart</a>
                                                                 </div>
-
                                                             </div>
                                                         </div>
                                                     </a>
                                                     @guest
-                                                    <div class="product_fav"><a class="btn" href="javascript:void(0)" data-toggle="popover" title="Please login to continue" ><i  class="fas fa-heart"></i></a></div>
+                                                    <div class="product_fav"><span class="fas fa-heart" data-toggle="popover" title="Please login to continue"></span></div>
                                                     @else
                                                     <div class="product_fav"><span  data-id="{{$product->id}}" id="product-wishlist" class="fas fa-heart text-info"></span></div>
                                                     @endguest
@@ -914,13 +911,8 @@
                                 </div>
                                 <div class="arrivals_slider_dots_cover"></div>
                             </div>
-
-
-
                         </div>
-
                     </div>
-
                 </div>
             </div>
         </div>
@@ -1010,7 +1002,11 @@
                                         @endif
                                     </div>
                                 </div>
+                                @guest
+                                <div class="bestsellers_fav active"><span class="fas fa-heart text-danger" data-toggle="popover" title="Please login to continue"></span></div>
+                                @else
                                 <div class="bestsellers_fav active"><span  data-id="{{$product->id}}" id="product-wishlist" class="fas fa-heart text-info"></span></div>
+                                @endguest
                                 <ul class="bestsellers_marks">
                                     @if(empty($product->discount_price))
                                         <li class="bestsellers_mark bestsellers_new">new</li>
@@ -1079,7 +1075,11 @@
                                             <li class="trends_mark trends_new">new</li>
                                         @endif
                                     </ul>
-                                    <div class="trends_fav"><i  data-id="{{$product->id}}" id="product-wishlist" class="fas fa-heart text-info"></i></div>
+                                    @guest
+                                    <div class="trends_fav"><span class="fas fa-heart" data-toggle="popover" title="Please login to continue"></span></div>
+                                    @else
+                                    <div class="trends_fav"><span data-id="{{$product->id}}" id="product-wishlist" class="fas fa-heart text-info"></span></div>
+                                    @endguest
                                 </div>
                             </div>
                         @endforeach
@@ -1305,15 +1305,14 @@
     </div>
 </div>
   <!--End single product review modal-->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script>
-    // $('#click').click(()=>{
-    //     alert('alert shown');
-    // })
 
-    $(document).ready(function(){
-      $('[data-toggle="popover"]').popover();
-    });
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+    // $(document).ready(function(){
+    //   $('[data-toggle="popover"]').popover();
+    // });
 
     // edit modal script
     $(document).on('click', '#show', function() {
