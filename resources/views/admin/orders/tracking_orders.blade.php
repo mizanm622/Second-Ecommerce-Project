@@ -60,7 +60,7 @@
                                                       <td>{{$item->product_quantity}}</td>
                                                       <td>{{$item->product_color}}</td>
                                                       <td>{{$item->product_size}}</td>
-                                                      <td>{{$item->product_price}}</td>
+                                                      <td>{{$settings->currency}}{{$item->product_price}} /-</td>
                                                   </tr><!--End Order Items-->
                                               @endif
                                           @endforeach

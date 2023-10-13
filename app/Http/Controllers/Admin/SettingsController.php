@@ -113,7 +113,8 @@ class SettingsController extends Controller
 
 
         Setting::where('id',$id)->update([
-            'name'=>$request->name,
+            'website_name'=>$request->website_name,
+            'currency_name'=>$request->currency_name,
             'currency'=>$request->currency,
             'phone_one'=>$request->phone_one,
             'phone_two'=>$request->phone_two,

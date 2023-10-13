@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->default(0);
+            $table->string('website_name')->default(0);
+            $table->string('currency_name')->nullable();
             $table->string('currency')->nullable();
             $table->string('phone_one')->nullable();
             $table->string('phone_two')->nullable();

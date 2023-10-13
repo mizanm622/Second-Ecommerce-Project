@@ -266,7 +266,6 @@ $('.dropify').dropify({
            // alert(data.childcategory_name);
             $('select[name=childcategory_id]').empty();
             $.each(data, function(key, data){
-
                 $('select[name=childcategory_id]').append('<option value="'+data.id+'">'+data.childcategory_name+'</option>');
 
             });

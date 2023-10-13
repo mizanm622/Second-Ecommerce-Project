@@ -117,5 +117,13 @@ class UserController extends Controller
         return view('layouts.front-end.user.user_profile',get_defined_vars());
     }
 
+    // show recent order
+//     public function orderStatus()
+//     {
 
+//         //no implementation
+//         $address =  OrderAddress::where('user_id',auth()->id())->where('order_date', date('Y-m-d'))->first();
+//         $orderItems = OrderDetail::where('user_id',auth()->id())->where('order_date', date('Y-m-d'))->get();
+//         return view('layouts.front-end.cart.order_check', compact('address','orderItems'));
+//    }
 }

@@ -5,7 +5,7 @@
             <span class="app-brand-logo demo">
                 <img src="{{asset($settings->logo)}}" alt="{{$settings->logo}}" class="img-thumbnail rounded-circle m-auto" width="40" height="40">
             </span>
-            <span class="app-brand-text demo menu-text fw-bolder ms-2 text-capitalize text-primary m-1">{{$settings->name}}</span>
+            <span class="app-brand-text demo menu-text fw-bolder ms-2 text-capitalize text-primary m-1">{{$settings->website_name}}</span>
         </a>
     </div>
 

@@ -49,6 +49,8 @@ Route::group(['namespace' => 'App\Http\Controllers\User',],function(){
     Route::post('change/password', 'UserController@changePassword')->name('user.change.password');
     Route::post('update/shipping/address', 'UserController@updateShippingAddress')->name('update.shipping.address');
     Route::get('user/profile', 'UserController@userProfile')->name('user.profile');
+
+
     // Route::get('/user/logout', 'UserController@logout')->name('user.logout');
     // Route::get('user/reset-password', 'UserController@changePasswrd')->name('user.resetpassword');
     // Route::post('user/update-password', 'UserController@updatePasswrd')->name('user.password.update');
@@ -74,7 +76,8 @@ Route::group(['namespace' => 'App\Http\Controllers\User',],function(){
     Route::get('/checkout', 'CheckoutController@index')->name('checkout');
     Route::get('/check-coupon', 'CheckoutController@checkCoupon')->name('check.coupon');
     Route::post('/submit-order', 'CheckoutController@submitOrder')->name('submit.order');
-    Route::get('/order-status', 'CheckoutController@orderStatus')->name('order.status');
+    Route::get('/recent-order', 'CheckoutController@orderStatus')->name('recent.order');
+
     // payment gateway route
     Route::post('success', 'CheckoutController@success')->name('success');
     Route::post('fail', 'CheckoutController@fail')->name('fail');
@@ -84,14 +87,10 @@ Route::group(['namespace' => 'App\Http\Controllers\User',],function(){
 
 //Wishlist Routes
 Route::group(['namespace' => 'App\Http\Controllers\User',],function(){
-
-
     Route::get('/wishlist', 'WishlistController@index')->name('wishlist');
     Route::get('/product/wishlist', 'WishlistController@addWishlist')->name('add.wishlist');
     Route::get('/remove/wishlist/{id}', 'WishlistController@removeWishlist')->name('remove.wishlist');
     Route::get('/destroy/wishlist', 'WishlistController@destroyWishlist')->name('destroy.wishlist');
-
-
 
 });
 

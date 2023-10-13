@@ -18,13 +18,20 @@
             <div class="row">
                 <div class="form-group mb-3 col-6">
                     <label for="nameBasic" class="form-label">Website Name<span class="text-danger fw-bold">*</span></label>
-                    <input type="text" id="name" name="name" class="form-control" value="{{$data->name}}"/>
+                    <input type="text" id="website_name" name="website_name" class="form-control" value="{{$data->website_name}}"/>
                 </div>
-                <div class="form-group mb-3 col-6">
+                <div class="form-group mb-3 col-4">
+                    <label for="nameBasic" class="form-label">Currency Name<span class="text-danger fw-bold">*</span></label>
+                    <select type="text" id="currency" name="currency_name" class="form-control" value="{{$data->currency_name}}">
+                        <option value="BDT" {{$data->currency== '৳' ? 'selected': ''}}> BDT</option>
+                        <option value="USD" {{$data->currency== '$' ? 'selected': ''}}> USD</option>
+                    </select>
+                </div>
+                <div class="form-group mb-3 col-2">
                     <label for="nameBasic" class="form-label">Currency<span class="text-danger fw-bold">*</span></label>
                     <select type="text" id="currency" name="currency" class="form-control" value="{{$data->currency}}">
-                        <option value="৳" {{$data->currency== '৳' ? 'selected': ''}}> Taka</option>
-                        <option value="$" {{$data->currency== '$' ? 'selected': ''}}> USD</option>
+                        <option value="৳" {{$data->currency== '৳' ? 'selected': ''}}> ৳</option>
+                        <option value="$" {{$data->currency== '$' ? 'selected': ''}}> $</option>
                     </select>
                 </div>
             </div>

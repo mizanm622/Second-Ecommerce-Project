@@ -2,9 +2,6 @@
 
 @section('home-content')
 
-@php
-    $order_id=rand();
-@endphp
 <div class="container">
     <!--Order submit form-->
     <form action="{{route('submit.order')}}" method="post" id="order-submit">
@@ -72,7 +69,7 @@
                                 </div>
                             </div>
                             <input type="hidden" name="delivery_charge" value="{{$delivery}}">
-                            <input type="hidden" name="order_id" value="{{$order_id}}">
+
                             <div class="row mb-0">
                                 <div class="col-8 offset-md-4">
                                     <button type="submit" class="btn btn-primary btn-block">
@@ -98,6 +95,7 @@
                                         <td>{{substr($product->name,0,10)}}</td>
                                         <td>{{$settings->currency}} {{$product->price}}</td>
                                         <td>{{$product->qty}}</td>
+                                        <td>{{$product->options->color}}</td>
                                         <td>{{$settings->currency}} {{$product->price*$product->qty}}</td>
 
                                     </tr>
@@ -171,7 +169,7 @@
                         <div class="card">
                             <div class="card-header" id="headingThree">
                             <h5 class="mb-0">
-                                <button class="btn btn-link collapsed fas fa-rocket" data-toggle="collapse" data-target="#coupon-area" aria-expanded="true" aria-controls="collapseOne">
+                                <button type="button" class="btn btn-link collapsed fas fa-rocket" data-toggle="collapse" data-target="#coupon-area" aria-expanded="true" aria-controls="collapseOne">
                                     Have a Copoun Code?
                                 </button>
                             </h5>
@@ -192,7 +190,7 @@
                         <div class="card">
                         <div class="card-header" id="headingOne">
                             <h5 class="mb-0">
-                            <button class="btn btn-link collapsed fas fa-rocket" data-toggle="collapse" data-target="#cash-on" aria-expanded="true" aria-controls="collapseOne">
+                            <button type="button" class="btn btn-link collapsed fas fa-rocket" data-toggle="collapse" data-target="#cash-on" aria-expanded="true" aria-controls="collapseOne">
                             Cash on Delivery
                             </button>
                             </h5>
@@ -208,7 +206,7 @@
                         <div class="card">
                             <div class="card-header" id="headingTwo">
                                 <h5 class="mb-0">
-                                <button class="btn btn-link collapsed fas fa-rocket" data-toggle="collapse" data-target="#online" aria-expanded="false" aria-controls="collapseTwo">
+                                <button type="button" class="btn btn-link collapsed fas fa-rocket" data-toggle="collapse" data-target="#online" aria-expanded="false" aria-controls="collapseTwo">
                                 Online Payment?
                                 </button>
                                 </h5>
@@ -216,7 +214,7 @@
                             <div id="online" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                                 <div class="card-body">
                                     <label for="cash_on">Bkash/Rocket/Nagad</label>
-                                    <input type="checkbox" name="payment" value="online" required>
+                                    <input type="checkbox" name="payment" value="online">
                                 </div>
                             </div>
                         </div>
@@ -228,26 +226,26 @@
 </div>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
-        // order submit
-        $('#order-submit').submit(function(e) {
-        e.preventDefault();
-        var url = $(this).attr('action');
-        var request = $(this).serialize();
-        $.ajax({
-            url: url,
-            type: 'post',
-            anyne: false,
-            async: false,
-            data: request,
-            success:function(data) {
-                toastr.success(data);
-                $('#order-submit')[0].reset();
-                $('.table').load(location.href+' .table');
-                $('.cart').load(location.href+' .cart');
+        //order submit
+        // $('#order-submit').submit(function(e) {
+        // e.preventDefault();
+        // var url = $(this).attr('action');
+        // var request = $(this).serialize();
+        // $.ajax({
+        //     url: url,
+        //     type: 'post',
+        //     anyne: false,
+        //     async: false,
+        //     data: request,
+        //     success:function(data) {
+        //         toastr.success(data.msg);
+        //         $('#order-submit')[0].reset();
+        //         $('.table').load(location.href+' .table');
+        //         $('.cart').load(location.href+' .cart');
 
-            }
-        });
-        });
+        //     }
+        // });
+        // });
 
           // check coupon
         $(document).on('blur','#coupon',function(e){

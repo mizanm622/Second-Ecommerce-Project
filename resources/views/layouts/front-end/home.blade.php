@@ -37,14 +37,8 @@
                         @endif
                         <input type="hidden" name="quantity" value="1">
                         <div class="banner_product_name">{{$row->brand->brand_name}}</div>
-                        @guest
-                            <div class="button banner_button"><a href="" id=""> <span class="fas fa-shopping-cart"></span> Shop Now</a></div>
-                            <div class="button banner_button"><a href="{{route('product.details',$row->id)}}">Show Details</a></div>
-                        @else
-
                             <div class="button banner_button"><a href="javascript:void(0)" data-id="{{$row->id}}" id="cart_item"><span class="fas fa-shopping-cart"></span>Shop Now</a></div>
                             <div class="button banner_button"><a href="{{route('product.details',$row->id)}}">Show Details</a></div>
-                        @endguest
                     </div>
                 </div>
             </div>
@@ -221,7 +215,6 @@
                                                             @isset($product->color)
                                                                 <div class="color text-left">
                                                                     <select type="text" name="color" class="form-control form-control-sm" id="">
-                                                                        <option>Colors</option>
                                                                         @foreach ($colors as $color)
                                                                             <option value="{{$color}}">{{$color}}</option>
                                                                         @endforeach
@@ -231,7 +224,6 @@
                                                             @isset($product->size)
                                                                 <div class="size text-center">
                                                                     <select type="text" name="size" class="form-control form-control-sm" id="">
-                                                                        <option >Sizes</option>
                                                                         @foreach ($sizes as $size)
                                                                             <option value="{{$size}}">{{$size}}</option>
                                                                         @endforeach
@@ -310,7 +302,6 @@
                                                             @isset($product->color)
                                                                 <div class="color text-left">
                                                                     <select type="text" name="color" class="form-control form-control-sm" id="">
-                                                                        <option>Colors</option>
                                                                         @foreach ($colors as $color)
                                                                             <option value="{{$color}}">{{$color}}</option>
                                                                         @endforeach
@@ -320,7 +311,6 @@
                                                             @isset($product->size)
                                                                 <div class="size text-center">
                                                                     <select type="text" name="size" class="form-control form-control-sm" id="">
-                                                                        <option>Sizes</option>
                                                                         @foreach ($sizes as $size)
                                                                             <option value="{{$size}}">{{$size}}</option>
                                                                         @endforeach
@@ -401,7 +391,6 @@
                                                         @isset($product->color)
                                                             <div class="color text-left">
                                                                 <select type="text" name="color" class="form-control form-control-sm" id="">
-                                                                    <option>Colors</option>
                                                                     @foreach ($colors as $color)
                                                                         <option value="{{$color}}">{{$color}}</option>
                                                                     @endforeach
@@ -411,7 +400,6 @@
                                                         @isset($product->size)
                                                             <div class="size text-center">
                                                                 <select type="text" name="size" class="form-control form-control-sm" id="">
-                                                                    <option>Sizes</option>
                                                                     @foreach ($sizes as $size)
                                                                         <option value="{{$size}}">{{$size}}</option>
                                                                     @endforeach
@@ -642,7 +630,6 @@
                                                                     @isset($product->color)
                                                                         <div class="color text-left">
                                                                             <select type="text" name="color" class="form-control form-control-sm" id="">
-                                                                                <option>Colors</option>
                                                                                 @foreach ($colors as $color)
                                                                                     <option value="{{$color}}">{{$color}}</option>
                                                                                 @endforeach
@@ -652,7 +639,6 @@
                                                                     @isset($product->size)
                                                                         <div class="size text-center">
                                                                             <select type="text" name="size" class="form-control form-control-sm" id="">
-                                                                                <option>Sizes</option>
                                                                                 @foreach ($sizes as $size)
                                                                                     <option value="{{$size}}">{{$size}}</option>
                                                                                 @endforeach
@@ -670,7 +656,7 @@
                                                                     @endif
                                                                 </div>
                                                                 <div class="add-to-cart-btn">
-                                                                    <a class="product_cart_button btn" id="cart" data-id="{{$product->id}}" href="javascript:void(0)">Add to Cart</a>
+                                                                    <a class="product_cart_button btn" id="cart_product" data-id="{{$product->id}}" href="javascript:void(0)">Add to Cart</a>
                                                                 </div>
 
                                                             </div>
@@ -735,7 +721,6 @@
                                                                     @isset($product->color)
                                                                         <div class="color text-left">
                                                                             <select type="text" name="color" class="form-control form-control-sm" id="">
-                                                                                <option>Colors</option>
                                                                                 @foreach ($colors as $color)
                                                                                     <option value="{{$color}}">{{$color}}</option>
                                                                                 @endforeach
@@ -745,7 +730,6 @@
                                                                     @isset($product->size)
                                                                         <div class="size text-center">
                                                                             <select type="text" name="size" class="form-control form-control-sm" id="">
-                                                                                <option>Sizes</option>
                                                                                 @foreach ($sizes as $size)
                                                                                     <option value="{{$size}}">{{$size}}</option>
                                                                                 @endforeach
@@ -763,7 +747,7 @@
                                                                     @endif
                                                                 </div>
                                                                 <div class="add-to-cart-btn">
-                                                                    <a class="product_cart_button btn" id="cart" data-id="{{$product->id}}" href="javascript:void(0)">Add to Cart</a>
+                                                                    <a class="product_cart_button btn" id="cart_product" data-id="{{$product->id}}" href="javascript:void(0)">Add to Cart</a>
                                                                 </div>
 
                                                             </div>
@@ -826,7 +810,6 @@
                                                                     @isset($product->color)
                                                                         <div class="color text-left">
                                                                             <select type="text" name="color" class="form-control form-control-sm" id="">
-                                                                                <option>Colors</option>
                                                                                 @foreach ($colors as $color)
                                                                                     <option value="{{$color}}">{{$color}}</option>
                                                                                 @endforeach
@@ -836,7 +819,6 @@
                                                                     @isset($product->size)
                                                                         <div class="size text-center">
                                                                             <select type="text" name="size" class="form-control form-control-sm" id="">
-                                                                                <option>Sizes</option>
                                                                                 @foreach ($sizes as $size)
                                                                                     <option value="{{$size}}">{{$size}}</option>
                                                                                 @endforeach
@@ -854,7 +836,7 @@
                                                                     @endif
                                                                 </div>
                                                                 <div class="add-to-cart-btn">
-                                                                    <a class="product_cart_button btn" id="cart" data-id="{{$product->id}}" href="javascript:void(0)">Add to Cart</a>
+                                                                    <a class="product_cart_button btn" id="cart_product" data-id="{{$product->id}}" href="javascript:void(0)">Add to Cart</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1354,37 +1336,71 @@
 
     $(document).on('click','#cart',function(e) {
     e.preventDefault();
-// $('.loading').removeClass('d-none');
-let id = $(this).data('id');
-let cart_item = $(this).closest('.featured_slider_item');
-let name = cart_item.find('input[name="name"]').val();
-let image = cart_item.find('input[name="image"]').val();
-let color = cart_item.find('select[name="color"]').val();
-let size = cart_item.find('select[name="size"]').val();
-let quantity = cart_item.find('input[name="quantity"]').val();
-let price = cart_item.find('input[name="price"]').val();
-let url = "{{route('add.to.cart')}}";
-$.ajax({
-     url : url,
-    type : 'get',
-   async : false,
-    data : {
-        id   : id,
-        name : name,
-       image : image,
-       color : color,
-        size : size,
-    quantity : quantity,
-       price : price,
-    },
-    success:function(data) {
-        toastr.success(data);
-        //  $('#wishlist-to-cart')[0].reset();
-          $('.cart').load(location.href+' .cart');
+    // $('.loading').removeClass('d-none');
+    let id = $(this).data('id');
+    let cart_item = $(this).closest('.featured_slider_item');
+    let name = cart_item.find('input[name="name"]').val();
+    let image = cart_item.find('input[name="image"]').val();
+    let color = cart_item.find('select[name="color"]').val();
+    let size = cart_item.find('select[name="size"]').val();
+    let quantity = cart_item.find('input[name="quantity"]').val();
+    let price = cart_item.find('input[name="price"]').val();
+    let url = "{{route('add.to.cart')}}";
+    $.ajax({
+        url : url,
+        type : 'get',
+    async : false,
+        data : {
+            id   : id,
+            name : name,
+        image : image,
+        color : color,
+            size : size,
+        quantity : quantity,
+        price : price,
+        },
+        success:function(data) {
+            toastr.success(data);
+            //  $('#wishlist-to-cart')[0].reset();
+            $('.cart').load(location.href+' .cart');
 
-    }
-});
-});
+        }
+    });
+    });
+
+    $(document).on('click','#cart_product',function(e) {
+    e.preventDefault();
+    // $('.loading').removeClass('d-none');
+    let id = $(this).data('id');
+    let cart_item = $(this).closest('.arrivals_slider_item');
+    let name = cart_item.find('input[name="name"]').val();
+    let image = cart_item.find('input[name="image"]').val();
+    let color = cart_item.find('select[name="color"]').val();
+    let size = cart_item.find('select[name="size"]').val();
+    let quantity = cart_item.find('input[name="quantity"]').val();
+    let price = cart_item.find('input[name="price"]').val();
+    let url = "{{route('add.to.cart')}}";
+    $.ajax({
+        url : url,
+        type : 'get',
+    async : false,
+        data : {
+            id   : id,
+            name : name,
+        image : image,
+        color : color,
+            size : size,
+        quantity : quantity,
+        price : price,
+        },
+        success:function(data) {
+            toastr.success(data);
+            //  $('#wishlist-to-cart')[0].reset();
+            $('.cart').load(location.href+' .cart');
+
+        }
+    });
+    });
 
 // add to cart from main slider
 $(document).on('click','#cart_item',function(e) {

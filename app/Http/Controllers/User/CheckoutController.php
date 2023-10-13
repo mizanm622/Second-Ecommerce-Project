@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\Shipping;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class CheckoutController extends Controller
@@ -18,39 +19,44 @@ class CheckoutController extends Controller
     // data send to checkout page
     public function index(){
 
+        if(!auth()->check())
+        {
+            $notification=array('msg' => 'Please login to continue! ', 'alert-type' => 'info');
+            return redirect()->back()->with($notification);
+        }else
+        {
         if(count(Cart::content()) <1 ){
             return redirect()->route('home');
-        }else{
+        }else
+        {
+            //calculate cart total
+            $delivery = 0;
 
-    //calculate cart total
-
-    $delivery = 0;
-
-   if(Cart::subtotal() <= 1000){
-    $delivery =50;
-   }
-   elseif(Cart::subtotal() > 1000 and Cart::subtotal() <= 2000){
-    $delivery =40;
-   }
-   elseif(Cart::subtotal() > 2000 and Cart::subtotal() <= 3000){
-    $delivery =30;
-   }
-   elseif(Cart::subtotal() > 3000 and Cart::subtotal() <= 4000){
-    $delivery =20;
-   }
-   elseif(Cart::subtotal() > 4000 and Cart::subtotal() <= 5000){
-    $delivery =10;
-   }
-   elseif(Cart::subtotal() > 5000){
-
-    $delivery =0;
-   }
+        if(Cart::subtotal() <= 1000){
+            $delivery =50;
+        }
+        elseif(Cart::subtotal() > 1000 and Cart::subtotal() <= 2000){
+            $delivery =40;
+        }
+        elseif(Cart::subtotal() > 2000 and Cart::subtotal() <= 3000){
+            $delivery =30;
+        }
+        elseif(Cart::subtotal() > 3000 and Cart::subtotal() <= 4000){
+            $delivery =20;
+        }
+        elseif(Cart::subtotal() > 4000 and Cart::subtotal() <= 5000){
+            $delivery =10;
+        }
+        elseif(Cart::subtotal() > 5000){
+            $delivery =0;
+        }
 
         $cartProducts = Cart ::content();
         $shippingInfo = Shipping::where('user_id',auth()->id())->first();
 
         return view('layouts.front-end.cart.checkout',compact('cartProducts','shippingInfo','delivery'));
-       }
+        }
+    }
     }
 
     //check coupon validation
@@ -84,7 +90,11 @@ class CheckoutController extends Controller
             'phone'=>'required',
             'email'=>'required',
             'address'=>'required',
+            'payment'=>'required',
+
         ]);
+
+        $order_id=rand(); // order id randomly generated
         // check payment method
         if($request->payment == 'cash-on')
         {
@@ -101,7 +111,7 @@ class CheckoutController extends Controller
 
             OrderAddress::insert([
                 'user_id'=>auth()->id(),
-                'order_id'=>$request->order_id,
+                'order_id'=>$order_id,
                 'total'=>Cart::total()+$request->delivery_charge,
                 'subtotal'=>Cart::subtotal(),
                 'discount_amount'=>$discount_amount,
@@ -124,7 +134,7 @@ class CheckoutController extends Controller
             foreach(Cart::content() as $product){
             OrderDetail::insert([
                 'user_id'=>auth()->id(),
-                'order_id'=>$request->order_id,
+                'order_id'=>$order_id,
                 'product_id'=> $product->id,
                 'product_name'=> $product->name,
                 'product_price'=> $product->price,
@@ -141,7 +151,9 @@ class CheckoutController extends Controller
 
         session()->forget('coupon');
         Cart::destroy();
-         return response()->json('Order Successfully Submited!');
+
+        $notification=array('msg' => 'Order Successfully Submited!', 'alert-type' => 'info');
+        return redirect()->route('recent.order')->with($notification);
 
         }elseif($request->payment == 'online')
         {
@@ -158,14 +170,22 @@ class CheckoutController extends Controller
 
                 }else
                 {
-                    $url = "https://​sandbox​.aamarpay.com/jsonpost.php"; // for Sandbox Transection use
+                    $url = "https://sandbox.aamarpay.com/jsonpost.php"; // for Sandbox Transection use
                 }
-                $tran_id = "test".rand(1111111,9999999);//unique transection id for every transection
+
+                $tran_id =rand(1111111,9999999);//unique transection id for every transection
+                //$tran_id = "test".rand(1111111,9999999);//unique transection id for every transection
 
                 $currency= "BDT"; //aamarPay support Two type of currency USD & BDT
 
-                $amount = "10";   //10 taka is the minimum amount for show card option in aamarPay payment gateway
-                $signature_key = "dbb74894e82415a2f7ff0ec3a97e4183";
+                $amount = Cart::total()+$request->delivery_charge;   //10 taka is the minimum amount for show card option in aamarPay payment gateway
+               // $amount = "10";   //10 taka is the minimum amount for show card option in aamarPay payment gateway
+
+                //For live Store Id & Signature Key please mail to support@aamarpay.com
+
+
+                //$signature_key = "dbb74894e82415a2f7ff0ec3a97e4183";
+
 
 
                 $curl = curl_init();
@@ -186,18 +206,19 @@ class CheckoutController extends Controller
                     "fail_url": "'.route('fail').'",
                     "cancel_url": "'.route('cancel').'",
                     "amount": "'.$amount.'",
+                    "delivery_charge": "'.$request->delivery_charge.'",
                     "currency": "'.$currency.'",
-                    "signature_key": "'.$signature_key.'",
+                    "signature_key": "'.$aamer_pay->signature_key.'",
                     "desc": "Merchant Registration Payment",
-                    "cus_name": "Name",
-                    "cus_email": "payer@merchantcusomter.com",
-                    "cus_add1": "House B-158 Road 22",
-                    "cus_add2": "Mohakhali DOHS",
-                    "cus_city": "Dhaka",
-                    "cus_state": "Dhaka",
-                    "cus_postcode": "1206",
-                    "cus_country": "Bangladesh",
-                    "cus_phone": "+8801704",
+                    "cus_name": "'.auth()->user()->name.'",
+                    "cus_email": "'.$request->email.'",
+                    "cus_add1": "'.$request->address.'",
+                    "cus_add2":  "'.$request->town.'",
+                    "cus_city":  "'.$request->city.'",
+                    "cus_state":  "'.$request->city.'",
+                    "cus_postcode": "'.$request->zip.'",
+                    "cus_country":  "'.$request->country.'",
+                    "cus_phone":  "'.$request->phone.'",
                     "type": "json"
                 }',
                 CURLOPT_HTTPHEADER => array(
@@ -221,23 +242,22 @@ class CheckoutController extends Controller
                 }else{
                     echo $response;
                 }
-            }
 
-
-        }
-
-
+                    }
+                }
     }
 
-    public function success(Request $request){
+    public function success(Request $request)
+    {
 
-        $request= $request->mer_txnid;
+        $order_id=rand(); // order id randomly generated
+        $request_id= $request->mer_txnid;
 
         //verify the transection using Search Transection API
 
-      //  $url = "http://sandbox.aamarpay.com/api/v1/trxcheck/request.php?request_id=$request_id&store_id=aamarpaytest&signature_key=dbb74894e82415a2f7ff0ec3a97e4183&type=json";
+        $url = "http://sandbox.aamarpay.com/api/v1/trxcheck/request.php?request_id=$request_id&store_id=aamarpaytest&signature_key=dbb74894e82415a2f7ff0ec3a97e4183&type=json";
 
-        $url = "http://secure.aamarpay.com/api/v1/trxcheck/request.php"; //For Live Transection Use
+        //For Live Transection Use "http://secure.aamarpay.com/api/v1/trxcheck/request.php"
 
         $curl = curl_init();
 
@@ -255,11 +275,71 @@ class CheckoutController extends Controller
         $response = curl_exec($curl);
 
         curl_close($curl);
-        echo $response;
+       // echo $response;
+
+        if(session()->has('coupon'))
+        {
+            $coupon_code = session()->get('coupon')['coupon_code'];
+            $discount_amount = session()->get('coupon')['coupon_discount'];
+        }else
+        {
+            $coupon_code = 0;
+            $discount_amount = 0;
+        }
+
+        $order_address = OrderAddress::insert([
+            'user_id'=>auth()->id(),
+            'order_id'=>$order_id,
+            'total'=>$request->amount,
+            'subtotal'=>Cart::subtotal(),
+            'discount_amount'=>$discount_amount,
+            'coupon_code'=>$coupon_code,
+            'delivery_charge'=>$request->delivery_charge,
+            'tax'=>Cart::tax(),
+            'payment_by'=>$request->payment_processor,
+            'email'=>$request->cus_email,
+            'phone'=>$request->cus_phone,
+            'extra_phone'=>$request->cus_phone,
+            'town'=>$request->cus_add2,
+            'city'=>$request->cus_city,
+            'zip'=>$request->cus_postcode,
+            'address'=>$request->cus_add1,
+            'country'=>$request->cus_country,
+            'order_date'=>date('Y-m-d'),
+
+        ]);
+
+        foreach(Cart::content() as $product){
+        $order_details = OrderDetail::insert([
+            'user_id'=>auth()->id(),
+            'order_id'=>$order_id,
+            'product_id'=> $product->id,
+            'product_name'=> $product->name,
+            'product_price'=> $product->price,
+            'product_quantity'=> $product->qty,
+            'product_color'=> $product->options->color,
+            'product_size'=> $product->options->size,
+            'product_image'=> $product->options->image,
+            'order_date'=> date('Y-m-d'),
+        ]);
+
+        //Mail::to(auth()->user()->email)->send(new InvoiceMail($order_address));
+
+        Product::where('id',$product->id)->decrement('stack_quantity',$product->qty);
+        Product::where('id',$product->id)->increment('selling_quantity',$product->qty);
+    }
+
+
+
+    session()->forget('coupon');
+    Cart::destroy();
+     return response()->json('Order Successfully Submited!');
 
     }
 
-    public function fail(Request $request){
+
+    public function fail(Request $request)
+    {
         return $request;
     }
 
@@ -271,8 +351,8 @@ class CheckoutController extends Controller
    public function orderStatus(){
 
     //no implementation
-    $address =  OrderAddress::where('user_is',auth()->id())->where('order_date', date('Y-m-d'))->first();
-    $orderItems = OrderDetail::where('user_is',auth()->id())->where('order_date', date('Y-m-d'))->get();
+    $address =  OrderAddress::where('user_id',auth()->id())->where('order_date', date('Y-m-d'))->orderBy('id', 'DESC')->first();
+    $orderItems = OrderDetail::where('user_id',auth()->id())->where('order_date', date('Y-m-d'))->get();
     return view('layouts.front-end.cart.order_check', compact('address','orderItems'));
    }
 
